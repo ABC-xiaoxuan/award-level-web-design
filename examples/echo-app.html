@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>回声 Echo · 说出来，它就整理好了</title>
+<meta name="description" content="Echo：在你的设备上，把语音变成有标题、有要点、有待办的笔记。">
+<meta name="theme-color" content="#0D0E0B">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:title" content="回声 Echo · 说出来，它就整理好了">
+<meta property="og:description" content="声音留下的等高线：暗色、酸性绿与录音到笔记的交互演示。Award-Level Web Design 示例。">
+<meta property="og:url" content="https://abc-xiaoxuan.github.io/award-level-web-design/examples/echo-app.html">
+<meta property="og:image" content="https://abc-xiaoxuan.github.io/award-level-web-design/og-preview.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Award-Level Web Design：设计、截图、自检，配有八维评分卡。">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="回声 Echo · 说出来，它就整理好了">
+<meta name="twitter:description" content="暗色、酸性绿与录音到笔记的交互演示。Award-Level Web Design 示例。">
+<meta name="twitter:image" content="https://abc-xiaoxuan.github.io/award-level-web-design/og-preview.png">
+<meta name="twitter:image:alt" content="Award-Level Web Design：设计、截图、自检，配有八维评分卡。">
+<link rel="canonical" href="https://abc-xiaoxuan.github.io/award-level-web-design/examples/echo-app.html">
+<link rel="preload" href="../assets/fonts/pages/echo-app-notosanssc-0.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts-echo-app.css">
+<style>
+:root{
+  --bg:#0D0E0B; --bg-2:#15160F; --bg-3:#1D1F16;
+  --fg:#ECEBE3; --fg-2:#A3A296; --fg-3:#8D8C81;
+  --line:rgba(236,235,227,.12); --line-2:rgba(236,235,227,.24);
+  --acid:#D4FF3A; --acid-ink:#0D0E0B;
+  --f-display:"Bricolage Grotesque","Noto Sans SC",sans-serif;
+  --f-cn:"Noto Sans SC",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono","Noto Sans SC",ui-monospace,monospace;
+  --gutter:clamp(20px,4vw,56px);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --s2:8px;--s3:16px;--s4:24px;--s5:40px;--s6:64px;--s7:112px;--s8:176px;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-cn);font-size:1rem;line-height:1.7;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--acid);outline-offset:3px;border-radius:4px}
+::selection{background:var(--acid);color:var(--acid-ink)}
+.mono{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase}
+.wrap{max-width:1440px;margin:0 auto;padding-inline:var(--gutter)}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(13,14,11,.78);backdrop-filter:blur(12px);border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:700;font-size:1.15rem;letter-spacing:-.01em}
+.logo svg{display:block}
+.nav ul{display:flex;gap:var(--s5);list-style:none;margin:0;padding:0;font-size:.9rem;color:var(--fg-2)}
+.nav ul a{transition:color .3s}
+.nav ul a:hover{color:var(--fg)}
+.menu-toggle{display:none;border:1px solid var(--line-2);background:transparent;color:var(--fg);border-radius:999px;min-width:44px;min-height:44px;padding:0 13px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;cursor:pointer}
+.mobile-menu{position:fixed;inset:68px 0 0;z-index:49;background:var(--bg);padding:var(--s5) var(--gutter);overflow:auto}
+.mobile-menu[hidden]{display:none}
+.mobile-menu nav{display:grid;gap:4px;border-top:1px solid var(--line-2)}
+.mobile-menu a{display:flex;align-items:center;min-height:56px;border-bottom:1px solid var(--line);font-size:1.15rem}
+.mobile-menu a::after{content:'↗';margin-left:auto;color:var(--acid);font-family:var(--f-mono);font-size:.8rem}
+.pill{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:12px 20px;font-weight:500;font-size:.92rem;transition:transform .4s var(--ease),background .3s,color .3s,box-shadow .4s var(--ease);cursor:pointer;border:0}
+.pill.acid{background:var(--acid);color:var(--acid-ink)}
+.pill.acid:hover{box-shadow:0 0 0 6px rgba(212,255,58,.16)}
+.pill.ghost{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1px var(--line-2)}
+.pill.ghost:hover{box-shadow:inset 0 0 0 1px var(--fg)}
+.pill:active{transform:scale(.97)}
+.pill svg{transition:transform .4s var(--ease)}
+.pill:hover svg{transform:translateX(3px)}
+
+/* hero */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
+#topo{position:absolute;inset:0;width:100%;height:100%;display:block}
+.topo-controls{position:absolute;right:var(--gutter);top:84px;z-index:3}
+.topo-controls .motion-toggle{background:var(--bg)}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(90% 70% at 15% 95%,rgba(13,14,11,.92) 20%,transparent 65%);pointer-events:none}
+.hero .wrap{position:relative;z-index:2;width:100%;padding-block:140px var(--s6);display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s4);align-items:end}
+.kicker{grid-column:1/-1;display:flex;align-items:center;gap:12px;color:var(--fg-2);margin-bottom:var(--s4)}
+.kicker .tag{color:var(--acid-ink);background:var(--acid);padding:3px 8px;border-radius:3px;font-weight:500}
+.hero h1{grid-column:1/9;margin:0;font-family:var(--f-cn);font-weight:700;font-size:clamp(3rem,1.2rem + 5.2vw,7rem);line-height:1.02;letter-spacing:-.04em}
+.hero h1 .l{display:block;overflow:hidden;padding-bottom:.04em}
+.hero h1 .l>span{display:inline-block;transform:translateY(12%);animation:rise .6s var(--ease) forwards}
+.hero h1 .l:nth-child(2)>span{animation-delay:.1s}
+.hero h1 em{font-style:normal;color:var(--acid)}
+@keyframes rise{to{transform:none}}
+.hero .sub{grid-column:1/6;margin:var(--s5) 0 0;color:var(--fg-2);font-size:1.08rem;max-width:26em}
+.hero .ctas{grid-column:1/8;display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;margin-top:var(--s5)}
+@keyframes fade{to{opacity:1}}
+.hint{display:flex;align-items:center;gap:8px;color:var(--fg-3);font-size:.85rem;margin-left:var(--s3)}
+kbd{font-family:var(--f-mono);font-size:.75rem;min-width:28px;height:28px;padding:0 8px;display:inline-grid;place-items:center;border-radius:6px;background:var(--bg-3);color:var(--fg);box-shadow:inset 0 -2px 0 rgba(0,0,0,.6),0 0 0 1px var(--line-2);transition:transform .12s,box-shadow .12s}
+kbd.down{transform:translateY(2px);box-shadow:inset 0 0 0 rgba(0,0,0,.6),0 0 0 1px var(--acid);color:var(--acid)}
+
+/* live recorder card */
+.rec{grid-column:9/13;grid-row:2/5;align-self:end;background:rgba(21,22,15,.82);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:18px;padding:var(--s4);opacity:0;transform:translateY(20px);animation:card 1s .8s var(--ease) forwards}
+@keyframes card{to{opacity:1;transform:none}}
+.rec-top{display:flex;justify-content:space-between;align-items:center;color:var(--fg-2)}
+.rec-top .live{display:flex;align-items:center;gap:8px;color:var(--fg)}
+.rec-top .live i{width:8px;height:8px;border-radius:50%;background:var(--acid);box-shadow:0 0 0 0 rgba(212,255,58,.6);animation:ping 1.6s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 8px rgba(212,255,58,0)}100%{box-shadow:0 0 0 0 rgba(212,255,58,0)}}
+.rec-controls{display:flex;justify-content:flex-end;margin-top:var(--s3)}
+.motion-toggle{border:1px solid var(--line-2);background:transparent;color:var(--fg);border-radius:999px;padding:7px 12px;min-height:40px;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.04em;cursor:pointer}
+.motion-toggle:hover{border-color:var(--acid);color:var(--acid)}
+.bars{display:flex;align-items:center;gap:3px;height:56px;margin:var(--s4) 0}
+.bars b{flex:1;background:var(--fg);border-radius:2px;height:20%;opacity:.85;transition:height .12s linear}
+.bars b.hot{background:var(--acid)}
+.typed{min-height:5.1em;font-size:.98rem;line-height:1.7;margin:0;color:var(--fg)}
+.typed .caret{display:inline-block;width:2px;height:1.05em;background:var(--acid);vertical-align:-.15em;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* section heads */
+.sec{padding-top:var(--s8)}
+.head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s4);align-items:end;margin-bottom:var(--s6)}
+.head .mono{grid-column:1/-1;color:var(--fg-2);margin-bottom:var(--s3)}
+.head h2{grid-column:1/9;margin:0;font-family:var(--f-cn);font-weight:700;font-size:clamp(2.2rem,1rem + 3.6vw,4.8rem);line-height:1.08;letter-spacing:-.035em}
+.head h2 span{color:var(--fg-3)}
+.head p{grid-column:9/13;margin:0;color:var(--fg-2)}
+
+/* demo tabs (signature 2) */
+.demo-controls{grid-column:1/-1;display:flex;justify-content:flex-end;margin-bottom:16px}
+[data-motion-paused="true"] .live i{animation-play-state:paused}
+.demo{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s4)}
+.tabs{grid-column:1/5;display:flex;flex-direction:column;gap:2px}
+.tab{all:unset;cursor:pointer;display:grid;grid-template-columns:44px 1fr;padding:var(--s4) 0;border-top:1px solid var(--line);position:relative}
+.tab:focus-visible{outline:2px solid var(--acid);outline-offset:-2px}
+.tab .i{font-family:var(--f-mono);font-size:.75rem;color:var(--fg-3);padding-top:6px;transition:color .3s}
+.tab h3{margin:0;font-family:var(--f-cn);font-weight:500;font-size:1.5rem;letter-spacing:-.02em;color:var(--fg-3);transition:color .3s}
+.tab p{grid-column:2;margin:6px 0 0;color:var(--fg-2);font-size:.92rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .6s var(--ease),opacity .4s}
+.tab .prog{position:absolute;left:0;top:-1px;height:1px;width:100%;background:var(--acid);transform:scaleX(0);transform-origin:left}
+.tab[aria-selected="true"] h3{color:var(--fg)}
+.tab[aria-selected="true"] .i{color:var(--acid)}
+.tab[aria-selected="true"] p{max-height:6em;opacity:1}
+.tab:hover h3{color:var(--fg)}
+.stage{grid-column:6/13;background:var(--bg-2);border:1px solid var(--line);border-radius:22px;min-height:460px;position:relative;overflow:hidden;padding:clamp(20px,3vw,40px)}
+.stage::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 80% 0%,rgba(212,255,58,.08),transparent 70%);pointer-events:none}
+.panel{position:relative;display:none}
+.panel.on{display:block;animation:pin .7s var(--ease)}
+@keyframes pin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.ph{display:flex;justify-content:space-between;align-items:center;color:var(--fg-2);margin-bottom:var(--s4)}
+.wave{display:flex;align-items:center;gap:2px;height:150px;margin:var(--s5) 0}
+.wave b{flex:1;border-radius:2px;background:var(--fg-3)}
+.wave b.played{background:var(--fg)}
+.big-t{font-family:var(--f-display);font-weight:300;font-size:clamp(3.4rem,2rem + 3vw,5.6rem);line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.raw{color:var(--fg-3);margin:var(--s4) 0 0;max-width:34em}
+.line{display:grid;grid-template-columns:64px 1fr;gap:var(--s3);padding:var(--s3) 0;border-top:1px solid var(--line)}
+.line .ts{font-family:var(--f-mono);font-size:.72rem;color:var(--fg-3);padding-top:4px}
+.line p{margin:0}
+.line .who{font-family:var(--f-mono);font-size:.68rem;color:var(--fg-2);letter-spacing:.06em;display:block;margin-bottom:2px}
+mark{background:rgba(212,255,58,.16);color:var(--acid);padding:0 3px;border-radius:3px}
+.note h3{margin:0 0 var(--s2);font-family:var(--f-cn);font-weight:700;font-size:1.7rem;letter-spacing:-.02em;line-height:1.25}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--s4)}
+.tags span{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.04em;padding:4px 9px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line-2);color:var(--fg-2)}
+.note ul{margin:0 0 var(--s4);padding-left:1.1em;color:var(--fg)}
+.note ul li{margin-bottom:6px}
+.note ul li::marker{color:var(--acid)}
+.todo{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.todo label{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.todo input{appearance:none;width:20px;height:20px;border-radius:6px;box-shadow:inset 0 0 0 1.5px var(--fg-2);margin:0;display:grid;place-items:center;transition:background .25s,box-shadow .25s;cursor:pointer;flex:none}
+.todo input::after{content:"";width:9px;height:5px;border:2px solid var(--acid-ink);border-top:0;border-right:0;transform:rotate(-45deg) scale(0);margin-top:-2px;transition:transform .3s var(--ease)}
+.todo input:checked{background:var(--acid);box-shadow:none}
+.todo input:checked::after{transform:rotate(-45deg) scale(1)}
+.todo input:checked+span{color:var(--fg-3);text-decoration:line-through;text-decoration-color:var(--fg-3)}
+.todo span{transition:color .3s}
+.todo small{margin-left:auto;font-family:var(--f-mono);font-size:.68rem;color:var(--fg-3)}
+
+/* features */
+.feats{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-2)}
+.feat{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s4);align-items:baseline;padding:var(--s5) 0;border-bottom:1px solid var(--line-2);position:relative}
+.feat::after{content:"";position:absolute;left:0;bottom:-1px;height:1px;width:100%;background:var(--acid);transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease)}
+.feat:hover::after{transform:none}
+.feat .n{grid-column:1/2;font-family:var(--f-mono);font-size:.75rem;color:var(--fg-3)}
+.feat h3{grid-column:2/7;margin:0;font-family:var(--f-cn);font-weight:500;font-size:clamp(1.5rem,1rem + 1.6vw,2.6rem);letter-spacing:-.03em;line-height:1.2;transition:transform .6s var(--ease)}
+.feat:hover h3{transform:translateX(10px)}
+.feat p{grid-column:7/11;margin:0;color:var(--fg-2)}
+.feat .stat{grid-column:11/13;justify-self:end;font-family:var(--f-display);font-weight:400;font-size:clamp(1.6rem,1rem + 1.2vw,2.4rem);letter-spacing:-.03em;color:var(--acid);font-variant-numeric:tabular-nums}
+
+/* final cta */
+.cta{padding-block:var(--s8);text-align:left}
+.cta .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s4);align-items:end}
+.cta h2{grid-column:1/10;margin:0;font-family:var(--f-cn);font-weight:900;font-size:clamp(3rem,1rem + 8vw,10rem);line-height:.98;letter-spacing:-.05em}
+.cta h2 em{font-style:normal;color:var(--acid)}
+.cta .keys{grid-column:10/13;justify-self:end;display:flex;gap:10px;align-items:center}
+.cta .keys kbd{min-width:68px;height:68px;font-size:1.1rem;border-radius:14px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.6),0 0 0 1px var(--line-2)}
+.cta .keys kbd.down{transform:translateY(4px);box-shadow:inset 0 0 0 rgba(0,0,0,.6),0 0 0 1px var(--acid)}
+.cta .keys .plus{color:var(--fg-3);font-family:var(--f-mono)}
+.cta .row{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:var(--s3);margin-top:var(--s6);align-items:center}
+.cta .row .mono{color:var(--fg-3);margin-left:var(--s3)}
+
+footer.wrap{padding-block:var(--s5);border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--s3);color:var(--fg-3);font-size:.85rem}
+footer a:hover{color:var(--fg)}
+footer nav{display:flex;gap:var(--s4)}
+footer nav a{display:inline-flex;align-items:center;min-height:44px}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--i,0)*90ms)}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:1024px){
+  .nav ul{display:none}
+  .menu-toggle{display:inline-flex;align-items:center;justify-content:center}
+  .nav .pill{display:none}
+  .hero h1{grid-column:1/-1}
+  .hero .sub{grid-column:1/-1}
+  .hero .ctas{grid-column:1/-1}
+  .rec{grid-column:1/-1;grid-row:auto;margin-top:var(--s6);max-width:520px}
+  .head h2{grid-column:1/-1}
+  .head p{grid-column:1/9;margin-top:var(--s4)}
+  .tabs{grid-column:1/-1;flex-direction:row;gap:var(--s3);margin-bottom:var(--s4)}
+  .tab{flex:1;grid-template-columns:1fr;padding:var(--s3) 0}
+  .tab .i{padding:0 0 4px}
+  .tab h3{font-size:1.15rem}
+  .tab p{display:none}
+  .stage{grid-column:1/-1}
+  .feat h3{grid-column:2/9}
+  .feat .stat{grid-column:9/13}
+  .feat p{grid-column:2/9;margin-top:var(--s3)}
+  .cta h2{grid-column:1/-1}
+  .cta .keys{grid-column:1/-1;justify-self:start;margin-top:var(--s5)}
+}
+@media (max-width:640px){
+  .hint{display:none}
+  .hero .wrap{padding-top:120px}
+  .stage{min-height:0;border-radius:16px}
+  .wave{height:96px}
+  .line{grid-template-columns:48px 1fr}
+  .feat{padding:var(--s4) 0}
+  .feat .n{grid-column:1/-1;margin-bottom:var(--s2)}
+  .feat h3,.feat p{grid-column:1/-1}
+  .feat .stat{grid-column:1/-1;justify-self:start;margin-top:var(--s3)}
+  .cta .keys kbd{min-width:56px;height:56px}
+  .cta .row .mono{margin:0;width:100%}
+  .head p{grid-column:1/-1}
+  .head h2{font-size:1.85rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.001ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+<link rel="stylesheet" href="../assets/navigation.css">
+<script src="../assets/navigation.js" defer></script>
+</head>
+<body>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="回声 Echo 首页">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="3.5" fill="#D4FF3A"/><circle cx="13" cy="13" r="8" fill="none" stroke="#ECEBE3" stroke-width="1.4" opacity=".6"/><circle cx="13" cy="13" r="12" fill="none" stroke="#ECEBE3" stroke-width="1.2" opacity=".3"/></svg>
+      回声 Echo</a>
+    <ul>
+      <li><a href="#how">工作方式</a></li>
+      <li><a href="#features">特性</a></li>
+      <li><a href="#download">下载</a></li>
+    </ul>
+    <a class="pill acid" href="#download">免费试用</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">菜单</button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu" hidden><nav aria-label="移动端主导航"><a href="#how">工作方式</a><a href="#features">特性</a><a href="#download">下载</a></nav></div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="h1">
+    <canvas id="topo" aria-hidden="true"></canvas>
+    <div class="topo-controls"><button class="motion-toggle" id="topo-toggle" type="button" aria-pressed="false">暂停背景</button></div>
+    <div class="wrap">
+      <div class="kicker mono"><span class="tag">New</span>Echo 3.0 · 支持 42 种语言的实时整理</div>
+      <h1 id="h1"><span class="l"><span>说出来，</span></span><span class="l"><span>它就<em>整理好了</em>。</span></span></h1>
+      <p class="sub">会议、灵感、走路时冒出来的想法——按住快捷键说话，Echo 会把它变成有标题、有要点、有待办的笔记。全程在你的设备上完成。</p>
+      <div class="ctas">
+        <a class="pill acid" href="#download">下载 macOS 版 <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+        <a class="pill ghost" href="#how">看看怎么用</a>
+        <span class="hint">按住 <kbd id="k1">⌥</kbd><kbd id="k2">Space</kbd> 开始说话</span>
+      </div>
+      <aside class="rec" aria-label="实时录音示例">
+        <div class="rec-top mono"><span class="live"><i></i>正在聆听</span><span id="timer">00:00</span></div>
+        <div class="bars" id="bars" aria-hidden="true"></div>
+        <p class="typed" id="typed" aria-live="off"></p>
+        <div class="rec-controls"><button class="motion-toggle" id="rec-toggle" type="button" aria-pressed="false">暂停演示</button></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="how" aria-labelledby="how-h">
+    <div class="head reveal">
+      <span class="mono">01 · 工作方式</span>
+      <h2 id="how-h">从一段语音，<br><span>到一页能用的笔记。</span></h2>
+      <p>不用整理录音，不用回听。你只管说，结构交给 Echo。</p>
+    </div>
+    <div class="demo reveal" style="--i:1">
+      <div class="demo-controls"><button class="motion-toggle" id="tabs-toggle" type="button" aria-pressed="false">暂停演示</button></div>
+      <div class="tabs" role="tablist" aria-label="Echo 的三个步骤">
+        <button class="tab" role="tab" aria-selected="true" aria-controls="p0" id="t0"><span class="i">01</span><div><h3>录音</h3><p>按住快捷键说话，松开即停。没有界面打扰你的思路。</p></div><span class="prog"></span></button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p1" id="t1" tabindex="-1"><span class="i">02</span><div><h3>转写</h3><p>本地模型实时转写，自动区分说话人，标出关键词。</p></div><span class="prog"></span></button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p2" id="t2" tabindex="-1"><span class="i">03</span><div><h3>整理</h3><p>生成标题、摘要和待办，一键同步到你常用的工具。</p></div><span class="prog"></span></button>
+      </div>
+      <div class="stage">
+        <div class="panel on" id="p0" role="tabpanel" aria-labelledby="t0">
+          <div class="ph mono"><span>周一产品例会.m4a</span><span>48 kHz · 本地</span></div>
+          <div class="big-t">03:47</div>
+          <div class="wave" id="wave" aria-hidden="true"></div>
+          <p class="raw">“……嗯那个，下周三之前我们得把定价页定下来，然后 Lin 你那边看一下 iOS 的录音权限文案，还有就是……”</p>
+        </div>
+        <div class="panel" id="p1" role="tabpanel" aria-labelledby="t1">
+          <div class="ph mono"><span>转写 · 2 位说话人</span><span>准确率 98.2%</span></div>
+          <div class="line"><span class="ts">00:12</span><p><span class="who">Mia</span>下周三之前，我们得把<mark>定价页</mark>定下来。</p></div>
+          <div class="line"><span class="ts">00:19</span><p><span class="who">Mia</span>Lin，你看一下 <mark>iOS 录音权限</mark>的文案。</p></div>
+          <div class="line"><span class="ts">00:26</span><p><span class="who">Lin</span>好，我周二给你初稿。另外<mark>离线模式</mark>的测试我想再加两台旧机型。</p></div>
+          <div class="line"><span class="ts">00:41</span><p><span class="who">Mia</span>可以，预算没问题。</p></div>
+        </div>
+        <div class="panel note" id="p2" role="tabpanel" aria-labelledby="t2">
+          <div class="ph mono"><span>自动生成 · 刚刚</span><span>同步到 Notion</span></div>
+          <h3>周一产品例会：定价页与 iOS 权限</h3>
+          <div class="tags"><span>#产品</span><span>#iOS</span><span>#本周</span></div>
+          <ul><li>定价页需在下周三前定稿</li><li>离线模式测试增加两台旧机型，预算已确认</li></ul>
+          <ul class="todo">
+            <li><label><input type="checkbox"><span>定价页终稿</span><small>Mia · 周三</small></label></li>
+            <li><label><input type="checkbox"><span>iOS 录音权限文案初稿</span><small>Lin · 周二</small></label></li>
+            <li><label><input type="checkbox" checked><span>确认旧机型测试预算</span><small>Mia · 已完成</small></label></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="features" aria-labelledby="f-h">
+    <div class="head reveal">
+      <span class="mono">02 · 为什么是 Echo</span>
+      <h2 id="f-h">快、准，<br><span>而且不离开你的设备。</span></h2>
+    </div>
+    <ul class="feats">
+      <li class="feat reveal"><span class="n">01</span><h3>本地优先</h3><p>转写和整理都在设备上完成，录音不上传任何服务器。</p><span class="stat">0 KB</span></li>
+      <li class="feat reveal"><span class="n">02</span><h3>说完即整理</h3><p>松开快捷键后，笔记平均在 1.4 秒内生成。</p><span class="stat">1.4 s</span></li>
+      <li class="feat reveal"><span class="n">03</span><h3>听得懂混着说</h3><p>中英夹杂、方言口音、专业术语，都能正确识别。</p><span class="stat">42 种</span></li>
+      <li class="feat reveal"><span class="n">04</span><h3>去你常用的地方</h3><p>一键同步到 Notion、飞书、Obsidian、Things。</p><span class="stat">12+</span></li>
+    </ul>
+  </section>
+
+  <section class="cta wrap" id="download" aria-labelledby="d-h">
+    <div class="grid">
+      <h2 id="d-h" class="reveal">现在，<br>说一句<em>试试</em>。</h2>
+      <div class="keys reveal" style="--i:1" aria-hidden="true"><kbd id="k3">⌥</kbd><span class="plus">+</span><kbd id="k4" style="min-width:150px">Space</kbd></div>
+      <div class="row reveal" style="--i:2">
+        <a class="pill acid" href="#top">下载 macOS 版 <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+        <a class="pill ghost" href="#top">iPhone 版</a>
+        <span class="mono">免费 · 每月 300 分钟 · 无需注册</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>© 2026 回声 Echo</span>
+  <nav aria-label="页脚"><a href="#top">隐私</a><a href="#top">条款</a><a href="#top">更新日志</a></nav>
+</footer>
+
+<script src="../assets/motion.js"></script>
+<script>
+(()=>{
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // nav background after scroll
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>40),{passive:true});
+
+  // topographic contour lines that bend around the pointer (signature)
+  const cv=document.getElementById('topo'),ctx=cv.getContext('2d');
+  let W=0,H=0,dpr=1,px=-9999,py=-9999,tx=-9999,ty=-9999,t=0;
+  function size(){dpr=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);frame(0)}
+  size();addEventListener('resize',size);
+  cv.parentElement.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();tx=e.clientX-r.left;ty=e.clientY-r.top;if(px<-5000){px=tx;py=ty}});
+  cv.parentElement.addEventListener('pointerleave',()=>{tx=-9999;ty=-9999;px=-9999;py=-9999});
+  function frame(dt){
+    t+=dt*.00024;
+    px+=(tx-px)*.08;py+=(ty-py)*.08;
+    ctx.clearRect(0,0,W,H);
+    const n=Math.round(H/22),step=W<700?10:8,on=px>-5000;
+    const mk=a=>{if(!on)return `rgba(236,235,227,${a})`;const g=ctx.createRadialGradient(px,py,0,px,py,210);g.addColorStop(0,'rgba(212,255,58,.95)');g.addColorStop(.45,'rgba(212,255,58,.35)');g.addColorStop(1,`rgba(236,235,227,${a})`);return g};
+    const thin=mk(.13),thick=mk(.23);
+    for(let i=0;i<n;i++){
+      const base=(i+.5)*H/n;
+      ctx.beginPath();
+      for(let x=-step;x<=W+step;x+=step){
+        let y=base+Math.sin(x*.004+i*.5+t*2)*14+Math.sin(x*.011-i*.3+t*3)*6+Math.sin(x*.0017+t)*28*(i/n);
+        if(on){const dx=x-px,dy=y-py,g=Math.exp(-(dx*dx+dy*dy)/(2*130*130));y+=Math.tanh(dy/36)*g*46}
+        x===-step?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle=i%5===0?thick:thin;
+      ctx.lineWidth=i%5===0?1.2:.8;
+      ctx.stroke();
+    }
+  }
+  createMotion(cv,document.getElementById('topo-toggle'),frame,{play:'播放背景',pause:'暂停背景',interactionRoot:document.querySelector('.topo-controls')});
+
+  // One clock preserves transcript, waveform and elapsed time across pauses.
+  const bars=document.getElementById('bars');
+  for(let i=0;i<36;i++)bars.appendChild(document.createElement('b'));
+  const bs=[...bars.children],typed=document.getElementById('typed'),timer=document.getElementById('timer');
+  const transcript='周五前把新版引导页的文案再过一遍，顺便约 Lin 聊下离线模式的测试计划。对了，记得给设计组订周四的会议室。';
+  let elapsed=0,barElapsed=0;
+  typed.textContent=reduce?transcript:transcript.slice(0,1);
+  createMotion(document.querySelector('.rec'),document.getElementById('rec-toggle'),dt=>{
+    elapsed=(elapsed+dt)%(transcript.length*100+3600);barElapsed+=dt;
+    typed.textContent=transcript.slice(0,Math.max(1,Math.floor(elapsed/100)));
+    timer.textContent=`00:${String(Math.floor(elapsed/1000)).padStart(2,'0')}`;
+    if(barElapsed>=120){barElapsed=0;bs.forEach((b,i)=>{const v=.15+Math.abs(Math.sin(i*.6+elapsed/260))*.8;b.style.height=(v*100)+'%';b.classList.toggle('hot',v>.72)})}
+  });
+
+  // waveform in demo
+  const wave=document.getElementById('wave');
+  for(let i=0;i<96;i++){const b=document.createElement('b');const h=12+Math.abs(Math.sin(i*.35)*Math.cos(i*.13))*80+Math.random()*18;b.style.height=Math.min(100,h)+'%';if(i<38)b.className='played';wave.appendChild(b)}
+
+  const tabs=[...document.querySelectorAll('.tab')],panels=[...document.querySelectorAll('.panel')];
+  let cur=0,tabElapsed=0;
+  function select(i,user=false){
+    cur=i;tabElapsed=0;
+    tabs.forEach((t,j)=>{t.setAttribute('aria-selected',j===i);t.tabIndex=j===i?0:-1;t.querySelector('.prog').style.transform='scaleX(0)'});
+    panels.forEach((p,j)=>{p.classList.toggle('on',j===i);p.hidden=j!==i});
+    if(user)tabMotion.pause();
+  }
+  const tabMotion=createMotion(document.querySelector('.demo'),document.getElementById('tabs-toggle'),dt=>{
+    tabElapsed+=dt;if(tabElapsed>=5200)select((cur+1)%tabs.length);
+    tabs[cur].querySelector('.prog').style.transform=`scaleX(${tabElapsed/5200})`;
+  });
+  tabs.forEach((t,i)=>{
+    t.addEventListener('click',()=>select(i,true));
+    t.addEventListener('keydown',e=>{
+      const next={ArrowRight:(i+1)%3,ArrowDown:(i+1)%3,ArrowLeft:(i+2)%3,ArrowUp:(i+2)%3,Home:0,End:2}[e.key];
+      if(next!==undefined){e.preventDefault();select(next,true);tabs[next].focus()}
+    });
+  });
+
+
+
+  // reveal
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>

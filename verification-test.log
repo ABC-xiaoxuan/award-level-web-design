@@ -1,0 +1,22 @@
+
+> test
+> node tests/browser.mjs
+
+index.html 375 audit 0 axe label-content-name-mismatch JS 0
+index.html 768 audit 0 axe label-content-name-mismatch JS 0
+index.html 1280 audit 0 axe label-content-name-mismatch JS 0
+index.html 1920 audit 0 axe label-content-name-mismatch JS 0
+examples/qimu-coffee.html 375 audit 0 axe heading-order,label-content-name-mismatch JS 0
+examples/qimu-coffee.html 768 audit 0 axe heading-order,label-content-name-mismatch JS 0
+examples/qimu-coffee.html 1280 audit 0 axe heading-order,label-content-name-mismatch JS 0
+examples/qimu-coffee.html 1920 audit 0 axe heading-order,label-content-name-mismatch JS 0
+examples/jian-studio.html 375 audit 0 axe heading-order JS 0
+examples/jian-studio.html 768 audit 0 axe heading-order JS 0
+examples/jian-studio.html 1280 audit 0 axe heading-order JS 0
+examples/jian-studio.html 1920 audit 0 axe heading-order JS 0
+examples/echo-app.html 375 audit 0 axe  JS 0
+examples/echo-app.html 768 audit 0 axe  JS 0
+examples/echo-app.html 1280 audit 0 axe  JS 0
+examples/echo-app.html 1920 audit 0 axe  JS 0
+PASS recorder pause/resume, tab keyboard control, reduced motion
+PASS scorecard pause

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#F4F3EF"/>
+  <circle cx="76" cy="78" r="24" fill="#2B37F0"/>
+  <text x="76" y="92" text-anchor="middle" font-family="Instrument Serif,Georgia,serif" font-size="38" fill="#fff">A</text>
+  <text x="116" y="83" font-family="JetBrains Mono,monospace" font-size="16" fill="#5B5A55">AWARD-LEVEL WEB DESIGN</text>
+  <g font-family="Noto Sans SC,sans-serif" font-weight="900" font-size="66" letter-spacing="-3" fill="#111110">
+    <text x="52" y="244">让 AI 做出</text>
+    <text x="52" y="332">能拿奖的网页，</text>
+  </g>
+  <text x="52" y="435" font-family="Instrument Serif,Georgia,serif" font-style="italic" font-size="100" fill="#2B37F0">by default.</text>
+  <g transform="translate(728 76) rotate(1 204 226)">
+    <rect width="408" height="450" rx="18" fill="#FBFAF7" stroke="#CCCAC2"/>
+    <text x="28" y="52" font-family="Instrument Serif,Georgia,serif" font-size="32" fill="#111110">Jury scorecard</text>
+    <text x="380" y="50" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="12" fill="#2B37F0">ROUND 03</text>
+    <path d="M28 72H380 M28 358H380" stroke="#CCCAC2" stroke-dasharray="4 4"/>
+    <g font-family="Noto Sans SC,sans-serif" font-size="16" fill="#5B5A55">
+      <text x="28" y="107">排版</text><text x="28" y="141">留白</text><text x="28" y="175">视觉层级</text><text x="28" y="209">色彩</text><text x="28" y="243">动效</text><text x="28" y="277">微交互</text><text x="28" y="311">响应式</text><text x="28" y="345">原创性</text>
+    </g>
+    <g fill="#EAE8E1">
+      <rect x="124" y="98" width="200" height="6" rx="3"/><rect x="124" y="132" width="200" height="6" rx="3"/><rect x="124" y="166" width="200" height="6" rx="3"/><rect x="124" y="200" width="200" height="6" rx="3"/><rect x="124" y="234" width="200" height="6" rx="3"/><rect x="124" y="268" width="200" height="6" rx="3"/><rect x="124" y="302" width="200" height="6" rx="3"/><rect x="124" y="336" width="200" height="6" rx="3"/>
+    </g>
+    <g fill="#2B37F0">
+      <rect x="124" y="98" width="180" height="6" rx="3"/><rect x="124" y="132" width="180" height="6" rx="3"/><rect x="124" y="166" width="190" height="6" rx="3"/><rect x="124" y="200" width="180" height="6" rx="3"/><rect x="124" y="234" width="180" height="6" rx="3"/><rect x="124" y="268" width="190" height="6" rx="3"/><rect x="124" y="302" width="180" height="6" rx="3"/><rect x="124" y="336" width="190" height="6" rx="3"/>
+    </g>
+    <g text-anchor="end" font-family="JetBrains Mono,monospace" font-size="16" fill="#111110">
+      <text x="380" y="107">9.0</text><text x="380" y="141">9.0</text><text x="380" y="175">9.5</text><text x="380" y="209">9.0</text><text x="380" y="243">9.0</text><text x="380" y="277">9.5</text><text x="380" y="311">9.0</text><text x="380" y="345">9.5</text>
+    </g>
+    <text x="28" y="404" font-family="Noto Sans SC,sans-serif" font-size="16" fill="#5B5A55">截图 → 打分 → 修改</text>
+    <text x="380" y="426" text-anchor="end" font-family="Instrument Serif,Georgia,serif" font-size="58" fill="#111110">9.2</text>
+  </g>
+  <path d="M52 560H1148" stroke="#CCCAC2"/>
+  <text x="52" y="599" font-family="JetBrains Mono,monospace" font-size="14" fill="#5B5A55">AGENT SKILL · CLAUDE CODE / CODEX / CURSOR</text>
+  <text x="1148" y="599" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="14" fill="#5B5A55">DESIGN. REVIEW. REFINE.</text>
+</svg>

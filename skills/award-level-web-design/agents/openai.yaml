@@ -1,0 +1,7 @@
+interface:
+  display_name: "获奖级网页设计"
+  short_description: "按 Awwwards / Webby / FWA 标准设计网页，并做八维度截图自检迭代"
+  default_prompt: "按获奖级网站的品质标准完成这个页面，并在完成后自检优化"
+
+policy:
+  allow_implicit_invocation: true

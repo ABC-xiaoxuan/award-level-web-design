@@ -1,0 +1,130 @@
+[
+  {
+    "page": "index",
+    "family": "Noto Sans SC",
+    "file": "index-notosanssc-0.woff2",
+    "bytes": 105964,
+    "source": "notosanssc-0.woff2",
+    "characters": 457
+  },
+  {
+    "page": "index",
+    "family": "Instrument Serif",
+    "file": "index-instrumentserif-0.woff2",
+    "bytes": 15232,
+    "source": "instrumentserif-0.woff2",
+    "characters": 98
+  },
+  {
+    "page": "index",
+    "family": "Instrument Serif",
+    "file": "index-instrumentserif-1.woff2",
+    "bytes": 14316,
+    "source": "instrumentserif-1.woff2",
+    "characters": 98
+  },
+  {
+    "page": "index",
+    "family": "JetBrains Mono",
+    "file": "index-jetbrainsmono-0.woff2",
+    "bytes": 24244,
+    "source": "jetbrainsmono-0.woff2",
+    "characters": 103
+  },
+  {
+    "page": "qimu-coffee",
+    "family": "Noto Sans SC",
+    "file": "qimu-coffee-notosanssc-0.woff2",
+    "bytes": 83080,
+    "source": "notosanssc-0.woff2",
+    "characters": 423
+  },
+  {
+    "page": "qimu-coffee",
+    "family": "Noto Serif SC",
+    "file": "qimu-coffee-notoserifsc-0.woff2",
+    "bytes": 62344,
+    "source": "notoserifsc-0.woff2",
+    "characters": 228
+  },
+  {
+    "page": "qimu-coffee",
+    "family": "Fraunces",
+    "file": "qimu-coffee-fraunces-0.woff2",
+    "bytes": 30996,
+    "source": "fraunces-0.woff2",
+    "characters": 100
+  },
+  {
+    "page": "qimu-coffee",
+    "family": "Fraunces",
+    "file": "qimu-coffee-fraunces-1.woff2",
+    "bytes": 24060,
+    "source": "fraunces-1.woff2",
+    "characters": 100
+  },
+  {
+    "page": "qimu-coffee",
+    "family": "IBM Plex Mono",
+    "file": "qimu-coffee-ibmplexmono-0.woff2",
+    "bytes": 8768,
+    "source": "ibmplexmono-0.woff2",
+    "characters": 104
+  },
+  {
+    "page": "qimu-coffee",
+    "family": "IBM Plex Mono",
+    "file": "qimu-coffee-ibmplexmono-1.woff2",
+    "bytes": 8820,
+    "source": "ibmplexmono-1.woff2",
+    "characters": 104
+  },
+  {
+    "page": "jian-studio",
+    "family": "Noto Sans SC",
+    "file": "jian-studio-notosanssc-0.woff2",
+    "bytes": 63616,
+    "source": "notosanssc-0.woff2",
+    "characters": 312
+  },
+  {
+    "page": "jian-studio",
+    "family": "Archivo",
+    "file": "jian-studio-archivo-0.woff2",
+    "bytes": 44688,
+    "source": "archivo-0.woff2",
+    "characters": 102
+  },
+  {
+    "page": "jian-studio",
+    "family": "JetBrains Mono",
+    "file": "jian-studio-jetbrainsmono-0.woff2",
+    "bytes": 24224,
+    "source": "jetbrainsmono-0.woff2",
+    "characters": 103
+  },
+  {
+    "page": "echo-app",
+    "family": "Noto Sans SC",
+    "file": "echo-app-notosanssc-0.woff2",
+    "bytes": 85476,
+    "source": "notosanssc-0.woff2",
+    "characters": 377
+  },
+  {
+    "page": "echo-app",
+    "family": "Bricolage Grotesque",
+    "file": "echo-app-bricolagegrotesque-0.woff2",
+    "bytes": 23148,
+    "source": "bricolagegrotesque-0.woff2",
+    "characters": 102
+  },
+  {
+    "page": "echo-app",
+    "family": "JetBrains Mono",
+    "file": "echo-app-jetbrainsmono-0.woff2",
+    "bytes": 24340,
+    "source": "jetbrainsmono-0.woff2",
+    "characters": 103
+  }
+]

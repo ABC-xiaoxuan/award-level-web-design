@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node tests/server.mjs",
+    "test": "node tests/browser.mjs",
+    "test:lighthouse": "node tests/lighthouse.mjs",
+    "test:shots": "node tests/shoot-all.mjs",
+    "build:texture": "node tests/build-texture.mjs && python tests/optimize-texture.py",
+    "build:share": "node tests/build-share.mjs",
+    "build:previews": "node tests/build-previews.mjs && python tests/build-images.py",
+    "build:fonts": "python tests/optimize-fonts.py"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0",
+    "axe-core": "^4.10.3",
+    "lighthouse": "^13.0.0",
+    "chrome-launcher": "^1.2.2"
+  }
+}

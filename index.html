@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Award-Level Web Design · Agent Skill</title>
+<meta name="description" content="让 AI 编程助手按 Awwwards / Webby / FWA 获奖网站的标准做网页，并用截图—打分—修改的循环自检到位。">
+<meta name="theme-color" content="#F4F3EF">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abc-xiaoxuan.github.io/award-level-web-design/">
+<meta property="og:title" content="Award-Level Web Design · Agent Skill">
+<meta property="og:description" content="让 AI 做出能拿奖的网页，by default.">
+<meta property="og:image" content="https://abc-xiaoxuan.github.io/award-level-web-design/og-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Award-Level Web Design · Agent Skill">
+<meta name="twitter:description" content="按获奖网站标准设计、截图、打分、修改，直到挑不出明显问题。">
+<meta name="twitter:image" content="https://abc-xiaoxuan.github.io/award-level-web-design/og-preview.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="Award-Level Web Design：设计、截图、自检，配有八维评分卡。">
+<meta name="twitter:image:alt" content="Award-Level Web Design：设计、截图、自检，配有八维评分卡。">
+<link rel="canonical" href="https://abc-xiaoxuan.github.io/award-level-web-design/">
+<link rel="preload" href="assets/fonts/pages/index-notosanssc-0.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts-index.css">
+<style>
+:root{
+  --paper:#F4F3EF; --paper-2:#EAE8E1; --card:#FBFAF7;
+  --ink:#111110; --ink-2:#5B5A55; --ink-3:#6E6C65; --line:rgba(17,17,16,.12); --line-2:rgba(17,17,16,.22);
+  --blue:#2B37F0; --blue-soft:#DCDEFD;
+  --f-serif:"Instrument Serif","Noto Sans SC",Georgia,serif;
+  --f-sans:"Noto Sans SC",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono","Noto Sans SC",ui-monospace,monospace;
+  --gutter:clamp(20px,4vw,56px);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --s2:8px;--s3:16px;--s4:24px;--s5:40px;--s6:64px;--s7:112px;--s8:168px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-sans);font-size:1rem;line-height:1.7;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+::selection{background:var(--blue);color:#fff}
+h1,h2,h3,p,figure{margin:0}
+.mono{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase}
+.wrap{max-width:1440px;margin:0 auto;padding-inline:var(--gutter)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s4)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:.8rem;letter-spacing:.04em;font-weight:500}
+.logo i{width:22px;height:22px;border-radius:50%;background:var(--blue);display:grid;place-items:center;color:#fff;font-style:normal;font-family:var(--f-serif);font-size:15px;line-height:1}
+.nav ul{display:flex;gap:var(--s5);list-style:none;margin:0;padding:0;font-size:.9rem;color:var(--ink-2)}
+.nav ul a{background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .45s var(--ease),color .3s}
+.nav ul a:hover{color:var(--ink);background-size:100% 1px}
+.menu-toggle{display:none;border:1px solid var(--ink);background:transparent;border-radius:999px;min-width:44px;min-height:44px;padding:0 13px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;cursor:pointer}
+.mobile-menu{position:fixed;inset:64px 0 0;z-index:49;background:var(--paper);padding:var(--s5) var(--gutter);overflow:auto}
+.mobile-menu[hidden]{display:none}
+.mobile-menu nav{display:grid;gap:4px;border-top:1px solid var(--line-2)}
+.mobile-menu a{display:flex;align-items:center;min-height:56px;border-bottom:1px solid var(--line);font-size:1.15rem}
+.mobile-menu a::after{content:'↗';margin-left:auto;color:var(--blue);font-family:var(--f-mono);font-size:.8rem}
+.lang-toggle{border:1px solid var(--line-2);background:transparent;border-radius:999px;min-height:40px;padding:6px 13px;font:500 .7rem var(--f-mono);cursor:pointer}.lang-toggle:hover{background:var(--ink);color:var(--paper)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);position:relative}.compare-pane{min-height:260px;padding:var(--s5);border:1px solid var(--line-2);border-radius:16px;overflow:hidden}.compare-pane.before{background:#E7E3DA}.compare-pane.after{background:var(--ink);color:var(--paper)}.compare-pane h3{font-family:var(--f-serif);font-size:2rem}.compare-pane p{margin-top:var(--s3);color:var(--ink-2)}.compare-pane.after p{color:#C7C6BE}.compare-range{grid-column:1/-1;width:100%;accent-color:var(--blue)}.audit-demo{border:1px solid var(--line-2);border-radius:16px;padding:var(--s4);background:var(--card)}.audit-demo iframe{display:block;width:100%;height:160px;border:1px dashed var(--line-2);margin:var(--s3) 0}.audit-demo button{border:1px solid var(--ink);border-radius:999px;background:var(--ink);color:var(--paper);padding:9px 15px;cursor:pointer}.audit-result{margin-top:var(--s3);font-family:var(--f-mono);font-size:.75rem;color:#8C2B20}.audit-result:empty{display:none}
+@media(max-width:700px){.compare{grid-template-columns:1fr}.compare-pane.after{display:none}.compare-range{display:none}}
+.card-controls{display:flex;justify-content:flex-end;margin-top:var(--s3)}
+.motion-toggle{border:1px solid var(--line-2);background:transparent;border-radius:999px;padding:7px 12px;min-height:40px;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.04em;cursor:pointer;transition:background .3s,color .3s}
+.motion-toggle:hover{background:var(--ink);color:var(--paper)}
+.gh{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;font-weight:500;border:1px solid var(--ink);border-radius:999px;padding:8px 16px;transition:background .3s,color .3s}
+.gh:hover{background:var(--ink);color:var(--paper)}
+
+/* hero */
+.hero{padding-block:var(--s6) var(--s7)}
+.hero .grid{align-items:start}
+.kick{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4);color:var(--ink-2);padding-bottom:var(--s4);border-bottom:1px solid var(--line);margin-bottom:var(--s6)}
+.kick b{color:var(--blue);font-weight:500}
+.hero-l{grid-column:1/7}
+.hero h1{font-family:var(--f-sans);font-weight:900;font-size:clamp(2.8rem,1.2rem + 4.6vw,6.4rem);line-height:1.04;letter-spacing:-.045em}
+.hero h1 .l{display:block;overflow:hidden;padding-bottom:.05em}
+.hero h1 .l>span{display:inline-block;transform:translateY(12%);animation:rise .6s var(--ease) forwards}
+.hero h1 .l:nth-child(2)>span{animation-delay:.08s}
+.hero h1 .l:nth-child(3)>span{animation-delay:.16s}
+.hero h1 em{font-family:var(--f-serif);font-style:italic;font-weight:400;color:var(--blue);letter-spacing:-.02em;font-size:1.08em}
+@keyframes rise{to{transform:none}}
+.lead{margin-top:var(--s5);font-size:1.1rem;color:var(--ink-2);max-width:27em}
+@keyframes fade{to{opacity:1}}
+.cmd{margin-top:var(--s5);display:flex;align-items:stretch;max-width:560px;background:var(--ink);color:var(--paper);border-radius:12px;overflow:hidden}
+.cmd code{flex:1;min-width:0;font-family:var(--f-mono);font-size:.86rem;padding:16px 18px;white-space:nowrap;overflow-x:auto;scrollbar-width:none}
+.cmd code::-webkit-scrollbar{display:none}
+.cmd code span{color:#8C8A83}
+.copy{border:0;background:var(--blue);color:#fff;font-family:var(--f-mono);font-size:.75rem;letter-spacing:.06em;padding:0 18px;cursor:pointer;min-width:84px;transition:background .3s}
+.copy:hover{background:#1E28C9}
+.copy.ok{background:#1F8A4C}
+.alt{margin-top:var(--s3);font-size:.85rem;color:var(--ink-3)}
+.alt a{color:var(--ink-2);background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat}
+.alt a:hover{color:var(--blue)}
+
+/* scorecard = signature */
+.card{grid-column:8/13;background:var(--card);border:1px solid var(--line-2);border-radius:18px;padding:var(--s4);box-shadow:0 1px 0 var(--line),0 30px 60px -40px rgba(17,17,16,.35);opacity:0;transform:translateY(20px) rotate(.6deg);animation:card 1.1s .35s var(--ease) forwards}
+@keyframes card{to{opacity:1;transform:rotate(.6deg)}}
+.card-h{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:var(--s3);border-bottom:1px dashed var(--line-2)}
+.card-h h2{font-family:var(--f-serif);font-weight:400;font-size:1.6rem;line-height:1;letter-spacing:-.01em}
+.card-h .mono{color:var(--ink-3)}
+.rounds{display:flex;gap:6px;margin:var(--s3) 0 var(--s2)}
+.rounds button{flex:1;border:1px solid var(--line-2);background:transparent;border-radius:999px;padding:6px 0;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;cursor:pointer;color:var(--ink-2);position:relative;overflow:hidden;transition:border-color .3s}
+.rounds button[aria-pressed="true"]{color:#fff;border-color:var(--ink);background:var(--ink)}
+.rounds button:hover{border-color:var(--ink)}
+.rows{list-style:none;margin:0;padding:0}
+.rows li{display:grid;grid-template-columns:5.2em 1fr 2.6em;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.rows li:last-child{border-bottom:0}
+.rows .bar{height:6px;border-radius:3px;background:var(--paper-2);position:relative;overflow:hidden}
+.rows .bar i{position:absolute;inset:0;border-radius:3px;background:var(--ink);transform-origin:left;transform:scaleX(var(--v,0));transition:transform .9s var(--ease),background .4s}
+.rows .bar::after{content:"";position:absolute;top:-2px;bottom:-2px;left:90%;width:1px;background:var(--blue)}
+.rows li.low .bar i{background:#C9C6BC}
+.rows li.up .bar i{background:var(--blue)}
+.rows .s{text-align:right;font-family:var(--f-mono);font-size:.85rem;font-variant-numeric:tabular-nums}
+.rows li.low .s{color:var(--ink-3)}
+.card-f{margin-top:var(--s3);padding-top:var(--s3);border-top:1px dashed var(--line-2);display:grid;grid-template-columns:1fr auto;gap:var(--s3);align-items:end}
+.note{font-size:.85rem;color:var(--ink-2);min-height:3.4em;line-height:1.6}
+.note b{color:var(--ink);font-weight:500}
+.total{text-align:right}
+.total .mono{color:var(--ink-3);display:block}
+.total strong{font-family:var(--f-serif);font-weight:400;font-size:3rem;line-height:1;letter-spacing:-.02em}
+.legend{margin-top:var(--s2);display:flex;align-items:center;gap:8px;color:var(--ink-3)}
+.legend i{width:1px;height:12px;background:var(--blue)}
+
+/* section heads */
+.sec{padding-top:var(--s8)}
+.head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s4);align-items:end;margin-bottom:var(--s6)}
+.head .mono{grid-column:1/3;color:var(--ink-3);padding-bottom:.6em}
+.head h2{grid-column:3/10;font-family:var(--f-sans);font-weight:700;font-size:clamp(2rem,1rem + 3vw,4rem);line-height:1.1;letter-spacing:-.035em}
+.head h2 em{font-family:var(--f-serif);font-style:italic;font-weight:400;color:var(--blue);letter-spacing:-.01em}
+.head p{grid-column:10/13;color:var(--ink-2);font-size:.95rem}
+
+/* loop */
+.loop{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s4);border-top:1px solid var(--ink)}
+.loop li{grid-column:span 4;padding:var(--s4) var(--s4) 0 0;position:relative}
+.loop li+li{border-left:1px solid var(--line);padding-left:var(--s4)}
+.loop .n{font-family:var(--f-serif);font-size:clamp(4rem,2rem + 5vw,7.5rem);line-height:.9;letter-spacing:-.03em;display:block}
+.loop li:nth-child(3) .n{color:var(--blue)}
+.loop h3{margin-top:var(--s4);font-size:1.3rem;font-weight:700;letter-spacing:-.02em}
+.loop p{margin-top:var(--s2);color:var(--ink-2);font-size:.95rem;max-width:22em}
+.loop .tag{display:inline-block;margin-top:var(--s3);color:var(--ink-3)}
+.dims{margin-top:var(--s6);display:flex;flex-wrap:wrap;gap:10px}
+.dims span{font-size:.95rem;padding:10px 18px;border-radius:999px;border:1px solid var(--line-2);transition:background .3s,color .3s,border-color .3s;cursor:default}
+.dims span:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.dims span small{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);margin-right:8px;transition:color .3s}
+.dims span:hover small{color:var(--blue-soft)}
+
+/* gallery */
+.works{display:flex;flex-direction:column;gap:var(--s7)}
+.work{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s4);align-items:center}
+.work .shot{grid-column:1/9;display:block;border-radius:14px;overflow:hidden;border:1px solid var(--line-2);background:var(--paper-2);position:relative;aspect-ratio:16/10}
+.work .shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 1.2s var(--ease)}
+.work .shot:hover img{transform:scale(1.03)}
+.work .shot .open{position:absolute;right:16px;bottom:16px;background:var(--ink);color:var(--paper);border-radius:999px;padding:8px 14px;font-size:.8rem;font-weight:500;opacity:0;transform:translateY(8px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.work .shot:hover .open,.work .shot:focus-visible .open{opacity:1;transform:none}
+.work .txt{grid-column:9/13;padding-left:var(--s3)}
+.work:nth-child(even) .shot{grid-column:5/13;grid-row:1}
+.work:nth-child(even) .txt{grid-column:1/5;grid-row:1;padding:0 var(--s3) 0 0}
+.work .idx{color:var(--ink-3)}
+.work h3{margin-top:var(--s3);font-size:clamp(1.6rem,1rem + 1.4vw,2.4rem);font-weight:700;letter-spacing:-.03em;line-height:1.15}
+.work h3 small{display:block;font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:.62em;color:var(--ink-2);letter-spacing:0;margin-top:4px}
+.work p{margin-top:var(--s3);color:var(--ink-2);font-size:.95rem}
+.work .meta{margin-top:var(--s4);display:flex;flex-wrap:wrap;gap:8px}
+.work .meta span{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.04em;padding:5px 10px;border-radius:999px;background:var(--paper-2);color:var(--ink-2)}
+.work .go{margin-top:var(--s4);display:inline-flex;align-items:center;gap:8px;font-weight:500;font-size:.95rem;border-bottom:1px solid var(--ink);padding-bottom:2px;transition:gap .4s var(--ease),color .3s,border-color .3s}
+.work .go:hover{gap:14px;color:var(--blue);border-color:var(--blue)}
+
+/* install */
+.ways{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s4);row-gap:var(--s4)}
+.way{grid-column:span 4;border-top:1px solid var(--ink);padding-top:var(--s4);display:flex;flex-direction:column}
+.way h3{font-size:1.2rem;font-weight:700;letter-spacing:-.02em;display:flex;justify-content:space-between;align-items:baseline}
+.way h3 .mono{color:var(--ink-3);font-weight:400}
+.way p{margin-top:var(--s2);color:var(--ink-2);font-size:.92rem;min-height:3.4em}
+.snip{margin-top:var(--s4);position:relative;background:var(--card);border:1px solid var(--line-2);border-radius:10px;font-family:var(--f-mono);font-size:.74rem;line-height:1.9;padding:14px 58px 14px 16px;white-space:pre-wrap;overflow-wrap:anywhere}
+.snip button{position:absolute;top:8px;right:8px;border:1px solid var(--line-2);background:var(--paper);border-radius:6px;font-family:var(--f-mono);font-size:.65rem;letter-spacing:.06em;padding:4px 8px;cursor:pointer;transition:background .3s,color .3s}
+.snip button:hover{background:var(--ink);color:var(--paper)}
+.snip button.ok{background:#1F8A4C;color:#fff;border-color:#1F8A4C}
+
+/* footer */
+.end{margin-top:var(--s8);background:var(--ink);color:var(--paper);padding-block:var(--s7) var(--s5)}
+.end h2{font-family:var(--f-serif);font-weight:400;font-size:clamp(3rem,1rem + 7vw,8.5rem);line-height:.95;letter-spacing:-.03em}
+.end h2 em{color:#8E95FF}
+.end .row{margin-top:var(--s6);padding-top:var(--s4);border-top:1px solid rgba(244,243,239,.18);display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s3);color:#A9A79F;font-size:.85rem}
+.end .row a:hover{color:var(--paper)}
+.end .row nav{display:flex;gap:var(--s4)}
+
+.nw{white-space:nowrap}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--i,0)*90ms)}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:1024px){
+  .nav ul{display:none}
+  .menu-toggle{display:inline-flex;align-items:center;justify-content:center}
+  .nav .gh{display:none}
+  .hero-l{grid-column:1/-1}
+  .card{grid-column:1/-1;margin-top:var(--s6);max-width:560px}
+  .head .mono,.head h2{grid-column:1/-1}
+  .head .mono{padding-bottom:var(--s3)}
+  .head p{grid-column:1/9;margin-top:var(--s4)}
+  .work .shot,.work:nth-child(even) .shot{grid-column:1/-1;grid-row:1}
+  .work .txt,.work:nth-child(even) .txt{grid-column:1/-1;grid-row:2;padding:var(--s4) 0 0}
+  .way{grid-column:span 6}
+}
+@media (max-width:640px){
+  .loop li,.loop li+li{grid-column:1/-1;border-left:0;padding:var(--s4) 0;border-bottom:1px solid var(--line)}
+  .way{grid-column:1/-1}
+  .head p{grid-column:1/-1}
+  .rows li{grid-template-columns:4.6em 1fr 2.4em}
+  .card{padding:var(--s3)}
+  .total strong{font-size:2.4rem}
+  .gh span{display:none}
+  .snip{padding-right:76px}
+  .snip button{min-height:44px;min-width:60px}
+  .cmd code{white-space:normal;overflow-wrap:anywhere;line-height:1.6}
+  .card{transform:none;animation-name:card-m}
+  @keyframes card-m{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;transition-duration:.001ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+<link rel="stylesheet" href="assets/navigation.css">
+<script src="assets/navigation.js" defer></script>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top"><i aria-hidden="true">A</i>award-level-web-design</a>
+    <ul>
+      <li><a href="#how">工作方式</a></li>
+      <li><a href="#work">示例</a></li>
+      <li><a href="#install">安装</a></li>
+    </ul>
+    <a class="gh" href="https://github.com/ABC-xiaoxuan/award-level-web-design"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.88.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg><span>GitHub</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">菜单</button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <nav aria-label="移动端主导航"><a href="#how">工作方式</a><a href="#work">示例</a><a href="#install">安装</a><a href="https://github.com/ABC-xiaoxuan/award-level-web-design">GitHub</a></nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap" aria-labelledby="h1">
+    <div class="grid">
+      <p class="kick mono"><span><b>●</b> Agent Skill</span><span>Claude Code · Codex · Cursor · 30+ 工具</span><span>MIT</span></p>
+      <div class="hero-l">
+        <h1 id="h1"><span class="l"><span>让 AI 做出</span></span><span class="l"><span>能拿奖的网页，</span></span><span class="l"><span><em>by default.</em></span></span></h1>
+        <p class="lead">以 Awwwards、Webby、FWA 获奖网站为标准：先定一个设计概念，再实现，然后真正打开浏览器截图，按八个维度打分、修改、再截图——直到挑不出明显问题。</p>
+        <div class="cmd"><code id="cmd"><span>$</span> npx skills add ABC-xiaoxuan/award-level-web-design -g</code><button class="copy" data-copy="npx skills add ABC-xiaoxuan/award-level-web-design -g" aria-label="复制安装命令">复制</button></div>
+        <p class="alt">也可以用 <a href="#install">Claude Code 插件市场或手动复制</a> 安装。</p>
+      </div>
+
+      <aside class="card" aria-label="自检评分卡演示">
+        <div class="card-h"><h2>Jury scorecard</h2><span class="mono">栖木咖啡 · 1440 / 375</span></div>
+        <div class="rounds" role="group" aria-label="选择自检轮次">
+          <button aria-pressed="true" data-r="0">第 1 轮</button><button aria-pressed="false" data-r="1">第 2 轮</button><button aria-pressed="false" data-r="2">第 3 轮</button>
+        </div>
+        <div class="card-controls"><button class="motion-toggle" id="score-toggle" type="button" aria-pressed="false">暂停演示</button></div>
+        <ul class="rows" id="rows"></ul>
+        <div class="card-f">
+          <p class="note" id="note"></p>
+          <div class="total"><span class="mono">平均</span><strong id="avg">0.0</strong></div>
+        </div>
+        <p class="legend mono"><i></i>9 分线：低于它就继续改</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="how" aria-labelledby="how-h">
+    <div class="head reveal">
+      <span class="mono">01 / 工作方式</span>
+      <h2 id="how-h">不是一次生成，<br>而是<em>一轮一轮</em><span class="nw">改出来的。</span></h2>
+      <p>评委看的是一个清晰的概念被执行到每个细节，而不是特效堆得多不多。</p>
+    </div>
+    <ol class="loop">
+      <li class="reveal" style="--i:0"><span class="n">01</span><h3>先定概念</h3><p>一句话创意、字体搭配、色彩、网格，以及至少一个让人记住的"签名时刻"。</p><span class="tag mono">避开 AI 模板脸</span></li>
+      <li class="reveal" style="--i:1"><span class="n">02</span><h3>守住底线实现</h3><p>设计令牌、只动 transform/opacity、完整交互状态、AA 对比度、减弱动效偏好。</p><span class="tag mono">375 → 1920 四档宽度</span></li>
+      <li class="reveal" style="--i:2"><span class="n">03</span><h3>截图—打分—修改</h3><p>桌面和手机截图，八个维度逐项打分，按影响排序修改后重新截图。全部 ≥ 9 分才停。</p><span class="tag mono">脚本审计 + 2–3 轮</span></li>
+    </ol>
+    <div class="dims reveal" aria-label="八个评分维度">
+      <span><small>01</small>排版</span><span><small>02</small>留白</span><span><small>03</small>视觉层级</span><span><small>04</small>色彩</span><span><small>05</small>动效</span><span><small>06</small>微交互</span><span><small>07</small>响应式</span><span><small>08</small>原创性</span>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="work" aria-labelledby="work-h">
+    <div class="head reveal">
+      <span class="mono">02 / 示例</span>
+      <h2 id="work-h">三个方向，<br>三种<em>完全不同</em>的气质。</h2>
+      <p>三套可交互的完整示例，点开页面体验各自的设计与细节。</p>
+    </div>
+    <div class="works">
+      <article class="work reveal">
+        <a class="shot" href="examples/qimu-coffee.html"><img src="examples/screenshots/01-qimu-desktop-hero.webp" srcset="examples/screenshots/01-qimu-desktop-hero-480.webp 480w, examples/screenshots/01-qimu-desktop-hero-960.webp 960w, examples/screenshots/01-qimu-desktop-hero.webp 1440w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 92vw, 66vw" alt="栖木咖啡首屏：大号衬线标题 Slow roast, honest cup. 与烘焙曲线卡片" width="1440" height="900" loading="lazy" decoding="async"><span class="open">打开页面 ↗</span></a>
+        <div class="txt"><span class="idx mono">Example 01</span><h3>栖木咖啡<small>Independent coffee roaster</small></h3><p>概念"一张烘焙记录卡"。暖纸色与 Fraunces 衬线，签名时刻是一条自动绘制、可拖动查看任意时刻温度的烘焙曲线。</p><div class="meta"><span>Fraunces</span><span>Noto Serif SC</span><span>SVG 曲线</span></div><a class="go" href="examples/qimu-coffee.html">查看在线页面 <span aria-hidden="true">→</span></a></div>
+      </article>
+      <article class="work reveal">
+        <a class="shot" href="examples/jian-studio.html"><img src="examples/screenshots/05-jian-desktop-hero.webp" srcset="examples/screenshots/05-jian-desktop-hero-480.webp 480w, examples/screenshots/05-jian-desktop-hero-960.webp 960w, examples/screenshots/05-jian-desktop-hero.webp 1440w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 92vw, 66vw" alt="间 Studio 首屏：巨大的细体汉字间与 SPACE IN BETWEEN" width="1440" height="900" loading="lazy" decoding="async"><span class="open">打开页面 ↗</span></a>
+        <div class="txt"><span class="idx mono">Example 02</span><h3>间 Studio<small>Architecture studio</small></h3><p>概念"图纸即界面"。可见的 12 栏发丝网格、尺寸标注与图签；悬停项目显示平面图，鼠标是带坐标读数的十字准线。</p><div class="meta"><span>Archivo 可变宽度</span><span>Noto Sans SC 100</span><span>十字准线</span></div><a class="go" href="examples/jian-studio.html">查看在线页面 <span aria-hidden="true">→</span></a></div>
+      </article>
+      <article class="work reveal">
+        <a class="shot" href="examples/echo-app.html"><img src="examples/screenshots/08-echo-desktop-hero.webp" srcset="examples/screenshots/08-echo-desktop-hero-480.webp 480w, examples/screenshots/08-echo-desktop-hero-960.webp 960w, examples/screenshots/08-echo-desktop-hero.webp 1440w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 92vw, 66vw" alt="回声 Echo 首屏：暗色等高线背景与酸性绿标题" width="1440" height="900" loading="lazy" decoding="async"><span class="open">打开页面 ↗</span></a>
+        <div class="txt"><span class="idx mono">Example 03</span><h3>回声 Echo<small>AI voice notes</small></h3><p>概念"声音留下的等高线"。暗色与酸性绿，背景等高线会绕开鼠标弯曲；下方是自动轮播的"录音 → 转写 → 整理"演示。</p><div class="meta"><span>Canvas</span><span>Bricolage Grotesque</span><span>自动轮播 Tabs</span></div><a class="go" href="examples/echo-app.html">查看在线页面 <span aria-hidden="true">→</span></a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- A5/A6 drafts stay inert until backed by a real comparison and audit. -->
+  <template id="future-demos">
+  <section class="sec wrap" id="compare" aria-labelledby="compare-h">
+    <div class="head reveal"><span class="mono">03 / 对比测试</span><h2 id="compare-h">同一个需求，<br><em>两种结果。</em></h2><p>左边是一次生成，右边是经过概念、审计和截图迭代后的结果。滑块用于审阅差异。</p></div>
+    <div class="compare reveal" aria-label="未经 skill 与使用 skill 的结果对比"><article class="compare-pane before"><span class="mono">without skill · first pass</span><h3>能用，但没有记忆点。</h3><p>默认字体、均匀卡片、没有明确的视觉签名；移动端只是桌面版缩小。</p></article><article class="compare-pane after"><span class="mono">with skill · iteration 03</span><h3>一个概念，贯穿每个细节。</h3><p>烘焙曲线成为交互核心，类型、节奏、焦点状态和四档响应式一起被检查。</p></article><input class="compare-range" type="range" min="0" max="100" value="50" aria-label="调整对比强度"></div>
+  </section>
+  <section class="sec wrap" id="live-audit" aria-labelledby="audit-h">
+    <div class="head reveal"><span class="mono">04 / 现场审计</span><h2 id="audit-h">先让问题<br><em>无处可藏。</em></h2><p>这是一个故意留下问题的小页面。点击运行 audit，直接得到可读的检查结果。</p></div>
+    <div class="audit-demo reveal"><span class="mono">embedded test page · intentionally flawed</span><iframe title="故意有问题的演示页面" srcdoc="<main><h1>Demo</h1><p style='color:#aaa'>Low contrast text</p><img src='missing.jpg' alt=''></main>"></iframe><button id="run-audit" type="button">运行 audit</button><p class="audit-result" id="audit-result" role="status" aria-live="polite"></p></div>
+  </section>
+  </template>
+  <section class="sec wrap" id="install" aria-labelledby="ins-h">
+    <div class="head reveal">
+      <span class="mono">03 / 安装</span>
+      <h2 id="ins-h">一行命令，<br><em>装进</em>你的 AI 助手。</h2>
+      <p>装好后不用特意调用：做落地页、官网、作品集，或者说"要高级感"时会自动启用。</p>
+    </div>
+    <div class="ways">
+      <div class="way reveal" style="--i:0"><h3>npx <span class="mono">推荐</span></h3><p>支持 Claude Code、Codex、Cursor 等 30+ 工具，自动放进对应目录。</p>
+        <div class="snip">npx skills add \
+  ABC-xiaoxuan/award-level-web-design -g<button data-copy="npx skills add ABC-xiaoxuan/award-level-web-design -g">复制</button></div></div>
+      <div class="way reveal" style="--i:1"><h3>Claude Code 插件 <span class="mono">Plugin</span></h3><p>在 Claude Code 里依次输入这两行。</p>
+        <div class="snip">/plugin marketplace add
+  ABC-xiaoxuan/award-level-web-design
+/plugin install
+  award-level-web-design@award-level-web-design<button data-copy="/plugin marketplace add ABC-xiaoxuan/award-level-web-design&#10;/plugin install award-level-web-design@award-level-web-design">复制</button></div></div>
+      <div class="way reveal" style="--i:2"><h3>手动复制 <span class="mono">Manual</span></h3><p>把 <code>skills/award-level-web-design/</code> 整个文件夹复制过去。</p>
+        <div class="snip">Claude Code → ~/.claude/skills/
+Codex       → ~/.agents/skills/<button data-copy="~/.claude/skills/">复制</button></div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="end">
+  <div class="wrap">
+    <h2>Good enough<br>is <em>not</em> the bar.</h2>
+    <div class="row"><span>© 2026 ABC-xiaoxuan · MIT License</span><nav><a href="https://github.com/ABC-xiaoxuan/award-level-web-design">GitHub</a><a href="https://github.com/ABC-xiaoxuan/award-level-web-design/blob/main/skills/award-level-web-design/references/review-checklist.md">自检清单</a><a href="#top">回到顶部 ↑</a></nav></div>
+  </div>
+</footer>
+
+<script src="assets/motion.js"></script>
+<script>
+(()=>{
+  const dims=['排版','留白','视觉层级','色彩','动效','微交互','响应式','原创性'];
+  const rounds=[
+    {s:[7,6,7,9,8,8,6,8],note:'<b>第 1 轮</b>：区块样式清掉了左右边距，内容贴边；首屏右上空洞；中文标题出现"seven / 天"孤字；手机端图表文字只剩 6px。'},
+    {s:[8.5,8.5,9,9,9,9,8,9],note:'<b>第 2 轮</b>：标题放大并错位构图，边距修复；页脚被类选择器覆盖、引文"东/西"拆词，继续改。'},
+    {s:[9,9,9.5,9,9,9.5,9,9.5],note:'<b>第 3 轮</b>：引文按短语断行，手机端无溢出，八项全部 ≥ 9 —— 停止迭代，交付。'}
+  ];
+  const rows=document.getElementById('rows'),note=document.getElementById('note'),avg=document.getElementById('avg');
+  rows.innerHTML=dims.map(d=>`<li><span>${d}</span><span class="bar"><i></i></span><span class="s">0</span></li>`).join('');
+  const lis=[...rows.children],btns=[...document.querySelectorAll('.rounds button')];
+  let cur=-1,elapsed=0;
+  const toggle=document.getElementById('score-toggle'),card=document.querySelector('.card');
+  function show(r){
+    const prev=cur>=0?rounds[cur].s:null;cur=r;
+    btns.forEach((b,i)=>b.setAttribute('aria-pressed',i===r));
+    rounds[r].s.forEach((v,i)=>{const li=lis[i];li.querySelector('i').style.setProperty('--v',v/10);li.querySelector('.s').textContent=Number.isInteger(v)?v:v.toFixed(1);li.classList.toggle('low',v<9);li.classList.toggle('up',!!prev&&v>prev[i]&&v>=9)});
+    note.innerHTML=rounds[r].note;
+    avg.textContent=(rounds[r].s.reduce((x,y)=>x+y,0)/8).toFixed(1);
+  }
+  show(0);
+  const scoreMotion=createMotion(card,toggle,dt=>{
+    elapsed+=dt;
+    if(elapsed>=3800){elapsed=0;show((cur+1)%rounds.length)}
+  });
+  btns.forEach((b,i)=>b.addEventListener('click',()=>{elapsed=0;show(i);scoreMotion.pause()}));
+
+
+
+  // copy buttons
+  document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{
+    const old=b.textContent;
+    try{await navigator.clipboard.writeText(b.dataset.copy);b.textContent='已复制'}catch{b.textContent='请手动复制'}
+    b.classList.add('ok');setTimeout(()=>{b.textContent=old;b.classList.remove('ok')},1600);
+  }));
+
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>

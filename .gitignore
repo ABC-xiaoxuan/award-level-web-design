@@ -1,0 +1,5 @@
+/node_modules/
+/verification/*
+!/verification/REVIEW.md
+/shots/
+__pycache__/
