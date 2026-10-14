@@ -1,7 +1,7 @@
 interface:
-  display_name: "获奖级网页设计"
-  short_description: "按 Awwwards / Webby / FWA 标准设计网页，并做八维度截图自检迭代"
-  default_prompt: "按获奖级网站的品质标准完成这个页面，并在完成后自检优化"
+  display_name: '获奖级网页设计'
+  short_description: '按品牌与页面目标设计网页，使用 Python 截图与八维度自检优化'
+  default_prompt: '使用 $award-level-web-design 完成这个页面，保留既有品牌与任务范围，并通过真实截图和状态检查优化。'
 
 policy:
   allow_implicit_invocation: true
