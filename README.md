@@ -145,6 +145,7 @@ npm run build:previews   # 截取三个示例，生成 WebP 与 480/960 宽度�
 ```
 skills/award-level-web-design/
 ├── SKILL.md                      # 主流程
+├── references/art-direction.md    # 美术方向、叙事结构与节拍表
 ├── references/award-criteria.md   # 奖项标准、维度权重与分数锚点
 ├── references/cjk-type.md         # 中文字体选择、子集化加载、排版细节与竖排
 ├── references/review-checklist.md # 九维度自检清单

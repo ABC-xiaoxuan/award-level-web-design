@@ -9,8 +9,8 @@
       "name": "award-level-web-design",
       "source": "./",
       "strict": false,
-      "description": "按获奖级标准设计网页，并按排版、留白、视觉层级、色彩、动效、微交互、响应式、原创性八个维度截图自检迭代",
-      "version": "1.1.0",
+      "description": "按获奖级标准设计网页，并按排版、留白、视觉层级、色彩、动效、微交互、响应式、原创性、内容九个维度加权打分、截图自检迭代",
+      "version": "1.2.0",
       "license": "MIT",
       "skills": ["./skills/award-level-web-design"]
     }

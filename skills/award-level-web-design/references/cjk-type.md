@@ -43,6 +43,18 @@
 - 用户输入、CMS 内容这类动态文字无法预先子集化。要么只给静态标题使用展示字体，要么用 Google Fonts 那种按 `unicode-range` 切片的方式加载。
 - 可变字体先用 `instantiateVariableFont` 把字重范围裁到实际用到的区间，体积能再小一截。
 - 每次修改文案后都要重新生成子集，否则新出现的字会退回系统字体。
+- **让回退字体和网页字体占同样的空间。** `font-display: swap` 时，页面先用系统字体渲染，网页字体加载完再替换；两者字面大小和行高不同，就会产生布局跳动（CLS）。做法是声明一个调整过尺寸的本地回退字体，放在字体栈里网页字体的后面：
+  ```css
+  @font-face {
+    font-family: "Serif SC Fallback";
+    src: local("Songti SC"), local("SimSun");
+    size-adjust: 100%;        /* 调到回退字体和网页字体的字面宽度一致 */
+    ascent-override: 88%;     /* 调到两者的行高、基线位置一致 */
+    descent-override: 12%;
+  }
+  .display { font-family: "Noto Serif SC", "Serif SC Fallback", serif; }
+  ```
+  数值需要对照截图调：网页字体加载前后各截一张，标题的换行位置和高度不变，就调好了。`--perf` 报告的 CLS 也应该接近 0。
 
 ## 4. 排版细节
 
