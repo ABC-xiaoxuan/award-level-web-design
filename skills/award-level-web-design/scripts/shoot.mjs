@@ -10,7 +10,14 @@
  *   --widths 375,768,1440,1920
  *   --sections "#work,.pricing"   extra screenshots scrolled to these selectors
  *   --full                 also save a full-page screenshot per width
- *   --audit                run audit.js at every width, print a summary, save audit.json
+ *   --review               save <w>-squint.png (blurred + grayscale first screen, for hierarchy)
+ *                          and <w>-overview.png (whole page shrunk to ~480px wide, for rhythm)
+ *   --audit                run audit.js at every width, print a summary, save audit.json;
+ *                          also records console errors / failed requests on load
+ *   --reduced-motion       re-load with prefers-reduced-motion: reduce at every width,
+ *                          save <w>-reduced.png and flag content stuck at opacity 0
+ *   --keyboard             press Tab through the page (first 40 stops) and flag stops
+ *                          with no visible focus indicator
  *   --perf                 collect LCP, CLS, resource bytes and font bytes at every width
  *   --axe                  run axe-core (npm install axe-core, or --axe-source <file>)
  *   --axe-source <file>    local axe.min.js; never fetched by the page
@@ -51,6 +58,7 @@ const WIDTHS = opt('widths', '375,768,1440,1920').split(',').map(Number);
 const SECTIONS = (opt('sections', '') || '').split(',').map(s => s.trim()).filter(Boolean);
 const SETTLE = Number(opt('settle', 2500));
 const AUDIT = flag('audit'), PERF = flag('perf'), AXE = flag('axe'), FULL = flag('full');
+const REDUCED = flag('reduced-motion'), KEYBOARD = flag('keyboard'), REVIEW = flag('review');
 const AUDIT_SRC = readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'audit.js'), 'utf8');
 const PERF_SRC = readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'performance.js'), 'utf8');
 let AXE_SRC;
@@ -92,11 +100,15 @@ if (!ws) { console.error('Could not connect to Chrome.'); chrome.kill(); process
 await new Promise(r => ws.addEventListener('open', r, { once: true }));
 let id = 0; const pending = new Map(); const waiters = [];
 let network = new Map();
+let consoleErrors = [];
 ws.addEventListener('message', e => {
   const m = JSON.parse(e.data);
   if (m.method === 'Network.responseReceived') network.set(m.params.requestId,{type:m.params.type,url:m.params.response.url,bytes:0,transferBytes:0});
   if (m.method === 'Network.dataReceived' && network.has(m.params.requestId)) network.get(m.params.requestId).bytes += m.params.dataLength;
   if (m.method === 'Network.loadingFinished' && network.has(m.params.requestId)) network.get(m.params.requestId).transferBytes = m.params.encodedDataLength;
+  if (m.method === 'Runtime.exceptionThrown') consoleErrors.push('exception: ' + (m.params.exceptionDetails.exception?.description || m.params.exceptionDetails.text).split('\n')[0]);
+  if (m.method === 'Runtime.consoleAPICalled' && m.params.type === 'error') consoleErrors.push('console.error: ' + m.params.args.map(a => a.value ?? a.description ?? '').join(' ').slice(0, 200));
+  if (m.method === 'Log.entryAdded' && m.params.entry.level === 'error') consoleErrors.push(`${m.params.entry.source}: ${m.params.entry.text}${m.params.entry.url ? ' ' + m.params.entry.url : ''}`.slice(0, 240));
   if (m.id && pending.has(m.id)) { pending.get(m.id)(m); pending.delete(m.id); }
   if (m.method) for (const w of waiters.filter(w => w.method === m.method)) { w.fn(m); waiters.splice(waiters.indexOf(w), 1); }
 });
@@ -116,6 +128,34 @@ const save = async (name, extra = {}) => {
 const slug = s => s.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase();
 
 await send('Page.enable');
+if (AUDIT) { await send('Runtime.enable'); await send('Log.enable'); }
+const navigate = async () => {
+  const loaded = once('Page.loadEventFired');
+  await send('Page.navigate', { url: target });
+  await Promise.race([loaded, sleep(20000)]);
+};
+// Tab through the page with real key events; report stops whose focus style is indistinguishable from unfocused.
+const KEYBOARD_PROBE = `(()=>{const a=document.activeElement;if(!a||a===document.body)return null;const s=getComputedStyle(a);
+  const ring=(s.outlineStyle!=='none'&&parseFloat(s.outlineWidth)>0)||s.boxShadow!=='none';
+  const t=(a.innerText||a.getAttribute('aria-label')||a.value||'').trim().replace(/\\s+/g,' ').slice(0,30);
+  let d=a.tagName.toLowerCase();if(a.id)d+='#'+a.id;else if(typeof a.className==='string'&&a.className.trim())d+='.'+a.className.trim().split(/\\s+/)[0];
+  const r=a.getBoundingClientRect();return {target:d+(t?' "'+t+'"':''),ring,visible:r.width>0&&r.height>0}})()`;
+async function keyboardPass() {
+  await js('document.activeElement?.blur(); scrollTo(0,0)');
+  const stops = [], seen = new Set();
+  for (let i = 0; i < 40; i++) {
+    await send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
+    await send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
+    await sleep(60);
+    const s = await js(KEYBOARD_PROBE);
+    if (!s) break;
+    if (seen.has(s.target) && stops.length > 1) break; // wrapped around
+    seen.add(s.target); stops.push(s);
+  }
+  const noRing = stops.filter(s => !s.ring), hiddenStops = stops.filter(s => !s.visible);
+  return { stops: stops.length, noFocusRing: noRing.map(s => s.target), focusOnInvisible: hiddenStops.map(s => s.target),
+    note: 'Checks outline/box-shadow only. Stops styled with background or underline changes show up here too; verify those in a screenshot before fixing.' };
+}
 if(PERF){
   await send('Network.enable');
   await send('Network.setCacheDisabled',{cacheDisabled:true});
@@ -127,9 +167,8 @@ for (const w of WIDTHS) {
   const h = w < 768 ? 844 : w < 1200 ? 1024 : w >= 1900 ? 1080 : 900;
   await send('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: w < 768 ? 2 : 1, mobile: w < 768 });
   network = new Map();
-  const loaded = once('Page.loadEventFired');
-  await send('Page.navigate', { url: target });
-  await Promise.race([loaded, sleep(20000)]);
+  consoleErrors = [];
+  await navigate();
   const errPage = await js("location.href.startsWith('chrome-error://') || !!document.querySelector('#main-frame-error')");
   if (errPage) {
     console.error('Page failed to load: ' + target);
@@ -150,18 +189,34 @@ for (const w of WIDTHS) {
     files.push(await save(`${w}-${slug(sel)}`));
   }
 
-  if (FULL) {
+  if (REVIEW) {
+    // squint test: blur + grayscale leaves only mass, contrast and position, i.e. the hierarchy
+    await js(`document.documentElement.style.filter='blur(${Math.max(4, Math.round(w / 240))}px) grayscale(1)'`);
+    await sleep(150);
+    files.push(await save(`${w}-squint`));
+    await js(`document.documentElement.style.filter=''`);
+  }
+
+  if (FULL || REVIEW) {
     // scroll through once so scroll-reveal content is visible, then capture beyond the viewport
     await js(`(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=innerHeight*.8){scrollTo(0,y);await new Promise(r=>setTimeout(r,250))}scrollTo(0,0)})()`);
     await sleep(1200);
-    const height = await js('document.documentElement.scrollHeight');
-    files.push(await save(`${w}-full`, { captureBeyondViewport: true, clip: { x: 0, y: 0, width: w, height: Math.min(height, 16000), scale: 1 } }));
+    const height = Math.min(await js('document.documentElement.scrollHeight'), 16000);
+    if (FULL) files.push(await save(`${w}-full`, { captureBeyondViewport: true, clip: { x: 0, y: 0, width: w, height, scale: 1 } }));
+    // overview: the whole page shrunk to ~480px wide, for section rhythm and "did the footer get the same care"
+    // phones are tall, so they get a narrower thumbnail to stay viewable in one glance
+    if (REVIEW) files.push(await save(`${w}-overview`, { captureBeyondViewport: true, clip: { x: 0, y: 0, width: w, height, scale: (w < 768 ? 240 : 480) / (w * (w < 768 ? 2 : 1)) } }));
   }
 
-  if (AUDIT || PERF || AXE) {
+  if (AUDIT || PERF || AXE || REDUCED || KEYBOARD) {
     await js('scrollTo(0,0)');
     const result = {};
-    if (AUDIT) result.audit = await js(AUDIT_SRC);
+    if (AUDIT) {
+      result.audit = await js(AUDIT_SRC);
+      for (const e of [...new Set(consoleErrors)].slice(0, 12)) result.audit.issues.push({ check: 'console', severity: 'error', target: null, detail: e });
+      result.audit.errors = result.audit.issues.filter(i => i.severity === 'error').length;
+    }
+    if (KEYBOARD) result.keyboard = await keyboardPass();
     if (PERF) {
       const timing=await js('window.__shootPerformance');
       const resources=[...network.values()];
@@ -173,6 +228,23 @@ for (const w of WIDTHS) {
       await js(AXE_SRC);
       result.axe=await js(`axe.run(document,{resultTypes:['violations','incomplete'],runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','best-practice']}}).then(r=>({version:r.testEngine.version,violations:r.violations,incomplete:r.incomplete,note:'Automatic scan only. Pause behavior, keyboard interaction and screen-reader experience require manual verification.'}))`);
     }
+    if (REDUCED) {
+      // reload with the media feature forced on; the page should be complete and calm, not blank
+      await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+      await navigate();
+      await js('document.fonts.ready.then(()=>true)');
+      await sleep(Math.min(SETTLE, 800));
+      files.push(await save(`${w}-reduced`));
+      result.reducedMotion = await js(`(async()=>{const matches=matchMedia('(prefers-reduced-motion: reduce)').matches;
+        for(let y=0;y<document.documentElement.scrollHeight;y+=innerHeight*.8){scrollTo(0,y);await new Promise(r=>setTimeout(r,120))}
+        await new Promise(r=>setTimeout(r,300));
+        const stuck=[...document.querySelectorAll('body *')].filter(e=>{const s=getComputedStyle(e);const r=e.getBoundingClientRect();
+          return s.opacity==='0'&&s.visibility!=='hidden'&&r.height>40&&(e.innerText||'').trim()&&!e.closest('[aria-hidden="true"],[hidden],dialog:not([open])')})
+          .slice(0,12).map(e=>e.tagName.toLowerCase()+(e.id?'#'+e.id:'')+' "'+e.innerText.trim().replace(/\\s+/g,' ').slice(0,30)+'"');
+        const infinite=document.getAnimations().filter(a=>a.playState==='running'&&a.effect?.getComputedTiming().iterations===Infinity).length;
+        scrollTo(0,0);return {matches,stuckHidden:stuck,infiniteAnimations:infinite}})()`);
+      await send('Emulation.setEmulatedMedia', { features: [] });
+    }
     report[w] = result;
   }
 }
@@ -181,13 +253,15 @@ await sleep(400);
 try { rmSync(profile, { recursive: true, force: true }); } catch {}
 
 console.log(`Saved ${files.length} screenshots to ${OUT}`);
-if (AUDIT || PERF || AXE) {
+if (AUDIT || PERF || AXE || REDUCED || KEYBOARD) {
   writeFileSync(join(OUT, 'report.json'), JSON.stringify(report, null, 2));
   if(AUDIT) writeFileSync(join(OUT,'audit.json'),JSON.stringify(Object.fromEntries(Object.entries(report).map(([w,r])=>[w,r.audit])),null,2));
   for (const [w, r] of Object.entries(report)) {
     console.log(`\n[${w}px]`);
     if (r.audit) { console.log(`  audit: ${r.audit.errors} errors, ${r.audit.warnings} warnings`); for (const i of r.audit.issues) console.log(`    ${i.severity === 'error' ? '✗' : '!'} ${i.check.padEnd(17)} ${i.target ?? ''}  ${i.detail}`); }
     if (r.perf) { console.log(`  perf: LCP ${r.perf.lcp===null?'unavailable':r.perf.lcp+'ms'} · CLS ${r.perf.cls ?? 'unavailable'} · ${(r.perf.totalBytes/1024).toFixed(1)}KB total · ${(r.perf.fontBytes/1024).toFixed(1)}KB fonts`); for(const warning of r.perf.warnings) console.warn('    ! '+warning); }
+    if (r.keyboard) { console.log(`  keyboard: ${r.keyboard.stops} tab stops · ${r.keyboard.noFocusRing.length} without outline/box-shadow · ${r.keyboard.focusOnInvisible.length} invisible`); for (const t of r.keyboard.noFocusRing.slice(0, 8)) console.log('    ! no-focus-ring     ' + t); for (const t of r.keyboard.focusOnInvisible.slice(0, 8)) console.log('    ! focus-invisible   ' + t); }
+    if (r.reducedMotion) { const m = r.reducedMotion; console.log(`  reduced-motion: ${m.matches ? 'emulated' : 'NOT emulated'} · ${m.stuckHidden.length} stuck hidden · ${m.infiniteAnimations} infinite animations still running`); for (const t of m.stuckHidden) console.log('    ✗ stuck-hidden      ' + t); }
     if (r.axe) console.log(r.axe.error ? `  axe: unavailable (${r.axe.error})` : `  axe: ${r.axe.violations.length} violations, ${r.axe.incomplete.length} incomplete`);
   }
   console.log(`\nFull report: ${join(OUT, 'report.json')}`);

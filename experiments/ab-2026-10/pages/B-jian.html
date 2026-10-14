@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>间筑建筑事务所 · 住宅与小型公共空间改造</title>
+<meta name="description" content="间筑建筑事务所，2014 年成立于杭州，十二年只做一件事：改造住宅和小型公共空间。留下七成，改对三成。">
+<style>
+:root{
+  --paper:#F2EFE8; --paper-2:#E8E4DA; --line:#CFC9BC;
+  --ink:#1E1D1A; --ink-2:#3B3934; --graphite:#66625A; --grey-wall:#9A958A;
+  --red:#C2321B; --red-deep:#A32814; --red-soft:rgba(194,50,27,.12);
+  --night:#1C1B19; --night-2:#2A2925; --night-text:#ECE8DF; --night-mute:#ADA89C; --red-night:#F0694F;
+  --f-sans:"Noto Sans SC","Source Han Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --f-mono:"Consolas","SFMono-Regular","Menlo","Noto Sans SC","PingFang SC","Microsoft YaHei",monospace;
+  --s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;--s7:96px;--s8:128px;--s9:192px;
+  --t-xs:12px;--t-sm:14px;--t-base:17px;--t-md:clamp(20px,1.6vw,23px);--t-lg:clamp(26px,2.6vw,40px);
+  --t-xl:clamp(36px,4.4vw,64px);--t-hero:clamp(54px,8.4vw,132px);
+  --ease-out:cubic-bezier(.22,1,.36,1);--ease-std:cubic-bezier(.2,.8,.2,1);
+  --d-fast:180ms;--d-base:420ms;--d-slow:700ms;
+  --gutter:clamp(16px,4vw,64px);--maxw:1560px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-sans);font-size:var(--t-base);line-height:1.8;
+  line-break:strict;text-spacing-trim:normal;text-autospace:normal;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,p,figure,blockquote,ul,ol,dl,dd{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+.mono{font-family:var(--f-mono);font-size:var(--t-xs);letter-spacing:.08em;text-transform:uppercase}
+.nw{white-space:nowrap}
+.skip{position:absolute;left:var(--s2);top:-80px;background:var(--ink);color:var(--paper);padding:var(--s1) var(--s2);z-index:10;text-decoration:none}
+.skip:focus{top:var(--s2)}
+:focus-visible{outline:2px dashed var(--red);outline-offset:4px}
+
+/* ---------- header ---------- */
+.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);min-height:64px}
+.logo{display:flex;align-items:baseline;gap:12px;text-decoration:none;min-height:44px;align-items:center}
+.logo-mark{width:28px;height:28px;flex:none}
+.logo b{font-weight:600;font-size:19px;letter-spacing:.12em}
+.logo .mono{color:var(--graphite)}
+.nav{display:flex;gap:var(--s1)}
+.nav a{position:relative;display:inline-flex;align-items:center;min-height:44px;padding-inline:12px;text-decoration:none;font-size:var(--t-sm);letter-spacing:.06em}
+.nav a span{color:var(--graphite);font-family:var(--f-mono);font-size:11px;margin-right:6px}
+.nav a::after{content:"";position:absolute;left:12px;right:12px;bottom:10px;height:1px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform var(--d-base) var(--ease-out)}
+.nav a:hover::after,.nav a:focus-visible::after{transform:scaleX(1)}
+.nav a:active{color:var(--red)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding-block:var(--s6) var(--s8);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:48px 48px;opacity:.45;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.35) 70%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.35) 70%,transparent 100%);
+  clip-path:inset(0 0 0 0)}
+.js .hero::before{animation:gridIn 1200ms var(--ease-out) both}
+@keyframes gridIn{from{clip-path:inset(0 100% 100% 0)}to{clip-path:inset(0 0 0 0)}}
+.hero-grid{position:relative;display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--s3);row-gap:var(--s5);align-items:end}
+.hero-meta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:var(--s1) var(--s4);color:var(--graphite)}
+.hero-meta span::before{content:"— ";color:var(--red)}
+.hero-text{grid-column:1/8;align-self:start}
+.hero h1{font-weight:300;font-size:var(--t-hero);line-height:1.08;letter-spacing:-.035em;margin-top:var(--s3)}
+.hero h1 .ln{display:block}
+.hero h1 em{font-style:normal;color:var(--red);font-weight:400}
+.js .hero h1 .ln{animation:lineIn var(--d-slow) var(--ease-out) both}
+.js .hero h1 .ln:nth-child(2){animation-delay:120ms}
+@keyframes lineIn{from{clip-path:inset(0 100% 0 0);transform:translateY(12px)}to{clip-path:inset(0 0 0 0);transform:none}}
+.hero-lede{max-width:24em;margin-top:var(--s5);font-size:var(--t-md);line-height:1.75;color:var(--ink-2)}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);margin-top:var(--s5)}
+.btn{position:relative;display:inline-flex;align-items:center;gap:12px;min-height:52px;padding:0 var(--s3);background:var(--ink);color:var(--paper);text-decoration:none;font-size:var(--t-sm);letter-spacing:.08em;border:0;cursor:pointer;
+  transition:background var(--d-fast) var(--ease-std),transform var(--d-fast) var(--ease-std)}
+.btn::before,.btn::after{content:"";position:absolute;width:10px;height:10px;border:1.5px solid var(--red);opacity:0;transition:opacity var(--d-fast),transform var(--d-base) var(--ease-out)}
+.btn::before{left:-6px;top:-6px;border-right:0;border-bottom:0;transform:translate(4px,4px)}
+.btn::after{right:-6px;bottom:-6px;border-left:0;border-top:0;transform:translate(-4px,-4px)}
+.btn:hover{background:var(--red)}
+.btn:hover::before,.btn:hover::after,.btn:focus-visible::before,.btn:focus-visible::after{opacity:1;transform:none}
+.btn:active{transform:translateY(1px)}
+.btn .arr{transition:transform var(--d-base) var(--ease-out)}
+.btn:hover .arr{transform:translateX(4px)}
+.link{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;font-size:var(--t-sm);letter-spacing:.06em;border-bottom:1px solid var(--grey-wall);transition:border-color var(--d-fast),color var(--d-fast)}
+.link:hover{color:var(--red);border-color:var(--red)}
+
+.plan-fig{grid-column:8/13;position:relative}
+.plan-box{position:relative;background:var(--paper);border:1px solid var(--line);padding:var(--s2)}
+.plan{display:block;width:100%;height:auto;cursor:crosshair}
+.plan text{font-family:var(--f-mono);font-size:15px;fill:var(--graphite)}
+.plan .dim{stroke:var(--graphite);stroke-width:1}
+.plan .wall{stroke:var(--ink);stroke-width:7;stroke-linecap:square;fill:none}
+.plan .wall-thin{stroke:var(--ink-2);stroke-width:3;fill:none}
+.plan .rm{stroke:var(--ink);stroke-width:7;fill:none;transition:stroke var(--d-base),stroke-dasharray var(--d-base),opacity var(--d-base)}
+.plan .new path,.plan .new rect,.plan .new line{stroke:var(--red);stroke-width:3;fill:none;stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 900ms var(--ease-out)}
+.plan .new .fillr{fill:var(--red-soft)}
+.plan .new text,.plan .after-l{fill:var(--red);transition:opacity var(--d-base)}
+.plan .before-l{transition:opacity var(--d-base)}
+.plan[data-state="after"] .rm{stroke:var(--red);stroke-width:2;stroke-dasharray:6 6;opacity:.75}
+.plan[data-state="after"] .before-l{opacity:0}
+.plan[data-state="before"] .new path,.plan[data-state="before"] .new rect,.plan[data-state="before"] .new line{stroke-dashoffset:1}
+.plan[data-state="before"] .new text,.plan[data-state="before"] .after-l,.plan[data-state="before"] .new .fillr{opacity:0}
+.plan .new .fillr{transition:opacity var(--d-base)}
+.plan-bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:var(--s2);margin-top:var(--s2)}
+.toggle{display:inline-flex;border:1px solid var(--ink)}
+.toggle button{min-height:44px;min-width:84px;padding:0 var(--s2);background:transparent;border:0;cursor:pointer;font-size:var(--t-sm);letter-spacing:.08em;transition:background var(--d-fast),color var(--d-fast)}
+.toggle button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.toggle button[data-v="after"][aria-pressed="true"]{background:var(--red)}
+.toggle button:hover:not([aria-pressed="true"]){background:var(--paper-2)}
+.toggle button:active{transform:translateY(1px)}
+.coord{color:var(--graphite);font-variant-numeric:tabular-nums;min-width:15em;text-align:right}
+.plan-cap{margin-top:var(--s2);font-size:var(--t-sm);color:var(--graphite);line-height:1.7}
+.plan-cap b{color:var(--red);font-weight:500}
+.legend{display:flex;gap:var(--s3);margin-top:var(--s1)}
+.legend i{display:inline-block;width:22px;height:0;vertical-align:middle;margin-right:8px;border-top:3px solid var(--ink)}
+.legend .l-new i{border-color:var(--red)}
+.legend .l-rm i{border-top:2px dashed var(--red)}
+
+/* ---------- stats strip ---------- */
+.stats{border-block:1px solid var(--ink)}
+.stats ol{display:grid;grid-template-columns:repeat(4,1fr)}
+.stats li{padding:var(--s3) var(--s3) var(--s3) 0;border-right:1px solid var(--line)}
+.stats li+li{padding-left:var(--s3)}
+.stats li:last-child{border-right:0}
+.stats .n{display:block;font-weight:300;font-size:var(--t-xl);line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.stats .n small{font-size:.4em;letter-spacing:0;margin-left:4px;color:var(--graphite)}
+.stats .k{display:block;margin-top:var(--s1);font-size:var(--t-sm);color:var(--graphite)}
+
+/* ---------- section heads ---------- */
+.sec{padding-block:var(--s8)}
+.sec-head{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--s3);align-items:end;margin-bottom:var(--s6)}
+.sec-no{grid-column:1/3;color:var(--red)}
+.sec-head h2{grid-column:3/9;font-weight:300;font-size:var(--t-xl);line-height:1.15;letter-spacing:-.02em}
+.sec-head p{grid-column:9/13;color:var(--ink-2);font-size:var(--t-sm);line-height:1.8}
+
+/* ---------- works ---------- */
+.filters{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s1);margin-bottom:var(--s3)}
+.filters button{min-height:44px;padding:0 var(--s2);background:transparent;border:1px solid var(--line);cursor:pointer;font-size:var(--t-sm);letter-spacing:.06em;transition:border-color var(--d-fast),background var(--d-fast),color var(--d-fast)}
+.filters button:hover{border-color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.filters button:active{transform:translateY(1px)}
+.filters .count{margin-left:auto;color:var(--graphite)}
+.works{border-top:1px solid var(--ink)}
+.work{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--s3);padding-block:var(--s4);border-bottom:1px solid var(--line);align-items:start;transition:background var(--d-base) var(--ease-std)}
+.work[hidden]{display:none}
+.work:hover{background:var(--paper-2)}
+.work .code{grid-column:1/2;color:var(--red);padding-top:6px}
+.work .thumb{grid-column:2/4}
+.work .thumb svg{display:block;width:100%;height:auto;background:var(--paper);border:1px solid var(--line)}
+.thumb .w{stroke:var(--ink);stroke-width:4;fill:none;stroke-linecap:square}
+.thumb .r{stroke:var(--red);stroke-width:2.5;fill:none;stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 800ms var(--ease-out)}
+.thumb .x{stroke:var(--red);stroke-width:1.5;stroke-dasharray:4 4;fill:none}
+.js .work:not(.drawn) .thumb .r{stroke-dashoffset:1}
+.work .body{grid-column:4/9}
+.work h3{font-weight:500;font-size:var(--t-md);line-height:1.45;letter-spacing:.01em}
+.work h3 .en{display:block;margin-top:4px;color:var(--graphite);font-weight:400}
+.work .desc{margin-top:var(--s1);color:var(--ink-2);font-size:var(--t-sm);line-height:1.85;max-width:30em}
+.work .meta{grid-column:9/13;font-size:var(--t-sm)}
+.work .meta dl{display:grid;grid-template-columns:auto 1fr;gap:4px var(--s2)}
+.work .meta dt{color:var(--graphite);font-family:var(--f-mono);font-size:var(--t-xs);letter-spacing:.08em;padding-top:3px}
+.keep{margin-top:var(--s2)}
+.keep .bar{position:relative;height:8px;background:var(--red);overflow:hidden}
+.keep .bar i{position:absolute;inset:0 auto 0 0;width:var(--k);background:var(--ink);transform-origin:left;transition:transform var(--d-slow) var(--ease-out)}
+.js .work:not(.drawn) .keep .bar i{transform:scaleX(.001)}
+.keep .lbl{display:flex;justify-content:space-between;margin-top:6px;font-family:var(--f-mono);font-size:var(--t-xs);color:var(--graphite);letter-spacing:.06em}
+.keep .lbl b{color:var(--red);font-weight:400}
+.work.feature .thumb{grid-column:2/6}
+.work.feature .body{grid-column:6/10}
+.work.feature .meta{grid-column:10/13}
+.work.feature h3{font-size:var(--t-lg);font-weight:400;line-height:1.3;letter-spacing:-.01em}
+.work.feature .desc{font-size:var(--t-base)}
+
+/* ---------- ethos ---------- */
+.ethos{background:var(--paper-2)}
+.ethos-grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--s3)}
+.vert{grid-column:1/3;writing-mode:vertical-rl;text-orientation:mixed;font-weight:300;font-size:var(--t-xl);line-height:1.3;letter-spacing:.2em;justify-self:start}
+.vert .num{text-combine-upright:all;color:var(--red)}
+.notes{grid-column:3/13;display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s6) var(--s5);counter-reset:n}
+.note{position:relative;padding-top:var(--s3);border-top:1px solid var(--ink)}
+.note::before{content:"";position:absolute;left:0;top:-5px;width:9px;height:9px;border-radius:50%;background:var(--red)}
+.note .mono{color:var(--red-deep)}
+.note h3{margin-top:var(--s2);font-weight:400;font-size:var(--t-lg);line-height:1.3;letter-spacing:-.01em}
+.note p{margin-top:var(--s2);color:var(--ink-2);max-width:26em}
+.quote{padding-block:var(--s9) var(--s8)}
+.quote blockquote{max-width:20em;font-weight:300;font-size:var(--t-xl);line-height:1.4;letter-spacing:-.02em;margin-inline:auto 8%}
+.quote blockquote .mk{color:var(--red)}
+.quote figcaption{margin-top:var(--s4);margin-inline:auto 8%;max-width:clamp(0px,64vw,1000px);color:var(--graphite)}
+
+/* ---------- contact ---------- */
+.contact{background:var(--night);color:var(--night-text);padding-block:var(--s8) var(--s6)}
+.contact .sec-no{color:var(--red-night)}
+.contact .sec-head p{color:var(--night-mute)}
+.c-grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--s3);row-gap:var(--s6)}
+.c-main{grid-column:1/8}
+.c-mail{display:inline-block;font-weight:300;font-size:clamp(30px,4.6vw,72px);line-height:1.15;letter-spacing:-.02em;text-decoration:none;border-bottom:2px solid var(--red-night);padding-bottom:4px;transition:color var(--d-fast)}
+.c-mail:hover{color:var(--red-night)}
+.c-steps{margin-top:var(--s6);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
+.c-steps li{border-top:1px solid #4A4842;padding-top:var(--s2);color:var(--night-mute);font-size:var(--t-sm);line-height:1.75}
+.c-steps b{display:block;color:var(--night-text);font-weight:500;font-size:var(--t-base);margin-bottom:4px}
+.c-steps .mono{color:var(--red-night);display:block;margin-bottom:var(--s1)}
+.c-side{grid-column:9/13;display:grid;gap:var(--s3);align-content:start}
+.c-side dt{color:var(--night-mute)}
+.c-side dd{margin-top:4px;font-size:var(--t-base)}
+.c-side a{text-decoration:none;border-bottom:1px solid #6A675F;display:inline-flex;align-items:center;min-height:44px;transition:border-color var(--d-fast),color var(--d-fast)}
+.c-side a:hover{color:var(--red-night);border-color:var(--red-night)}
+.contact :focus-visible{outline-color:var(--red-night)}
+
+/* ---------- footer title block ---------- */
+.foot{background:var(--night);color:var(--night-text);padding-bottom:var(--s5)}
+.tb{display:grid;grid-template-columns:2fr repeat(4,1fr);border:1px solid #57544D}
+.tb > div{padding:var(--s2);border-right:1px solid #57544D;min-height:88px}
+.tb > div:last-child{border-right:0}
+.tb .mono{display:block;color:var(--night-mute);margin-bottom:var(--s1)}
+.tb .big{font-size:var(--t-md);letter-spacing:.12em}
+.tb .sm{font-size:var(--t-sm)}
+.tb .red{color:var(--red-night)}
+.legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s2);margin-top:var(--s3);color:var(--night-mute);font-size:var(--t-xs)}
+.legal a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}
+.legal a:hover{color:var(--red-night)}
+
+/* ---------- reveal ---------- */
+.js [data-rise]{opacity:0;transform:translateY(24px);transition:opacity var(--d-base) var(--ease-out),transform var(--d-base) var(--ease-out);transition-delay:calc(var(--i,0) * 70ms)}
+.js [data-rise].in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){
+  .hero-text{grid-column:1/-1}
+  .plan-fig{grid-column:1/-1;max-width:680px}
+  .sec-head h2{grid-column:3/-1}
+  .sec-head p{grid-column:3/-1;margin-top:var(--s2)}
+  .work .thumb,.work.feature .thumb{grid-column:2/5}
+  .work .body,.work.feature .body{grid-column:5/-1}
+  .work .meta,.work.feature .meta{grid-column:5/-1;margin-top:var(--s2)}
+  .c-main,.c-side{grid-column:1/-1}
+  .c-side{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:720px){
+  .nav a span{display:none}
+  .nav a{padding-inline:8px}
+  .nav a::after{left:8px;right:8px}
+  .logo .mono{display:none}
+  .hero{padding-block:var(--s4) var(--s7)}
+  .hero::before{background-size:32px 32px}
+  .hero h1{font-size:clamp(46px,14vw,64px);letter-spacing:-.03em}
+  .hero-lede{font-size:18px}
+  .coord{display:none}
+  .stats ol{grid-template-columns:repeat(2,1fr)}
+  .stats li,.stats li+li{padding:var(--s2) var(--s2) var(--s2) 0;border-right:0}
+  .stats li:nth-child(odd){border-right:1px solid var(--line)}
+  .stats li:nth-child(even){padding-left:var(--s2)}
+  .stats li:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .sec{padding-block:var(--s7)}
+  .sec-head{display:block;margin-bottom:var(--s5)}
+  .sec-head h2{margin-top:var(--s1)}
+  .work{display:grid;grid-template-columns:72px 1fr;column-gap:var(--s2);row-gap:var(--s2);padding-block:var(--s3)}
+  .work .code{grid-column:1/-1;grid-row:1;padding-top:0}
+  .work .thumb,.work.feature .thumb{grid-column:1/2;grid-row:2}
+  .work .body,.work.feature .body{grid-column:2/3;grid-row:2}
+  .work .meta,.work.feature .meta{grid-column:1/-1;grid-row:3;margin-top:0}
+  .work.feature .thumb{grid-column:1/-1}
+  .work.feature .body{grid-column:1/-1;grid-row:3}
+  .work.feature .meta{grid-row:4}
+  .work.feature .thumb svg{max-width:300px}
+  .sec-head h2{font-size:30px;line-height:1.3}
+  .work h3,.work.feature h3{font-size:19px}
+  .work.feature h3{font-size:24px}
+  .work .desc{font-size:var(--t-sm)}
+  .filters .count{width:100%;margin-left:0}
+  .ethos-grid{display:block}
+  .vert{writing-mode:horizontal-tb;letter-spacing:.04em;margin-bottom:var(--s5)}
+  .vert .num{text-combine-upright:none}
+  .notes{grid-template-columns:1fr;gap:var(--s5)}
+  .quote{padding-block:var(--s7)}
+  .quote blockquote{font-size:28px;margin-inline:0}
+  .quote figcaption{margin-inline:0}
+  .c-steps{grid-template-columns:1fr}
+  .c-side{grid-template-columns:1fr}
+  .c-mail{font-size:clamp(26px,8vw,40px);word-break:break-all}
+  .tb{grid-template-columns:1fr 1fr}
+  .tb > div{border-bottom:1px solid #57544D}
+  .tb > div:first-child{grid-column:1/-1;border-right:0}
+  .tb > div:nth-child(3),.tb > div:nth-child(5){border-right:0}
+  .tb > div:nth-child(n+4){border-bottom:0}
+}
+@media (min-width:1800px){
+  :root{--t-hero:140px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  html{scroll-behavior:auto}
+  .js [data-rise]{opacity:1;transform:none}
+  .js .work:not(.drawn) .thumb .r{stroke-dashoffset:0}
+  .js .work:not(.drawn) .keep .bar i{transform:none}
+}
+</style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="间筑建筑事务所 首页">
+      <svg class="logo-mark" viewBox="0 0 28 28" aria-hidden="true"><path d="M3 27V3h22v24" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M9 3V1" stroke="currentColor" stroke-width="2.4"/><rect x="10" y="11" width="8" height="10" fill="none" stroke="#C2321B" stroke-width="2"/></svg>
+      <b>间筑</b><span class="mono">JIAN Architects</span>
+    </a>
+    <nav class="nav" aria-label="主导航">
+      <a href="#work"><span>01</span>作品</a>
+      <a href="#ethos"><span>02</span>理念</a>
+      <a href="#contact"><span>03</span>联系</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="wrap hero-grid">
+    <p class="hero-meta mono"><span>Est. 2014 · 杭州</span><span>住宅 / 小型公共空间改造</span><span>第 12 年</span></p>
+    <div class="hero-text">
+      <h1 id="hero-title"><span class="ln">留下七成，</span><span class="ln">改对<em>三成</em>。</span></h1>
+      <p class="hero-lede">间筑是一家做了十二年改造的小型建筑事务所。老公房、旧厂房、社区里闲置的角落，我们先画下已经在那里的东西，再用红笔改动真正需要改的部分。</p>
+      <div class="hero-cta">
+        <a class="btn" href="#contact">预约一次现场勘测 <span class="arr" aria-hidden="true">→</span></a>
+        <a class="link" href="#work">看看最近的 8 个项目</a>
+      </div>
+    </div>
+    <figure class="plan-fig">
+      <div class="plan-box">
+        <svg class="plan" id="plan" data-state="after" viewBox="0 0 600 480" width="600" height="480" role="img" aria-labelledby="plan-t">
+          <title id="plan-t">小营巷老公房平面图：黑色为原有墙体，红色为改造新增，红色虚线为拆除的墙</title>
+          <g class="dims">
+            <path class="dim" d="M40 18H560 M40 12V24 M560 12V24"/>
+            <text x="300" y="14" text-anchor="middle">7 800</text>
+            <path class="dim" d="M18 40V440 M12 40H24 M12 440H24"/>
+            <text x="12" y="240" text-anchor="middle" transform="rotate(-90 12 240)" dy="-2">6 000</text>
+          </g>
+          <path class="wall" d="M40 40H100 M220 40H360 M500 40H560V440H520 M470 440H40V40"/>
+          <path class="wall-thin" d="M100 37H220 M100 43H220 M360 37H500 M360 43H500"/>
+          <path class="wall" d="M300 40V200 M40 200H130 M180 200H360 M410 200H560 M40 300H200 M200 300V340 M200 390V440"/>
+          <path class="wall-thin" d="M470 440V390 M470 390A50 50 0 0 1 520 440"/>
+          <path class="rm" d="M380 300H560 M380 300V440"/>
+          <g class="labels">
+            <text x="170" y="128" text-anchor="middle">卧室</text>
+            <text x="430" y="128" text-anchor="middle">卧室</text>
+            <text x="120" y="378" text-anchor="middle">卫</text>
+            <text x="290" y="290" text-anchor="middle">客厅</text>
+            <text class="before-l" x="470" y="378" text-anchor="middle">厨房 4.6 m²</text>
+          </g>
+          <g class="new">
+            <rect class="fillr" x="384" y="304" width="172" height="132"/>
+            <rect x="410" y="330" width="110" height="36" pathLength="1"/>
+            <path d="M216 212H364 M216 228H364 M216 212V228 M364 212V228" pathLength="1"/>
+            <path d="M48 420H190" pathLength="1"/>
+            <text x="290" y="252" text-anchor="middle">书墙 4.2 m</text>
+            <text x="465" y="353" text-anchor="middle">岛台</text>
+            <text x="300" y="404" text-anchor="middle">开放厨房 +11 m²</text>
+          </g>
+        </svg>
+      </div>
+      <div class="plan-bar">
+        <div class="toggle" role="group" aria-label="切换平面图">
+          <button type="button" data-v="before" aria-pressed="false">原状</button>
+          <button type="button" data-v="after" aria-pressed="true">改造</button>
+        </div>
+        <span class="coord mono" id="coord" aria-hidden="true">X 0 000 · Y 0 000 mm</span>
+      </div>
+      <figcaption class="plan-cap">J-01 小营巷老公房，64 m²。黑线是 1987 年的原墙，<b>红线</b>是我们的改动：拆掉厨房两道墙，加一张岛台、一面书墙。
+        <div class="legend mono" aria-hidden="true"><span><i></i>保留</span><span class="l-new"><i></i>新增</span><span class="l-rm"><i></i>拆除</span></div>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="stats" aria-label="事务所数据">
+  <div class="wrap">
+    <ol>
+      <li data-rise style="--i:0"><span class="n">12<small>年</small></span><span class="k">只做改造，2014 年至今</span></li>
+      <li data-rise style="--i:1"><span class="n">146<small>个</small></span><span class="k">完成的住宅与公共空间</span></li>
+      <li data-rise style="--i:2"><span class="n">74<small>%</small></span><span class="k">平均保留的原有结构</span></li>
+      <li data-rise style="--i:3"><span class="n">0<small>栋</small></span><span class="k">被我们整栋拆掉的房子</span></li>
+    </ol>
+  </div>
+</section>
+<section class="sec" id="work" aria-labelledby="work-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-no mono">01 / 作品</p>
+      <h2 id="work-title"><span class="nw">每张图都有两种颜色：</span><wbr><span class="nw">黑的是原来的，</span><wbr><span class="nw">红的是我们的。</span></h2>
+      <p>下面是近三年的 8 个项目。每一项右侧的色条，黑色是保留下来的原有部分，红色是改动的部分。</p>
+    </div>
+    <div class="filters" role="group" aria-label="按类型筛选作品">
+      <button type="button" data-f="all" aria-pressed="true">全部</button>
+      <button type="button" data-f="home" aria-pressed="false">住宅</button>
+      <button type="button" data-f="public" aria-pressed="false">公共空间</button>
+      <span class="count mono" id="count" aria-live="polite">共 8 项</span>
+    </div>
+    <ol class="works" id="works">
+      <li class="work feature" data-type="home">
+        <span class="code mono">J-01</span>
+        <figure class="thumb"><svg viewBox="0 0 160 120" width="160" height="120" aria-hidden="true"><path class="w" d="M10 10H150V110H10Z M80 10V55 M10 55H120 M10 80H55V110"/><path class="x" d="M100 80H150 M100 80V110"/><path class="r" pathLength="1" d="M110 88H140V98H110Z M60 60H110"/></svg></figure>
+        <div class="body">
+          <h3>小营巷老公房<span class="en mono">Xiaoying Lane Flat</span></h3>
+          <p class="desc">1987 年的两室一厅。拆掉厨房两道墙，换来一张能坐四个人的岛台；原有的水磨石地面、木窗框和那扇朝南的铁门都留着。</p>
+        </div>
+        <div class="meta"><dl>
+          <dt>城市</dt><dd>杭州</dd><dt>类型</dt><dd>住宅</dd><dt>面积</dt><dd>64 m²</dd><dt>年份</dt><dd>2025</dd>
+          </dl><div class="keep" style="--k:82%"><div class="bar"><i></i></div><div class="lbl"><span>保留 82%</span><b>改动 18%</b></div></div>
+        </div>
+      </li>
+      <li class="work feature" data-type="public">
+        <span class="code mono">J-02</span>
+        <figure class="thumb"><svg viewBox="0 0 160 120" width="160" height="120" aria-hidden="true"><path class="w" d="M10 20H150V100H10Z M40 20V100 M70 20V100 M100 20V100 M130 20V100"/><path class="r" pathLength="1" d="M20 60H140 M50 40H120V50H50Z M50 70H120V80H50Z"/></svg></figure>
+        <div class="body">
+          <h3>织造厂旧食堂 · 邻里饭堂<span class="en mono">Weaving Mill Canteen</span></h3>
+          <p class="desc">七十年代的厂区食堂，砖墙和木桁架原样保留。中午是居民饭堂，下午两点以后，长桌留给放学的孩子写作业。</p>
+        </div>
+        <div class="meta"><dl>
+          <dt>城市</dt><dd>湖州</dd><dt>类型</dt><dd>公共空间</dd><dt>面积</dt><dd>420 m²</dd><dt>年份</dt><dd>2024</dd>
+          </dl><div class="keep" style="--k:71%"><div class="bar"><i></i></div><div class="lbl"><span>保留 71%</span><b>改动 29%</b></div></div>
+        </div>
+      </li>
+      <li class="work" data-type="home">
+        <span class="code mono">J-03</span>
+        <figure class="thumb"><svg viewBox="0 0 160 120" width="160" height="120" aria-hidden="true"><path class="w" d="M50 10H110V110H50Z M50 60H110"/><path class="x" d="M60 20H100V50H60Z"/><path class="r" pathLength="1" d="M60 70H100V100H60Z M60 78H100 M60 86H100 M60 94H100"/></svg></figure>
+        <div class="body">
+          <h3>2.9 米宽的石库门<span class="en mono">Narrow Shikumen</span></h3>
+          <p class="desc">面宽只有 2.9 米。把楼梯转了 90 度，二楼多出一张床的位置，阁楼成了孩子的书房。</p>
+        </div>
+        <div class="meta"><dl>
+          <dt>城市</dt><dd>上海</dd><dt>类型</dt><dd>住宅</dd><dt>面积</dt><dd>48 m²</dd><dt>年份</dt><dd>2025</dd>
+          </dl><div class="keep" style="--k:69%"><div class="bar"><i></i></div><div class="lbl"><span>保留 69%</span><b>改动 31%</b></div></div>
+        </div>
+      </li>
+      <li class="work" data-type="public">
+        <span class="code mono">J-04</span>
+        <figure class="thumb"><svg viewBox="0 0 160 120" width="160" height="120" aria-hidden="true"><path class="w" d="M10 30H60V100H10Z M100 30H150V100H100Z"/><path class="r" pathLength="1" d="M60 40H100 M60 40L80 20L100 40 M68 90H92"/></svg></figure>
+        <div class="body">
+          <h3>小学门房 · 雨棚<span class="en mono">School Gate Shelter</span></h3>
+          <p class="desc">原本是一间门卫室。加一道 18 米长的雨棚，接孩子的家长不用再站在路边淋雨。</p>
+        </div>
+        <div class="meta"><dl>
+          <dt>城市</dt><dd>绍兴</dd><dt>类型</dt><dd>公共空间</dd><dt>面积</dt><dd>36 m²</dd><dt>年份</dt><dd>2024</dd>
+          </dl><div class="keep" style="--k:60%"><div class="bar"><i></i></div><div class="lbl"><span>保留 60%</span><b>改动 40%</b></div></div>
+        </div>
+      </li>
+      <li class="work" data-type="home">
+        <span class="code mono">J-05</span>
+        <figure class="thumb"><svg viewBox="0 0 160 120" width="160" height="120" aria-hidden="true"><path class="w" d="M10 110H150 M10 110V60 M150 110V60"/><path class="x" d="M10 60H150"/><path class="r" pathLength="1" d="M10 60L80 20L150 60 M110 38V60"/></svg></figure>
+        <div class="body">
+          <h3>顶楼的北向工作室<span class="en mono">North-light Attic</span></h3>
+          <p class="desc">漏水十年的平屋顶改成坡顶，开一排北向高窗。一位插画师终于有了一整天都不变的光。</p>
+        </div>
+        <div class="meta"><dl>
+          <dt>城市</dt><dd>杭州</dd><dt>类型</dt><dd>住宅</dd><dt>面积</dt><dd>38 m²</dd><dt>年份</dt><dd>2023</dd>
+          </dl><div class="keep" style="--k:76%"><div class="bar"><i></i></div><div class="lbl"><span>保留 76%</span><b>改动 24%</b></div></div>
+        </div>
+      </li>
+      <li class="work" data-type="public">
+        <span class="code mono">J-06</span>
+        <figure class="thumb"><svg viewBox="0 0 160 120" width="160" height="120" aria-hidden="true"><path class="w" d="M10 10H150V110H10Z M10 40H150"/><path class="r" pathLength="1" d="M20 55H50V100H20Z M65 55H95V100H65Z M110 55H140V100H110Z M20 70H50 M20 85H50 M65 70H95 M65 85H95 M110 70H140 M110 85H140"/></svg></figure>
+        <div class="body">
+          <h3>老邮局 · 街角书店<span class="en mono">Old Post Office Bookshop</span></h3>
+          <p class="desc">柜台、信格和水泥花砖都没动。新书架按旧信格的尺寸做，一格放一本书。</p>
+        </div>
+        <div class="meta"><dl>
+          <dt>城市</dt><dd>宁波</dd><dt>类型</dt><dd>公共空间</dd><dt>面积</dt><dd>180 m²</dd><dt>年份</dt><dd>2023</dd>
+          </dl><div class="keep" style="--k:84%"><div class="bar"><i></i></div><div class="lbl"><span>保留 84%</span><b>改动 16%</b></div></div>
+        </div>
+      </li>
+      <li class="work" data-type="home">
+        <span class="code mono">J-07</span>
+        <figure class="thumb"><svg viewBox="0 0 160 120" width="160" height="120" aria-hidden="true"><path class="w" d="M30 10H130V110H30Z M30 60H130"/><path class="r" pathLength="1" d="M130 25H150V95H130 M140 25V95"/></svg></figure>
+        <div class="body">
+          <h3>三代同住的联排<span class="en mono">Three-generation Townhouse</span></h3>
+          <p class="desc">父母住一楼，子女一家住楼上。加了一部外挂楼梯，两代人各走各的门，周末在院子里吃饭。</p>
+        </div>
+        <div class="meta"><dl>
+          <dt>城市</dt><dd>苏州</dd><dt>类型</dt><dd>住宅</dd><dt>面积</dt><dd>210 m²</dd><dt>年份</dt><dd>2024</dd>
+          </dl><div class="keep" style="--k:73%"><div class="bar"><i></i></div><div class="lbl"><span>保留 73%</span><b>改动 27%</b></div></div>
+        </div>
+      </li>
+      <li class="work" data-type="public">
+        <span class="code mono">J-08</span>
+        <figure class="thumb"><svg viewBox="0 0 160 120" width="160" height="120" aria-hidden="true"><path class="w" d="M20 30H140V90H20Z"/><path class="x" d="M20 60H140"/><path class="r" pathLength="1" d="M35 45H125 M35 75H125 M80 45V75"/></svg></figure>
+        <div class="body">
+          <h3>菜场二楼 · 社区客厅<span class="en mono">Market Loft Commons</span></h3>
+          <p class="desc">菜场楼上空了六年的仓库。打通隔墙，留下货运电梯，现在每周有四个兴趣班在这里上课。</p>
+        </div>
+        <div class="meta"><dl>
+          <dt>城市</dt><dd>杭州</dd><dt>类型</dt><dd>公共空间</dd><dt>面积</dt><dd>260 m²</dd><dt>年份</dt><dd>2025</dd>
+          </dl><div class="keep" style="--k:78%"><div class="bar"><i></i></div><div class="lbl"><span>保留 78%</span><b>改动 22%</b></div></div>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+<section class="sec ethos" id="ethos" aria-labelledby="ethos-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-no mono">02 / 理念</p>
+      <h2 id="ethos-title"><span class="nw">改造不是推倒重来，</span><wbr><span class="nw">是在旧图纸上</span><wbr><span class="nw">做批注。</span></h2>
+      <p>十二年、146 个项目之后，我们的工作方法收成了四条批注。每个项目开工前，团队都会把它们重新读一遍。</p>
+    </div>
+    <div class="ethos-grid">
+      <p class="vert" aria-hidden="true">批注<span class="num">04</span>条</p>
+      <ol class="notes">
+        <li class="note" data-rise style="--i:0"><span class="mono">批注 01 · 测量</span><h3>先测量，再动笔。</h3><p>每个项目在画第一张草图之前，至少去现场三次：晴天、雨天，还有住户下班回家的晚上七点。</p></li>
+        <li class="note" data-rise style="--i:1"><span class="mono">批注 02 · 保留</span><h3>留下经得住时间的东西。</h3><p>老墙、旧窗框、磨亮的扶手已经替我们证明过一次它们的价值。我们的项目平均保留 74% 的原有结构，这也是最省钱的部分。</p></li>
+        <li class="note" data-rise style="--i:2"><span class="mono">批注 03 · 红线</span><h3>只改那三成真正碍事的。</h3><p>每一条红线都要回答一个问题：住在这里的人，哪件事因此变得容易了？答不上来的线，不画。</p></li>
+        <li class="note" data-rise style="--i:3"><span class="mono">批注 04 · 余量</span><h3>给下一个十年留余地。</h3><p>孩子会长大，老人会需要扶手，小店会换主人。我们在图纸上预留管线、承重和隔墙的位置，让下一次改动更轻。</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<figure class="quote wrap">
+  <blockquote><span class="mk">“</span>最好的改造，是住进去的人只觉得日子顺手了，<wbr><span class="nw">却说不出哪里改过。</span><span class="mk">”</span></blockquote>
+  <figcaption class="mono">— 陈既白，主持建筑师 · 写在第 100 个项目的回访记录里</figcaption>
+</figure>
+
+<section class="contact" id="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-no mono">03 / 联系</p>
+      <h2 id="contact-title">带我们去看看<br>你家的房子。</h2>
+      <p>杭州及周边一小时车程内，第一次现场勘测免费。更远的项目，我们按差旅成本收费。</p>
+    </div>
+    <div class="c-grid">
+      <div class="c-main">
+        <a class="c-mail" href="mailto:hello@jianzhu.studio">hello@jianzhu.studio</a>
+        <ol class="c-steps">
+          <li><span class="mono">Step 01</span><b>写信给我们</b>房子在哪、多大、住着谁、最想解决的一件事。48 小时内回复。</li>
+          <li><span class="mono">Step 02</span><b>两小时现场勘测</b>测量、拍照、听你讲这个房子的故事。</li>
+          <li><span class="mono">Step 03</span><b>一页红线方案</b>两周内交付：哪些留、哪些改、大概花多少钱。</li>
+        </ol>
+      </div>
+      <dl class="c-side">
+        <div><dt class="mono">电话</dt><dd><a href="tel:+8657188217406">0571 8821 7406</a></dd></div>
+        <div><dt class="mono">工作室</dt><dd>杭州市上城区小营巷 31 号 2 楼<br>周二至周六 10:00–18:30</dd></div>
+        <div><dt class="mono">合作与媒体</dt><dd><a href="mailto:press@jianzhu.studio">press@jianzhu.studio</a></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="tb" role="group" aria-label="图签">
+      <div><span class="mono">事务所</span><span class="big">间筑建筑事务所</span></div>
+      <div><span class="mono">图名</span><span class="sm">官网首页</span></div>
+      <div><span class="mono">比例</span><span class="sm">1 : 1</span></div>
+      <div><span class="mono">图号</span><span class="sm red">J-WEB-012</span></div>
+      <div><span class="mono">版次</span><span class="sm">2026 · 第 12 版</span></div>
+    </div>
+    <div class="legal mono">
+      <span>© 2014–2026 间筑建筑事务所 JIAN Architects</span>
+      <a href="#top">回到图纸顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var doc=document.documentElement;
+  doc.classList.add('js');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Signature: redline plan toggle (原状 / 改造) */
+  var plan=document.getElementById('plan');
+  var btns=document.querySelectorAll('.toggle button');
+  function setState(v){
+    plan.setAttribute('data-state',v);
+    btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.v===v));});
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){setState(b.dataset.v);});});
+  if(!reduce){
+    setState('before');
+    // force a frame so the red lines draw in rather than appear
+    requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(function(){setState('after');},500);});});
+  }
+
+  /* Coordinate readout over the plan (scale: 1 svg unit = 15 mm, origin at outer wall) */
+  var coord=document.getElementById('coord');
+  var pending=null,raf=0;
+  function pad(n){n=Math.max(0,Math.round(n/10)*10);var s=String(n);while(s.length<4)s='0'+s;return s.slice(0,-3)+' '+s.slice(-3);}
+  function paint(){
+    raf=0;if(!pending)return;
+    var r=plan.getBoundingClientRect();
+    var x=(pending.x-r.left)/r.width*600, y=(pending.y-r.top)/r.height*480;
+    coord.textContent='X '+pad((x-40)*15)+' · Y '+pad((y-40)*15)+' mm';
+  }
+  plan.addEventListener('pointermove',function(e){pending={x:e.clientX,y:e.clientY};if(!raf)raf=requestAnimationFrame(paint);});
+  window.addEventListener('scroll',function(){if(pending&&!raf)raf=requestAnimationFrame(paint);},{passive:true});
+  plan.addEventListener('pointerleave',function(){pending=null;coord.textContent='X 0 000 · Y 0 000 mm';});
+
+  /* Filters */
+  var works=[].slice.call(document.querySelectorAll('.work'));
+  var fbtns=document.querySelectorAll('.filters button');
+  var count=document.getElementById('count');
+  fbtns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var f=b.dataset.f,n=0;
+      fbtns.forEach(function(o){o.setAttribute('aria-pressed',String(o===b));});
+      works.forEach(function(w){var show=f==='all'||w.dataset.type===f;w.hidden=!show;if(show){n++;w.classList.add('drawn');}});
+      count.textContent=(f==='all'?'共 ':(f==='home'?'住宅 ':'公共空间 '))+n+' 项';
+    });
+  });
+
+  /* Reveal: rows draw their redlines as they enter */
+  var targets=[].slice.call(document.querySelectorAll('[data-rise], .work'));
+  if(reduce||!('IntersectionObserver' in window)){
+    targets.forEach(function(t){t.classList.add('in','drawn');});
+  }else{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in','drawn');io.unobserve(e.target);}});
+    },{rootMargin:'0px 0px -10% 0px',threshold:.15});
+    targets.forEach(function(t){io.observe(t);});
+  }
+})();
+</script>
+</body>
+</html>

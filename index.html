@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://abc-xiaoxuan.github.io/award-level-web-design/og-preview.png">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:image:type" content="image/png">
-<meta property="og:image:alt" content="Award-Level Web Design：设计、截图、自检，配有八维评分卡。">
-<meta name="twitter:image:alt" content="Award-Level Web Design：设计、截图、自检，配有八维评分卡。">
+<meta property="og:image:alt" content="Award-Level Web Design：设计、截图、自检，配有评分卡。">
+<meta name="twitter:image:alt" content="Award-Level Web Design：设计、截图、自检，配有评分卡。">
 <link rel="canonical" href="https://abc-xiaoxuan.github.io/award-level-web-design/">
 <link rel="preload" href="assets/fonts/pages/index-notosanssc-0.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts-index.css">
@@ -111,7 +111,7 @@ h1,h2,h3,p,figure{margin:0}
 .rows li:last-child{border-bottom:0}
 .rows .bar{height:6px;border-radius:3px;background:var(--paper-2);position:relative;overflow:hidden}
 .rows .bar i{position:absolute;inset:0;border-radius:3px;background:var(--ink);transform-origin:left;transform:scaleX(var(--v,0));transition:transform .9s var(--ease),background .4s}
-.rows .bar::after{content:"";position:absolute;top:-2px;bottom:-2px;left:90%;width:1px;background:var(--blue)}
+.rows .bar::after{content:"";position:absolute;top:-2px;bottom:-2px;left:80%;width:1px;background:var(--blue)}
 .rows li.low .bar i{background:#C9C6BC}
 .rows li.up .bar i{background:var(--blue)}
 .rows .s{text-align:right;font-family:var(--f-mono);font-size:.85rem;font-variant-numeric:tabular-nums}
@@ -147,6 +147,19 @@ h1,h2,h3,p,figure{margin:0}
 .dims span:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .dims span small{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);margin-right:8px;transition:color .3s}
 .dims span:hover small{color:var(--blue-soft)}
+.weights{margin-top:var(--s3);font-size:.78rem;color:var(--ink-3)}
+.weights a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.ab{margin-top:var(--s6);padding:var(--s4) 0 0;border-top:1px solid var(--line-2);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--s2) var(--s5);align-items:start}
+.ab h3{grid-column:1;font-size:1.25rem}
+.ab>p:not(.fine){grid-column:1;color:var(--ink-2);max-width:32em}
+.ab dl{grid-column:2;grid-row:1/4;margin:0;display:grid;gap:var(--s2)}
+.ab dl div{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s2);padding-bottom:var(--s2);border-bottom:1px solid var(--line)}
+.ab dt{font-size:.95rem}
+.ab dd{margin:0;display:flex;align-items:baseline;gap:10px;font-family:var(--f-mono);color:var(--ink-3)}
+.ab dd b{font-family:var(--f-serif);font-weight:400;font-size:2.2rem;line-height:1;color:var(--ink);letter-spacing:-.02em}
+.ab .fine{grid-column:1;font-size:.85rem;color:var(--ink-3)}
+.ab .fine a{color:var(--ink-2);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:760px){.ab{grid-template-columns:1fr}.ab dl{grid-column:1;grid-row:auto}}
 
 /* gallery */
 .works{display:flex;flex-direction:column;gap:var(--s7)}
@@ -249,7 +262,7 @@ h1,h2,h3,p,figure{margin:0}
       <p class="kick mono"><span><b>●</b> Agent Skill</span><span>Claude Code · Codex · Cursor · 30+ 工具</span><span>MIT</span></p>
       <div class="hero-l">
         <h1 id="h1"><span class="l"><span>让 AI 做出</span></span><span class="l"><span>能拿奖的网页，</span></span><span class="l"><span><em>by default.</em></span></span></h1>
-        <p class="lead">以 Awwwards、Webby、FWA 获奖网站为标准：先定一个设计概念，再实现，然后真正打开浏览器截图，按八个维度打分、修改、再截图——直到挑不出明显问题。</p>
+        <p class="lead">以 Awwwards、Webby、FWA 获奖网站为标准：先定一个设计概念，再实现，然后真正打开浏览器截图，按九个维度加权打分、修改、再截图——直到挑不出明显问题。</p>
         <div class="cmd"><code id="cmd"><span>$</span> npx skills add ABC-xiaoxuan/award-level-web-design -g</code><button class="copy" data-copy="npx skills add ABC-xiaoxuan/award-level-web-design -g" aria-label="复制安装命令">复制</button></div>
         <p class="alt">也可以用 <a href="#install">Claude Code 插件市场或手动复制</a> 安装。</p>
       </div>
@@ -263,9 +276,9 @@ h1,h2,h3,p,figure{margin:0}
         <ul class="rows" id="rows"></ul>
         <div class="card-f">
           <p class="note" id="note"></p>
-          <div class="total"><span class="mono">平均</span><strong id="avg">0.0</strong></div>
+          <div class="total"><span class="mono">加权总分</span><strong id="avg">0.00</strong></div>
         </div>
-        <p class="legend mono"><i></i>9 分线：低于它就继续改</p>
+        <p class="legend mono"><i></i>8 分线：任一维度低于它就继续改</p>
       </aside>
     </div>
   </section>
@@ -277,13 +290,23 @@ h1,h2,h3,p,figure{margin:0}
       <p>评委看的是一个清晰的概念被执行到每个细节，而不是特效堆得多不多。</p>
     </div>
     <ol class="loop">
-      <li class="reveal" style="--i:0"><span class="n">01</span><h3>先定概念</h3><p>一句话创意、字体搭配、色彩、网格，以及至少一个让人记住的"签名时刻"。</p><span class="tag mono">避开 AI 模板脸</span></li>
+      <li class="reveal" style="--i:0"><span class="n">01</span><h3>先定概念</h3><p>先写三个方向再选一个，把概念翻译成字体、色彩、版式、动效、文案和"签名时刻"，先写文案再定版式。</p><span class="tag mono">避开 AI 模板脸</span></li>
       <li class="reveal" style="--i:1"><span class="n">02</span><h3>守住底线实现</h3><p>设计令牌、只动 transform/opacity、完整交互状态、AA 对比度、减弱动效偏好。</p><span class="tag mono">375 → 1920 四档宽度</span></li>
-      <li class="reveal" style="--i:2"><span class="n">03</span><h3>截图—打分—修改</h3><p>桌面和手机截图，八个维度逐项打分，按影响排序修改后重新截图。全部 ≥ 9 分才停。</p><span class="tag mono">脚本审计 + 2–3 轮</span></li>
+      <li class="reveal" style="--i:2"><span class="n">03</span><h3>截图—打分—修改</h3><p>截图加眯眼图，九个维度按锚点打分、附证据，再由只看截图的独立评委复评。无红线、没有维度低于 8、加权总分 ≥ 8.5 才停。</p><span class="tag mono">脚本审计 + 2–3 轮</span></li>
     </ol>
-    <div class="dims reveal" aria-label="八个评分维度">
-      <span><small>01</small>排版</span><span><small>02</small>留白</span><span><small>03</small>视觉层级</span><span><small>04</small>色彩</span><span><small>05</small>动效</span><span><small>06</small>微交互</span><span><small>07</small>响应式</span><span><small>08</small>原创性</span>
+    <div class="dims reveal" aria-label="九个评分维度">
+      <span><small>01</small>排版</span><span><small>02</small>留白</span><span><small>03</small>视觉层级</span><span><small>04</small>色彩</span><span><small>05</small>动效</span><span><small>06</small>微交互</span><span><small>07</small>响应式</span><span><small>08</small>原创性</span><span><small>09</small>内容</span>
     </div>
+    <p class="weights mono reveal">设计 40% · 可用性 30% · 创意 20% · 内容 10%，权重来自 <a href="https://www.awwwards.com/about-evaluation/">Awwwards 评审体系</a></p>
+    <aside class="ab reveal" aria-labelledby="ab-h">
+      <h3 id="ab-h">有没有用，盲评说了算</h3>
+      <p>同一个需求，各做一版不用 skill 的和用 skill 的，随机编号后交给只看截图的评委打分。</p>
+      <dl>
+        <div><dt>建筑事务所</dt><dd><span>6.55</span><span aria-hidden="true">→</span><b>8.00</b></dd></div>
+        <div><dt>技术大会</dt><dd><span>7.03</span><span aria-hidden="true">→</span><b>7.95</b></dd></div>
+      </dl>
+      <p class="fine">差距最大的是原创性：对照组的概念只停留在首屏。目前每个需求只跑了一次，<a href="https://github.com/ABC-xiaoxuan/award-level-web-design/blob/main/experiments/ab-2026-10/results.md">完整结果与局限</a>。</p>
+    </aside>
   </section>
 
   <section class="sec wrap" id="work" aria-labelledby="work-h">
@@ -351,11 +374,15 @@ Codex       → ~/.agents/skills/<button data-copy="~/.claude/skills/">复制</b
 <script src="assets/motion.js"></script>
 <script>
 (()=>{
-  const dims=['排版','留白','视觉层级','色彩','动效','微交互','响应式','原创性'];
+  const dims=['排版','留白','视觉层级','色彩','动效','微交互','响应式','原创性','内容'];
+  // Awwwards weights: design 40% (typography, whitespace, hierarchy, colour), usability 30% (responsive, micro-interactions),
+  // creativity 20% (originality, motion), content 10%; each group is the mean of its dimensions
+  const groups=[[0.4,[0,1,2,3]],[0.3,[6,5]],[0.2,[7,4]],[0.1,[8]]];
+  const weighted=s=>groups.reduce((t,[w,ix])=>t+w*ix.reduce((a,i)=>a+s[i],0)/ix.length,0);
   const rounds=[
-    {s:[7,6,7,9,8,8,6,8],note:'<b>第 1 轮</b>：区块样式清掉了左右边距，内容贴边；首屏右上空洞；中文标题出现"seven / 天"孤字；手机端图表文字只剩 6px。'},
-    {s:[8.5,8.5,9,9,9,9,8,9],note:'<b>第 2 轮</b>：标题放大并错位构图，边距修复；页脚被类选择器覆盖、引文"东/西"拆词，继续改。'},
-    {s:[9,9,9.5,9,9,9.5,9,9.5],note:'<b>第 3 轮</b>：引文按短语断行，手机端无溢出，八项全部 ≥ 9 —— 停止迭代，交付。'}
+    {s:[7,6,7,9,8,8,6,8,7.5],note:'<b>第 1 轮</b>：区块样式清掉了左右边距，内容贴边（响应式红线）；首屏右上空洞；中文标题出现"seven / 天"孤字；手机端图表文字只剩 6px。'},
+    {s:[8.5,8.5,9,9,9,9,7.5,9,8.5],note:'<b>第 2 轮</b>：标题放大并错位构图，边距修复；但手机端引文"东/西"拆词，响应式仍低于 8，继续改。'},
+    {s:[9,9,9.5,9,9,9.5,9,9.5,9],note:'<b>第 3 轮</b>：引文按短语断行，手机端无溢出。无红线、没有维度低于 8，加权总分 ≥ 8.5 —— 停止迭代，交付。'}
   ];
   const rows=document.getElementById('rows'),note=document.getElementById('note'),avg=document.getElementById('avg');
   rows.innerHTML=dims.map(d=>`<li><span>${d}</span><span class="bar"><i></i></span><span class="s">0</span></li>`).join('');
@@ -365,9 +392,9 @@ Codex       → ~/.agents/skills/<button data-copy="~/.claude/skills/">复制</b
   function show(r){
     const prev=cur>=0?rounds[cur].s:null;cur=r;
     btns.forEach((b,i)=>b.setAttribute('aria-pressed',i===r));
-    rounds[r].s.forEach((v,i)=>{const li=lis[i];li.querySelector('i').style.setProperty('--v',v/10);li.querySelector('.s').textContent=Number.isInteger(v)?v:v.toFixed(1);li.classList.toggle('low',v<9);li.classList.toggle('up',!!prev&&v>prev[i]&&v>=9)});
+    rounds[r].s.forEach((v,i)=>{const li=lis[i];li.querySelector('i').style.setProperty('--v',v/10);li.querySelector('.s').textContent=Number.isInteger(v)?v:v.toFixed(1);li.classList.toggle('low',v<8);li.classList.toggle('up',!!prev&&v>prev[i]&&v>=8)});
     note.innerHTML=rounds[r].note;
-    avg.textContent=(rounds[r].s.reduce((x,y)=>x+y,0)/8).toFixed(1);
+    avg.textContent=weighted(rounds[r].s).toFixed(2);
   }
   show(0);
   const scoreMotion=createMotion(card,toggle,dt=>{

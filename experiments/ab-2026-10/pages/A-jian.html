@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>间 建筑事务所</title>
+<meta name="description" content="间建筑事务所，成立于 2014 年，专注住宅与小型公共空间改造。">
+<style>
+:root{
+  --paper:#f3efe7; --paper-2:#ebe5d9; --ink:#1d1b18; --ink-2:#5b564e; --line:#cfc7b8;
+  --brick:#b4532a; --brick-soft:#e7c9b6;
+  --serif:"Songti SC","STSong","Noto Serif CJK SC","Source Han Serif SC","SimSun",serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --gut:clamp(16px,4vw,56px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--brick);outline-offset:3px}
+.wrap{padding:0 var(--gut);max-width:1440px;margin:0 auto}
+.num{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-2)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--paper);padding:8px 12px;z-index:99}
+.skip:focus{left:8px}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid transparent;transition:border-color .3s}
+header.scrolled{border-color:var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:20px;letter-spacing:.1em}
+.logo svg{width:28px;height:28px}
+nav ul{display:flex;gap:clamp(16px,3vw,40px);list-style:none;font-size:14px;letter-spacing:.12em}
+nav a{position:relative;padding:4px 0}
+nav a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--ink);transform:scaleX(0);transform-origin:right;transition:transform .35s ease}
+nav a:hover::after{transform:scaleX(1);transform-origin:left}
+
+/* hero */
+.hero{padding:clamp(48px,9vw,120px) 0 clamp(40px,6vw,80px)}
+.hero-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:end}
+.hero h1{grid-column:1/9;font-family:var(--serif);font-weight:400;font-size:clamp(44px,8.4vw,128px);line-height:1.08;letter-spacing:.02em}
+.hero h1 em{font-style:normal;color:var(--brick)}
+.hero .lede{grid-column:9/13;font-size:15px;color:var(--ink-2);max-width:30em;padding-bottom:12px}
+.hero-meta{display:flex;justify-content:space-between;gap:16px;margin-top:clamp(40px,6vw,72px);padding-top:16px;border-top:1px solid var(--ink)}
+.hero-meta div{display:flex;flex-direction:column;gap:2px}
+.hero-meta b{font-family:var(--serif);font-weight:400;font-size:clamp(24px,3vw,36px);line-height:1.2}
+.hero-draw{margin-top:clamp(32px,5vw,64px);border:1px solid var(--line);background:var(--paper-2);aspect-ratio:21/8;position:relative;overflow:hidden}
+.hero-draw svg{position:absolute;inset:0;width:100%;height:100%}
+.hero-draw .cap{position:absolute;left:16px;bottom:12px}
+/* sections */
+section{padding:clamp(64px,10vw,140px) 0;border-top:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-bottom:clamp(36px,5vw,64px);align-items:baseline}
+.sec-head .num{grid-column:1/3}
+.sec-head h2{grid-column:3/9;font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.4vw,60px);line-height:1.15}
+.sec-head p{grid-column:9/13;color:var(--ink-2);font-size:14px}
+
+/* filters */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.filters button{font:inherit;font-size:13px;letter-spacing:.1em;background:none;border:1px solid var(--line);color:var(--ink);padding:6px 16px;border-radius:999px;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.filters button:hover{border-color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* works */
+.works{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(20px,2.4vw,32px);list-style:none}
+.work{grid-column:span 4;display:flex;flex-direction:column;gap:12px;transition:opacity .35s}
+.work.wide{grid-column:span 8}
+.work.hide{display:none}
+.work .pic{position:relative;aspect-ratio:4/3;background:var(--paper-2);border:1px solid var(--line);overflow:hidden}
+.work.wide .pic{aspect-ratio:16/9}
+.work .pic svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.work a:hover .pic svg,.work a:focus-visible .pic svg{transform:scale(1.04)}
+.work .pic .tag{position:absolute;top:12px;left:12px;font-size:12px;background:var(--paper);padding:2px 10px;letter-spacing:.1em}
+.work .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.work h3{font-family:var(--serif);font-weight:400;font-size:clamp(20px,1.8vw,24px);line-height:1.3}
+.work p{font-size:14px;color:var(--ink-2)}
+.work a{display:flex;flex-direction:column;gap:12px}
+
+/* philosophy */
+.phil{background:var(--ink);color:var(--paper);border-top:none}
+.phil .num,.phil .sec-head p{color:#a59e92}
+.quote{font-family:var(--serif);font-size:clamp(26px,3.6vw,48px);line-height:1.5;max-width:22em;margin-bottom:clamp(48px,7vw,96px)}
+.quote span{color:var(--brick-soft)}
+.tenets{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,3vw,48px);list-style:none}
+.tenets li{border-top:1px solid #4a463f;padding-top:20px}
+.tenets h3{font-family:var(--serif);font-weight:400;font-size:24px;margin:10px 0 8px}
+.tenets p{color:#bdb6aa;font-size:15px}
+.tenets svg{width:48px;height:48px;display:block}
+
+/* timeline */
+.years{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:clamp(48px,6vw,80px);padding-top:24px;border-top:1px solid #4a463f}
+.years b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(32px,4vw,56px);line-height:1.1;color:var(--paper)}
+.years span{font-size:13px;color:#a59e92}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+.big-mail{grid-column:1/8;font-family:var(--serif);font-size:clamp(28px,4.6vw,64px);line-height:1.2;word-break:break-all}
+.big-mail a{background:linear-gradient(var(--brick),var(--brick)) 0 100%/0 2px no-repeat;transition:background-size .5s}
+.big-mail a:hover{background-size:100% 2px}
+.info{grid-column:8/13;display:grid;grid-template-columns:1fr 1fr;gap:28px 24px;font-size:15px}
+.info dt{font-size:12px;letter-spacing:.12em;color:var(--ink-2);margin-bottom:4px}
+.form{grid-column:1/13;margin-top:clamp(40px,6vw,72px);display:grid;grid-template-columns:1fr 1fr 2fr auto;gap:16px;align-items:end}
+.form label{display:flex;flex-direction:column;font-size:12px;letter-spacing:.1em;color:var(--ink-2);gap:6px}
+.form input,.form select{font:inherit;font-size:16px;color:var(--ink);background:transparent;border:none;border-bottom:1px solid var(--ink);padding:8px 0;border-radius:0}
+.form button{font:inherit;font-size:14px;letter-spacing:.12em;background:var(--brick);color:#fff;border:none;padding:12px 28px;cursor:pointer;transition:background .25s}
+.form button:hover{background:var(--ink)}
+.form .msg{grid-column:1/-1;font-size:14px;color:var(--brick);min-height:1.5em}
+
+footer{border-top:1px solid var(--line);padding:24px 0 32px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink-2)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:900px){
+  .hero h1,.hero .lede,.sec-head h2,.sec-head p,.sec-head .num,.big-mail,.info{grid-column:1/-1}
+  .work,.work.wide{grid-column:span 6}
+  .tenets{grid-template-columns:1fr}
+  .years{grid-template-columns:repeat(2,1fr)}
+  .form{grid-template-columns:1fr 1fr}
+  .form .full{grid-column:1/-1}
+}
+@media (max-width:600px){
+  nav ul{gap:14px;font-size:13px;letter-spacing:.04em}
+  .work,.work.wide{grid-column:1/-1}
+  .work.wide .pic{aspect-ratio:4/3}
+  .hero-meta{flex-wrap:wrap}
+  .hero-meta div{flex:1 1 40%}
+  .hero-draw{aspect-ratio:4/3}
+  .info{grid-template-columns:1fr}
+  .form{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#works">跳到作品</a>
+<header id="top">
+  <div class="wrap bar">
+    <a class="logo" href="#top" aria-label="间 建筑事务所 首页">
+      <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="10" height="18" fill="#b4532a"/></svg>
+      间 建筑
+    </a>
+    <nav aria-label="主导航"><ul>
+      <li><a href="#works">作品</a></li>
+      <li><a href="#about">理念</a></li>
+      <li><a href="#contact">联系</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap hero">
+  <div class="hero-grid">
+    <h1 class="reveal">让旧房子<br>再住<em>下一代</em>人。</h1>
+    <p class="lede reveal">间建筑事务所成立于 2014 年，十二年来只做两件事：住宅改造，与街角的小型公共空间。我们在已有的墙、梁和光线之间工作，尽量少拆，尽量多留。</p>
+  </div>
+  <div class="hero-meta reveal">
+    <div><span class="num">成立</span><b>2014</b></div>
+    <div><span class="num">已完成项目</span><b>86 个</b></div>
+    <div><span class="num">平均保留原结构</span><b>72%</b></div>
+    <div><span class="num">所在</span><b>上海 · 杭州</b></div>
+  </div>
+  <figure class="hero-draw reveal" aria-label="线描示意：一栋老弄堂住宅的剖面，新加入的部分以砖红色标出">
+    <svg id="heroSvg" viewBox="0 0 1050 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+    <figcaption class="cap num">剖面 01 · 灰色为原有结构，砖红为新增</figcaption>
+  </figure>
+</div>
+
+<section id="works" aria-labelledby="works-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="num">01 / 作品</span>
+      <h2 id="works-h" class="reveal">近年作品</h2>
+      <p class="reveal">从 38 平方米的老公房，到一座社区图书室。每个项目都从测绘原状开始。</p>
+    </div>
+    <div class="filters" role="group" aria-label="按类型筛选作品">
+      <button type="button" aria-pressed="true" data-f="all">全部</button>
+      <button type="button" aria-pressed="false" data-f="home">住宅</button>
+      <button type="button" aria-pressed="false" data-f="public">公共空间</button>
+    </div>
+    <ul class="works" id="worksList">
+      <li class="work wide reveal" data-type="home"><a href="#contact">
+        <div class="pic"><svg viewBox="0 0 800 450" data-k="0" aria-hidden="true"></svg><span class="tag">住宅</span></div>
+        <div class="row"><h3>永嘉路石库门翻新</h3><span class="num">2025 · 上海</span></div>
+        <p>三代同住的 92 平方米，保留木楼梯与天井，新增一道采光竖井。</p>
+      </a></li>
+      <li class="work reveal" data-type="public"><a href="#contact">
+        <div class="pic"><svg viewBox="0 0 400 300" data-k="1" aria-hidden="true"></svg><span class="tag">公共空间</span></div>
+        <div class="row"><h3>小营巷社区书房</h3><span class="num">2024 · 杭州</span></div>
+        <p>由废弃配电房改成的 60 平方米阅读室，向街道开一扇长窗。</p>
+      </a></li>
+      <li class="work reveal" data-type="home"><a href="#contact">
+        <div class="pic"><svg viewBox="0 0 400 300" data-k="2" aria-hidden="true"></svg><span class="tag">住宅</span></div>
+        <div class="row"><h3>38㎡ 老公房</h3><span class="num">2024 · 上海</span></div>
+        <p>一张折叠的墙柜，让一居室在白天和夜晚各有一种用法。</p>
+      </a></li>
+      <li class="work reveal" data-type="public"><a href="#contact">
+        <div class="pic"><svg viewBox="0 0 400 300" data-k="3" aria-hidden="true"></svg><span class="tag">公共空间</span></div>
+        <div class="row"><h3>菜场二层茶室</h3><span class="num">2023 · 杭州</span></div>
+        <p>在菜市场屋顶上加一层轻钢棚，给摊主和街坊一个歇脚处。</p>
+      </a></li>
+      <li class="work reveal" data-type="home"><a href="#contact">
+        <div class="pic"><svg viewBox="0 0 400 300" data-k="4" aria-hidden="true"></svg><span class="tag">住宅</span></div>
+        <div class="row"><h3>莫干山夯土宅</h3><span class="num">2022 · 湖州</span></div>
+        <p>加固五十年的夯土墙，在内侧植入一个木结构的“屋中屋”。</p>
+      </a></li>
+      <li class="work wide reveal" data-type="public"><a href="#contact">
+        <div class="pic"><svg viewBox="0 0 800 450" data-k="5" aria-hidden="true"></svg><span class="tag">公共空间</span></div>
+        <div class="row"><h3>武康路口袋广场</h3><span class="num">2021 · 上海</span></div>
+        <p>拆掉一段围墙，把 140 平方米的消防通道还给路人，种下四棵榉树。</p>
+      </a></li>
+    </ul>
+  </div>
+</section>
+<section id="about" class="phil" aria-labelledby="about-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="num">02 / 理念</span>
+      <h2 id="about-h" class="reveal">我们相信的事</h2>
+      <p class="reveal">改造不是推倒重来。好的改造，是让人看不出哪里动过，却处处住得更好。</p>
+    </div>
+    <p class="quote reveal">一栋房子最贵的部分，是<span>已经发生过的生活</span>。我们的工作，是替它留下来，再为下一段生活腾出地方。</p>
+    <ul class="tenets">
+      <li class="reveal">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="12" width="40" height="32" fill="none" stroke="#f3efe7" stroke-width="1.5"/><path d="M4 12 24 2 44 12" fill="none" stroke="#f3efe7" stroke-width="1.5"/><rect x="18" y="26" width="12" height="18" fill="#b4532a"/></svg>
+        <span class="num">壹</span><h3>少拆</h3>
+        <p>先测绘、再判断。能留下的墙、梁、地砖，都先留下。拆除是最后的选项，而不是第一步。</p>
+      </li>
+      <li class="reveal">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="none" stroke="#f3efe7" stroke-width="1.5"/><path d="M24 4v40" stroke="#b4532a" stroke-width="3"/><path d="M8 36 40 12" stroke="#f3efe7" stroke-width="1" stroke-dasharray="2 3"/></svg>
+        <span class="num">贰</span><h3>引光</h3>
+        <p>老房子的问题，往往是光进不来。一道天窗、一面退后的墙，比任何材料都更能改变一个家。</p>
+      </li>
+      <li class="reveal">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="4" width="18" height="18" fill="none" stroke="#f3efe7" stroke-width="1.5"/><rect x="26" y="4" width="18" height="18" fill="none" stroke="#f3efe7" stroke-width="1.5"/><rect x="4" y="26" width="18" height="18" fill="none" stroke="#f3efe7" stroke-width="1.5"/><rect x="26" y="26" width="18" height="18" fill="#b4532a"/></svg>
+        <span class="num">叁</span><h3>给街道</h3>
+        <p>每个公共项目，都试着向街道多让出一点：一张长凳、一个檐下、一棵树的位置。</p>
+      </li>
+    </ul>
+    <div class="years">
+      <div class="reveal"><b>2014</b><span>在上海一间弄堂阁楼成立</span></div>
+      <div class="reveal"><b>2017</b><span>第一个社区公共空间落成</span></div>
+      <div class="reveal"><b>2020</b><span>开设杭州工作室</span></div>
+      <div class="reveal"><b>2026</b><span>团队 14 人，第十二年</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" aria-labelledby="contact-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="num">03 / 联系</span>
+      <h2 id="contact-h" class="reveal">聊聊你的房子</h2>
+      <p class="reveal">第一次现场踏勘免费。告诉我们房子在哪、多大、住着谁就好。</p>
+    </div>
+    <div class="contact-grid">
+      <p class="big-mail reveal"><a href="mailto:hello@jian-studio.cn">hello@jian-studio.cn</a></p>
+      <dl class="info reveal">
+        <div><dt>上海工作室</dt><dd>徐汇区永嘉路 000 弄 00 号</dd></div>
+        <div><dt>杭州工作室</dt><dd>上城区小营巷 00 号 2 楼</dd></div>
+        <div><dt>电话</dt><dd><a href="tel:+862100000000">021-0000 0000</a></dd></div>
+        <div><dt>开放时间</dt><dd>周二至周六 10:00–18:00</dd></div>
+      </dl>
+      <form class="form reveal" id="form" novalidate>
+        <label>称呼<input name="name" autocomplete="name" required></label>
+        <label>项目类型<select name="type"><option>住宅改造</option><option>小型公共空间</option><option>其他</option></select></label>
+        <label class="full">邮箱或电话<input name="contact" autocomplete="email" required></label>
+        <button type="submit" class="full">预约踏勘</button>
+        <p class="msg" id="msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2014–2026 间建筑事务所</span>
+    <span>沪ICP备 00000000 号</span>
+    <a href="#top">回到顶部 ↑</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var NS="http://www.w3.org/2000/svg";
+  function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e}
+  var G="#8a8276",R="#b4532a",L="#cfc7b8";
+
+  // hero section drawing
+  var h=document.getElementById("heroSvg");
+  for(var x=0;x<=1050;x+=35)el("line",{x1:x,y1:0,x2:x,y2:400,stroke:L,"stroke-width":.5},h);
+  for(var y=0;y<=400;y+=35)el("line",{x1:0,y1:y,x2:1050,y2:y,stroke:L,"stroke-width":.5},h);
+  el("line",{x1:0,y1:350,x2:1050,y2:350,stroke:"#1d1b18","stroke-width":2},h);
+  el("path",{d:"M220 350V150L420 60 620 150V350",fill:"none",stroke:G,"stroke-width":2},h);
+  el("path",{d:"M220 250H620M320 350V250M520 250V150M420 60V150",fill:"none",stroke:G,"stroke-width":1.5},h);
+  el("path",{d:"M620 350V200H860V350",fill:"none",stroke:G,"stroke-width":2,"stroke-dasharray":"6 5"},h);
+  el("rect",{x:395,y:60,width:50,height:290,fill:R,opacity:.18},h);
+  el("path",{d:"M395 60V350M445 60V350",stroke:R,"stroke-width":2},h);
+  el("path",{d:"M620 200L860 160V200",fill:R,opacity:.85},h);
+  el("path",{d:"M250 330H300M260 310H310M270 290H320",stroke:R,"stroke-width":2},h);
+  for(var i=0;i<6;i++)el("line",{x1:420,y1:20,x2:330+i*36,y2:350,stroke:R,"stroke-width":.6,"stroke-dasharray":"2 6",opacity:.6},h);
+  el("circle",{cx:420,cy:20,r:6,fill:R},h);
+  [[100,"±0.000"],[150,"+4.200"]].forEach(function(d){var t=el("text",{x:880,y:350-d[0]+4,"font-size":12,fill:G,"font-family":"monospace"},h);t.textContent=d[1];});
+
+  // project thumbnails: abstract plans/axonometry
+  var palettes=[["#e3dccf","#c9bfae"],["#ddd5c6","#bfb39f"],["#e8e1d4","#cbbfac"]];
+  document.querySelectorAll(".pic svg").forEach(function(s){
+    var k=+s.dataset.k, vb=s.viewBox.baseVal, W=vb.width, H=vb.height, p=palettes[k%3];
+    el("rect",{width:W,height:H,fill:p[0]},s);
+    var seed=k*9301+49297; function rnd(){seed=(seed*9301+49297)%233280;return seed/233280}
+    var cx=W/2, cy=H*.58, u=Math.min(W,H)*.12;
+    // floor slab (isometric)
+    function iso(x,y,z){return [cx+(x-y)*u*.87, cy+(x+y)*u*.5-z*u]}
+    function poly(pts,fill,stroke){el("polygon",{points:pts.map(function(q){return q.join(",")}).join(" "),fill:fill,stroke:stroke||"none","stroke-width":1},s)}
+    var n=3+(k%2);
+    for(var gx=0;gx<n;gx++)for(var gy=0;gy<n;gy++){
+      var z=(rnd()<.45)?(1+Math.floor(rnd()*2)):0, a=gx-n/2, b=gy-n/2;
+      if(z===0){poly([iso(a,b,0),iso(a+1,b,0),iso(a+1,b+1,0),iso(a,b+1,0)],p[1],"#f3efe7");continue}
+      var red=rnd()<.22;
+      poly([iso(a,b+1,0),iso(a+1,b+1,0),iso(a+1,b+1,z),iso(a,b+1,z)],red?"#9a4522":"#a99e8b");
+      poly([iso(a+1,b,0),iso(a+1,b+1,0),iso(a+1,b+1,z),iso(a+1,b,z)],red?"#c9693f":"#8f8574");
+      poly([iso(a,b,z),iso(a+1,b,z),iso(a+1,b+1,z),iso(a,b+1,z)],red?R:"#efe9de","#1d1b18");
+    }
+    el("text",{x:W-14,y:H-14,"text-anchor":"end","font-size":11,fill:"#5b564e","font-family":"monospace"},s).textContent="P-"+String(k+1).padStart(2,"0");
+  });
+
+  // filters
+  var btns=document.querySelectorAll(".filters button"), items=document.querySelectorAll(".work");
+  btns.forEach(function(b){b.addEventListener("click",function(){
+    btns.forEach(function(x){x.setAttribute("aria-pressed",x===b)});
+    var f=b.dataset.f;
+    items.forEach(function(it){it.classList.toggle("hide",f!=="all"&&it.dataset.type!==f)});
+  })});
+
+  // header border on scroll
+  var hd=document.querySelector("header");
+  addEventListener("scroll",function(){hd.classList.toggle("scrolled",scrollY>8)},{passive:true});
+
+  // reveal
+  var rv=document.querySelectorAll(".reveal");
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.12,rootMargin:"0px 0px -40px 0px"});
+    rv.forEach(function(e){io.observe(e)});
+  } else rv.forEach(function(e){e.classList.add("in")});
+
+  // form (no network: confirmation only)
+  var form=document.getElementById("form"), msg=document.getElementById("msg");
+  form.addEventListener("submit",function(e){
+    e.preventDefault();
+    if(!form.elements.namedItem("name").value.trim()||!form.elements.namedItem("contact").value.trim()){msg.textContent="请填写称呼和联系方式。";return}
+    msg.textContent=form.elements.namedItem("name").value.trim()+"，谢谢。我们会在两个工作日内与你联系。";
+    form.reset();
+  });
+})();
+</script>
+</main>
+</body>
+</html>

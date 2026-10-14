@@ -3,15 +3,15 @@
     "page": "index",
     "family": "Noto Sans SC",
     "file": "index-notosanssc-0.woff2",
-    "bytes": 105964,
+    "bytes": 109472,
     "source": "notosanssc-0.woff2",
-    "characters": 457
+    "characters": 469
   },
   {
     "page": "index",
     "family": "Instrument Serif",
     "file": "index-instrumentserif-0.woff2",
-    "bytes": 15232,
+    "bytes": 15228,
     "source": "instrumentserif-0.woff2",
     "characters": 98
   },
@@ -19,7 +19,7 @@
     "page": "index",
     "family": "Instrument Serif",
     "file": "index-instrumentserif-1.woff2",
-    "bytes": 14316,
+    "bytes": 14312,
     "source": "instrumentserif-1.woff2",
     "characters": 98
   },
@@ -27,7 +27,7 @@
     "page": "index",
     "family": "JetBrains Mono",
     "file": "index-jetbrainsmono-0.woff2",
-    "bytes": 24244,
+    "bytes": 24228,
     "source": "jetbrainsmono-0.woff2",
     "characters": 103
   },

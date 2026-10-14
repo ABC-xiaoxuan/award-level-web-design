@@ -2,7 +2,7 @@
 
 一个让 AI 编程助手按 **Awwwards / Webby Awards / FWA 获奖网站**的品质标准来设计和实现网页的 Agent Skill。
 
-页面完成后，它会实际渲染并截图，再从八个维度逐项打分、修改、重新截图，循环到没有明显可提升之处：
+页面完成后，它会实际渲染并截图，再从九个维度逐项打分、修改、重新截图，循环到没有明显可提升之处：
 
 > 排版 · 留白 · 视觉层级 · 色彩 · 动效 · 微交互 · 响应式 · 原创性
 
@@ -101,7 +101,7 @@ npx skills add ABC-xiaoxuan/award-level-web-design -g -a claude-code -a codex
 1. **先定设计概念**：一句话创意、字体搭配、色彩方案、版式网格，以及至少一个"签名时刻"。
 2. **实现时守住底线**：设计令牌、只动 transform/opacity 的流畅动效、完整的交互状态、WCAG AA 对比度、`prefers-reduced-motion`、375–1920 四档宽度。
 3. **截图 + 自动审计**：自带的 `shoot.mjs` 一次截完 375 / 768 / 1440 / 1920 四个宽度，`audit.js` 自动查出溢出、对比度、点击区、中文字体回退、标题孤字等客观问题。
-4. **打分修改循环**：八维度 1–10 分打分，按影响排序批量修改，再重新截图。默认 2 轮、最多 3 轮；audit 无 error 且八项都 ≥ 9 分即停止。
+4. **打分修改循环**：九个维度按锚点打 1–10 分，每个分数附截图证据（含模糊灰度的"眯眼图"和整页缩略图），另开一个只看截图的子 agent 独立复评，再按 Awwwards 的设计 40% / 可用性 30% / 创意 20% / 内容 10% 加权。按影响排序批量修改，再重新截图。默认 2 轮、最多 3 轮；audit 无 error、总分 ≥ 8.5 且没有维度低于 8 即停止。
 5. **交付说明**：设计取舍、每轮改了什么、最终得分与 audit 结果、还需要你提供的素材。
 
 截图脚本需要 Node 22+ 和本机的 Chrome / Edge / Chromium。没有的话，可以把 `audit.js` 粘贴到浏览器控制台执行；两者都用不了时，它会改为对照代码逐条审查，并告诉你这一点。
@@ -145,9 +145,13 @@ npm run build:previews   # 截取三个示例，生成 WebP 与 480/960 宽度�
 ```
 skills/award-level-web-design/
 ├── SKILL.md                      # 主流程
-├── references/review-checklist.md # 八维度自检清单
+├── references/award-criteria.md   # 奖项标准、维度权重与分数锚点
+├── references/cjk-type.md         # 中文字体选择、子集化加载、排版细节与竖排
+├── references/review-checklist.md # 九维度自检清单
+├── references/motion-patterns.md  # 动效模式与降级模板
 ├── scripts/shoot.mjs              # 多宽度截图 + 调用审计
 ├── scripts/audit.js               # 页面内自动审计（也可粘贴到控制台）
+├── scripts/performance.js         # LCP / CLS 采集（shoot.mjs --perf 使用）
 └── agents/openai.yaml             # Codex 界面信息（其他工具会忽略）
 examples/                          # 三个示例页面 + 截图（不会被安装）
 ```

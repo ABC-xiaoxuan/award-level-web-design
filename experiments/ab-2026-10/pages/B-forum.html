@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>本地优先软件大会 2026 · 杭州 11.21—22</title>
+<meta name="description" content="第一届本地优先软件大会，2026 年 11 月 21—22 日在杭州举行。两天 18 场分享与 2 个工作坊：CRDT、同步引擎、端侧数据库与离线协作。">
+<style>
+:root{
+  --paper:#F1EEE5; --paper-2:#E6E2D5; --ink:#17160F; --ink-2:#4D4A40; --line:#C9C3B1;
+  --accent:#E0461B; --accent-ink:#B13210;
+  --night:#14130E; --night-2:#1E1D16; --night-line:#3B392F; --night-ink:#EEEADF; --night-mute:#ABA693;
+  --f-sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei UI","Microsoft YaHei","Noto Sans SC","Source Han Sans SC",sans-serif;
+  --f-display:"Bahnschrift","DIN Alternate","DIN Condensed","Roboto Condensed","Arial Narrow","PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --f-mono:"Cascadia Mono","SF Mono","Consolas","Menlo","PingFang SC","Microsoft YaHei","Noto Sans SC",monospace;
+  --ease-out:cubic-bezier(.22,1,.36,1); --ease-standard:cubic-bezier(.2,.8,.2,1);
+  --d-fast:180ms; --d-base:420ms; --d-slow:700ms;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px; --s10:144px;
+  --gutter:clamp(16px,4vw,56px); --max:1440px;
+  --r:2px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.8 var(--f-sans);line-break:strict;text-spacing-trim:normal;text-autospace:normal;overflow-x:hidden}
+h1,h2,h3,p,ul,ol,figure,blockquote{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+::selection{background:var(--accent);color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+.mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;line-height:1.5;text-transform:uppercase}
+.skip{position:absolute;left:var(--s4);top:-60px;background:var(--ink);color:var(--paper);padding:var(--s3) var(--s4);z-index:20;text-decoration:none}
+.skip:focus{top:var(--s3)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:var(--s5);min-height:60px}
+.brand{display:flex;align-items:baseline;gap:var(--s3);text-decoration:none;margin-right:auto;min-height:44px;align-items:center}
+.brand b{font:700 22px/1 var(--f-display);letter-spacing:.02em}
+.brand b i{font-style:normal;color:var(--accent-ink)}
+.brand span{font-size:13px;color:var(--ink-2)}
+.nav-links{display:flex;gap:var(--s2);align-items:center}
+.nav-links a{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(--s3);text-decoration:none;font-size:15px;position:relative}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:var(--s3);right:var(--s3);bottom:10px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform var(--d-base) var(--ease-out)}
+.nav-links a:not(.btn):hover::after{transform:scaleX(1)}
+.agenda-count{font-family:var(--f-mono);font-size:12px;margin-left:6px;padding:1px 6px;border:1px solid var(--line);border-radius:999px;font-variant-numeric:tabular-nums}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:var(--s3);min-height:48px;padding:0 var(--s5);border:1px solid var(--ink);background:var(--ink);color:var(--paper);text-decoration:none;font-weight:600;font-size:16px;border-radius:var(--r);cursor:pointer;transition:background var(--d-fast) var(--ease-standard),color var(--d-fast) var(--ease-standard),transform var(--d-fast) var(--ease-standard)}
+.btn .arrow{display:inline-block;transition:transform var(--d-base) var(--ease-out)}
+.btn:hover{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.btn:hover .arrow{transform:translateX(4px)}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn.sm{min-height:44px;padding:0 var(--s4);font-size:14px}
+.link{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
+.link:hover{color:var(--accent-ink)}
+
+/* hero */
+.hero{padding-block:var(--s6) var(--s8)}
+.statusbar{display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;color:var(--ink-2);padding-bottom:var(--s5)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#2F8F4E;margin-right:8px;vertical-align:1px}
+.dot.off{background:var(--accent)}
+.hero h1{font:800 clamp(60px,14.5vw,216px)/1.04 var(--f-sans);letter-spacing:-.04em;margin-top:var(--s5)}
+.hero h1 .l{display:block}
+.hero h1 .l2{text-align:right}
+.hero h1 .l2 em{font-style:normal;color:var(--accent-ink)}
+.hero h1 .l > span{display:inline-block}
+.hero-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s5);margin-top:var(--s7);align-items:end}
+.lede{grid-column:1 / span 5;font-size:clamp(17px,1.35vw,20px);max-width:30em;color:var(--ink-2)}
+.nw{white-space:nowrap}
+.lede strong{color:var(--ink);font-weight:600}
+.cta-row{display:flex;gap:var(--s3);flex-wrap:wrap;margin-top:var(--s5)}
+.dates{grid-column:8 / span 5;display:grid;grid-template-columns:auto 1fr;gap:var(--s2) var(--s5);align-items:end;justify-self:end}
+.dates .big{font:600 clamp(64px,8vw,128px)/.82 var(--f-display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.dates .big small{font-size:.4em;letter-spacing:0;vertical-align:top;margin-left:4px}
+.dates dl{margin:0;display:grid;gap:var(--s2)}
+.dates dt{color:var(--ink-2)}
+.dates dd{margin:0;font-size:15px;line-height:1.5}
+
+/* oplog signature */
+.oplog{margin-top:var(--s8);border-top:1px solid var(--ink);padding-top:var(--s4)}
+.oplog-head{display:flex;justify-content:space-between;gap:var(--s4);color:var(--ink-2);flex-wrap:wrap}
+.oplog svg{display:block;width:100%;height:auto;margin-top:var(--s4);overflow:visible}
+.oplog .lane{stroke:var(--ink);stroke-width:1.5;fill:none}
+.oplog .merge{stroke:var(--accent);stroke-width:1.5;fill:none}
+.oplog .op{fill:var(--paper);stroke:var(--ink);stroke-width:1.5}
+.oplog .op.m{fill:var(--accent);stroke:var(--accent)}
+.oplog text{font-family:var(--f-mono);font-size:11px;fill:var(--ink-2);letter-spacing:.06em}
+.draw .lane,.draw .merge{stroke-dasharray:var(--len);stroke-dashoffset:var(--len)}
+.draw.go .lane,.draw.go .merge{transition:stroke-dashoffset 1600ms var(--ease-out);stroke-dashoffset:0}
+.draw.go .merge{transition-delay:500ms}
+.draw .op{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.3)}
+.draw.go .op{opacity:1;transform:none;transition:opacity var(--d-base) var(--ease-out),transform var(--d-base) var(--ease-out);transition-delay:calc(var(--i) * 45ms)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stats li{padding:var(--s5) var(--s4) var(--s5) 0;border-right:1px solid var(--line);padding-left:var(--s4)}
+.stats li:first-child{padding-left:0}
+.stats li:last-child{border-right:0}
+.stats b{display:block;font:600 clamp(40px,4.4vw,64px)/1 var(--f-display);font-variant-numeric:tabular-nums}
+.stats li:last-child b{color:var(--accent-ink)}
+.stats span{display:block;margin-top:var(--s2);font-size:14px;color:var(--ink-2);line-height:1.5}
+
+/* section heads */
+.sec{padding-block:var(--s10)}
+.sec-head{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s5);margin-bottom:var(--s8)}
+.sec-head .idx{grid-column:1 / span 3;color:var(--ink-2);padding-top:.9em}
+.sec-head h2{grid-column:4 / span 9;font:800 clamp(36px,5.4vw,80px)/1.12 var(--f-sans);letter-spacing:-.03em}
+.sec-head p{grid-column:4 / span 6;margin-top:var(--s5);color:var(--ink-2);max-width:34em}
+/* demo (dark) */
+.night{background:var(--night);color:var(--night-ink)}
+.night .sec-head .idx,.night .sec-head p{color:var(--night-mute)}
+.night :focus-visible{outline-color:#FF7A4D}
+.demo{display:grid;grid-template-columns:1fr 168px 1fr;gap:0;align-items:stretch}
+.device{border:1px solid var(--night-line);background:var(--night-2);padding:var(--s5);display:flex;flex-direction:column;min-height:360px;border-radius:var(--r)}
+.device-top{display:flex;justify-content:space-between;align-items:center;gap:var(--s3);color:var(--night-mute);padding-bottom:var(--s4);border-bottom:1px solid var(--night-line)}
+.device h3{font:600 20px/1.4 var(--f-sans);color:var(--night-ink);margin-top:var(--s4)}
+.pending{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;padding:2px 8px;border:1px solid var(--night-line);border-radius:999px;color:var(--night-mute);transition:color var(--d-fast),border-color var(--d-fast)}
+.pending.has{color:#FF8F66;border-color:#FF8F66}
+.chips{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s4);flex:1;align-content:flex-start;min-height:120px}
+.chip{display:inline-flex;align-items:center;gap:var(--s2);padding:6px 12px;border:1px solid var(--night-line);border-radius:var(--r);font-size:15px;line-height:1.5;background:var(--night)}
+.chip small{font-family:var(--f-mono);font-size:11px;color:var(--night-mute);letter-spacing:.04em}
+.chip.local{border-style:dashed;border-color:#FF8F66}
+.chip.arrive-l{animation:inL var(--d-slow) var(--ease-out) both}
+.chip.arrive-r{animation:inR var(--d-slow) var(--ease-out) both}
+@keyframes inL{from{transform:translateX(-40px);opacity:0}to{transform:none;opacity:1}}
+@keyframes inR{from{transform:translateX(40px);opacity:0}to{transform:none;opacity:1}}
+.device .add{margin-top:var(--s4);align-self:flex-start;background:transparent;color:var(--night-ink);border:1px solid var(--night-ink);min-height:44px;padding:0 var(--s4);border-radius:var(--r);cursor:pointer;font-size:15px;transition:background var(--d-fast),color var(--d-fast),transform var(--d-fast)}
+.device .add:hover{background:var(--night-ink);color:var(--night)}
+.device .add:active{transform:scale(.98)}
+.device .add:disabled{opacity:.5;cursor:not-allowed;background:transparent;color:var(--night-ink)}
+.clock{margin-top:var(--s4);color:var(--night-mute);font-variant-numeric:tabular-nums}
+.channel{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s4)}
+.wire{position:absolute;left:0;right:0;top:50%;height:0;border-top:1px dashed var(--night-mute)}
+.wire::before,.wire::after{content:"";position:absolute;top:-1px;height:1px;width:50%;background:var(--night-ink);transition:transform var(--d-slow) var(--ease-out)}
+.wire::before{left:0;transform-origin:left}
+.wire::after{right:0;transform-origin:right}
+.demo.offline .wire::before,.demo.offline .wire::after{transform:scaleX(.32)}
+.demo.offline .wire{border-top-color:transparent}
+.toggle{position:relative;z-index:1;min-height:48px;padding:0 var(--s4);background:var(--night);color:var(--night-ink);border:1px solid var(--night-ink);border-radius:999px;cursor:pointer;font-size:15px;font-weight:600;white-space:nowrap;transition:background var(--d-fast),color var(--d-fast)}
+.toggle:hover{background:var(--night-ink);color:var(--night)}
+.toggle[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.netstate{position:relative;z-index:1;color:var(--night-mute);background:var(--night);padding:0 6px}
+.demo-log{margin-top:var(--s5);display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;color:var(--night-mute);border-top:1px solid var(--night-line);padding-top:var(--s4)}
+.demo-log output{color:var(--night-ink);font-family:var(--f-mono);font-size:13px;letter-spacing:.02em;text-transform:none}
+.demo-reset{background:none;border:0;color:var(--night-mute);cursor:pointer;min-height:44px;text-decoration:underline;text-underline-offset:4px}
+.demo-reset:hover{color:var(--night-ink)}
+.principles{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s5);margin-top:var(--s9)}
+.principles li{grid-column:span 4;border-top:1px solid var(--night-line);padding-top:var(--s4)}
+.principles b{display:block;font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;color:#FF8F66;font-weight:400}
+.principles p{margin-top:var(--s3);font-size:16px;color:var(--night-ink);line-height:1.75}
+.principles p span{color:var(--night-mute)}
+/* schedule */
+.sched-bar{display:flex;justify-content:space-between;align-items:end;gap:var(--s5);flex-wrap:wrap;border-bottom:1px solid var(--ink);position:relative}
+.tabs{display:flex;gap:0;position:relative}
+.tab{background:none;border:0;cursor:pointer;padding:var(--s3) var(--s6) var(--s4) 0;text-align:left;color:var(--ink-2);transition:color var(--d-fast)}
+.tab b{display:block;font:600 clamp(36px,4vw,56px)/1 var(--f-display);letter-spacing:-.01em}
+.tab span{display:block;font-size:15px;margin-top:var(--s2)}
+.tab[aria-selected="true"]{color:var(--ink)}
+.tab:hover{color:var(--ink)}
+.tab-ind{position:absolute;bottom:-1px;left:0;height:3px;background:var(--accent);width:0;transition:transform var(--d-base) var(--ease-out),width var(--d-base) var(--ease-out)}
+.filter{display:inline-flex;align-items:center;gap:var(--s2);min-height:44px;margin-bottom:var(--s3);background:none;border:1px solid var(--ink);padding:0 var(--s4);cursor:pointer;border-radius:999px;font-size:14px;transition:background var(--d-fast),color var(--d-fast)}
+.filter:hover{background:var(--paper-2)}
+.filter[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.panel[hidden]{display:none}
+.panel.enter{animation:panelIn var(--d-base) var(--ease-out)}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.theme{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s5);padding-block:var(--s6) var(--s4);color:var(--ink-2)}
+.theme p{grid-column:3 / span 7;font-size:16px}
+.theme .mono{grid-column:1 / span 2;padding-top:.35em}
+.slot{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s5);padding-block:var(--s5);border-top:1px solid var(--line);align-items:start;transition:background var(--d-fast)}
+.slot:hover{background:color-mix(in srgb,var(--paper-2) 60%,transparent)}
+.slot time{grid-column:1 / span 2;font:500 20px/1.4 var(--f-display);font-variant-numeric:tabular-nums;padding-top:2px}
+.slot .what{grid-column:3 / span 7}
+.slot h3{font:600 clamp(19px,1.6vw,23px)/1.45 var(--f-sans);letter-spacing:-.005em;text-wrap:pretty}
+.slot .who{margin-top:var(--s2);font-size:15px;color:var(--ink-2);line-height:1.6}
+.slot .tag{grid-column:10 / span 2;color:var(--ink-2);padding-top:6px}
+.slot .tag.ws{color:var(--accent-ink)}
+.slot .star{grid-column:12;justify-self:end}
+.slot.quiet{padding-block:var(--s3)}
+.slot.quiet h3{font-size:16px;font-weight:400;color:var(--ink-2)}
+.star{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);background:transparent;border-radius:50%;cursor:pointer;transition:border-color var(--d-fast),background var(--d-fast),transform var(--d-fast)}
+.star svg{width:18px;height:18px;fill:none;stroke:var(--ink);stroke-width:1.6;transition:fill var(--d-fast),stroke var(--d-fast)}
+.star:hover{border-color:var(--ink)}
+.star:active{transform:scale(.92)}
+.star[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
+.star[aria-pressed="true"] svg{fill:var(--accent);stroke:var(--accent)}
+.star.pop{animation:pop var(--d-base) var(--ease-out)}
+@keyframes pop{40%{transform:scale(1.18)}}
+.filtering .slot:not(.starred){display:none}
+.filtering .theme{display:none}
+.empty{display:none;padding-block:var(--s7);border-top:1px solid var(--line);color:var(--ink-2)}
+.filtering .panel:not(:has(.slot.starred)) .empty{display:block}
+.sched-note{margin-top:var(--s5);color:var(--ink-2)}
+
+/* speakers */
+.speakers{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink)}
+.spk{padding:var(--s5) var(--s5) var(--s6) 0;border-bottom:1px solid var(--line)}
+.spk + .spk{padding-left:var(--s5);border-left:1px solid var(--line)}
+.speakers .spk:nth-child(4n+1){padding-left:0;border-left:0}
+.ident{width:72px;height:72px;display:block;transition:transform var(--d-base) var(--ease-out)}
+.ident rect{fill:var(--ink)}
+.ident rect.a{fill:var(--accent)}
+.spk:hover .ident{transform:rotate(90deg)}
+.spk h3{margin-top:var(--s5);font:700 24px/1.3 var(--f-sans);letter-spacing:.02em}
+.spk .role{margin-top:var(--s1);font-size:15px;color:var(--ink-2);line-height:1.6}
+.spk .talk{margin-top:var(--s4);font-size:15px;line-height:1.65}
+.spk .hash{margin-top:var(--s4);color:var(--ink-2);font-variant-numeric:tabular-nums;text-transform:none;letter-spacing:.04em}
+.spk-note{margin-top:var(--s5);color:var(--ink-2);max-width:40em;font-size:15px}
+/* register */
+.reg{background:var(--paper-2)}
+.reg-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s5)}
+.tiers{grid-column:1 / span 6;border:0;margin:0;padding:0;min-width:0}
+.tiers legend{padding:0;margin-bottom:var(--s4);color:var(--ink-2)}
+.tier{display:grid;grid-template-columns:28px 1fr auto;gap:var(--s4);align-items:center;padding:var(--s5) var(--s4);border-top:1px solid var(--line);cursor:pointer;position:relative;transition:background var(--d-fast)}
+.tier:last-of-type{border-bottom:1px solid var(--line)}
+.tier:hover{background:color-mix(in srgb,var(--paper) 70%,transparent)}
+.tier input{appearance:none;width:20px;height:20px;border:1.5px solid var(--ink);border-radius:50%;margin:0;display:grid;place-items:center;cursor:pointer}
+.tier input::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);transform:scale(0);transition:transform var(--d-fast) var(--ease-out)}
+.tier input:checked::after{transform:scale(1)}
+.tier input:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.tier:has(input:checked){background:var(--paper)}
+.tier:has(input:checked)::before{content:"";position:absolute;left:0;top:-1px;bottom:-1px;width:3px;background:var(--accent)}
+.tier b{display:block;font-size:19px;font-weight:600;line-height:1.4}
+.tier span{display:block;font-size:14px;color:var(--ink-2);line-height:1.6}
+.tier .price{font:600 clamp(32px,3vw,44px)/1 var(--f-display);font-variant-numeric:tabular-nums;text-align:right}
+.tier .price small{font-size:.45em;margin-right:2px;vertical-align:top}
+.form{grid-column:8 / span 5;display:grid;gap:var(--s4);align-content:start}
+.field{display:grid;gap:var(--s1)}
+.field label{font-size:14px;color:var(--ink-2)}
+.field input{min-height:52px;padding:0 var(--s4);border:1px solid var(--ink-2);background:var(--paper);border-radius:var(--r);font-size:17px;transition:border-color var(--d-fast),box-shadow var(--d-fast)}
+.field input:hover{border-color:var(--ink)}
+.field input:focus-visible{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px var(--accent)}
+.field input[aria-invalid="true"]{border-color:var(--accent-ink)}
+.err{font-size:13px;color:var(--accent-ink);min-height:1.5em;line-height:1.5}
+.form .btn{justify-content:space-between;width:100%;min-height:56px;font-size:17px}
+.form .btn[disabled]{cursor:progress}
+.sync-status{display:grid;grid-template-columns:auto 1fr;gap:var(--s3);align-items:start;padding:var(--s4);border:1px dashed var(--ink-2);font-size:15px;line-height:1.6;border-radius:var(--r)}
+.sync-status[hidden]{display:none}
+.sync-status .st{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;padding:2px 8px;border:1px solid currentColor;border-radius:999px;white-space:nowrap}
+.sync-status.local .st{color:var(--accent-ink)}
+.sync-status.synced{border-style:solid;border-color:var(--ink)}
+.sync-status.synced .st{color:#1F6B39}
+.fineprint{font-size:13px;color:var(--ink-2);line-height:1.7}
+
+/* footer */
+.foot{background:var(--night);color:var(--night-ink);padding-block:var(--s9) var(--s6)}
+.foot-big{font:800 clamp(40px,7.4vw,112px)/1.1 var(--f-sans);letter-spacing:-.035em}
+.foot-big span{color:var(--night-mute)}
+.receipt{display:grid;grid-template-columns:repeat(4,1fr);margin-top:var(--s8);border-top:1px solid var(--night-line)}
+.receipt div{padding:var(--s4) var(--s4) var(--s4) 0}
+.receipt dt{color:var(--night-mute)}
+.receipt dd{margin:var(--s2) 0 0;font:600 28px/1.2 var(--f-display);font-variant-numeric:tabular-nums}
+.receipt dd.hot{color:#FF8F66}
+.foot-row{display:flex;justify-content:space-between;gap:var(--s5);flex-wrap:wrap;margin-top:var(--s8);padding-top:var(--s4);border-top:1px solid var(--night-line);color:var(--night-mute);font-size:14px}
+.foot-row nav{display:flex;gap:var(--s4);flex-wrap:wrap}
+.foot-row a{text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.foot-row a:hover{color:var(--night-ink);text-decoration:underline;text-underline-offset:4px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity var(--d-slow) var(--ease-out),transform var(--d-slow) var(--ease-out)}
+.rv.in{opacity:1;transform:none}
+.no-js .rv{opacity:1;transform:none}
+
+/* responsive */
+@media (max-width:1100px){
+  .demo{grid-template-columns:1fr 128px 1fr}
+  .speakers{grid-template-columns:repeat(2,1fr)}
+  .speakers .spk:nth-child(n){padding-left:var(--s5);border-left:1px solid var(--line)}
+  .speakers .spk:nth-child(2n+1){padding-left:0;border-left:0}
+}
+@media (max-width:860px){
+  .nav-links a:not(.btn){display:none}
+  .hero-grid,.sec-head,.reg-grid,.principles,.theme,.slot{grid-template-columns:1fr}
+  .lede,.dates,.sec-head .idx,.sec-head h2,.sec-head p,.tiers,.form,.principles li,.theme p,.theme .mono{grid-column:1 / -1}
+  .dates{justify-self:start;margin-top:var(--s6)}
+  .sec-head{gap:var(--s3);margin-bottom:var(--s7)}
+  .sec-head .idx{padding-top:0}
+  .sec{padding-block:var(--s9)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stats li:nth-child(2){border-right:0}
+  .stats li:nth-child(3){padding-left:0}
+  .stats li:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .demo{grid-template-columns:1fr;gap:0}
+  .device{min-height:0}
+  .channel{min-height:112px}
+  .wire{left:50%;right:auto;top:0;bottom:0;height:auto;width:0;border-top:0;border-left:1px dashed var(--night-mute)}
+  .wire::before,.wire::after{width:1px;height:50%;left:-1px}
+  .wire::before{top:0;transform-origin:top}
+  .wire::after{top:auto;bottom:0;right:auto;transform-origin:bottom}
+  .demo.offline .wire::before,.demo.offline .wire::after{transform:scaleY(.2)}
+  .demo.offline .wire{border-left-color:transparent}
+  .chip.arrive-l,.chip.arrive-r{animation-name:inV}
+  @keyframes inV{from{transform:translateY(-24px);opacity:0}to{transform:none;opacity:1}}
+  .slot{grid-template-columns:72px 1fr 44px;gap:var(--s2) var(--s4)}
+  .slot time{grid-column:1;grid-row:1 / span 2;font-size:17px}
+  .slot .what{grid-column:2;grid-row:1}
+  .slot .tag{grid-column:2;grid-row:2;padding-top:0}
+  .slot .star{grid-column:3;grid-row:1}
+  .theme{gap:var(--s2)}
+  .reg-grid{gap:var(--s7)}
+  .receipt{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px){
+  .hero h1{font-size:clamp(54px,17.5vw,96px);line-height:1.08}
+  .hero h1 .l2{text-align:left}
+  .brand span{display:none}
+  .tab{padding-right:var(--s5)}
+  .filter{margin-bottom:var(--s4)}
+  .sched-bar{align-items:start;flex-direction:column;gap:0}
+  .tier{grid-template-columns:24px 1fr;padding-inline:var(--s3)}
+  .tier .price{grid-column:2;text-align:left}
+  .dates .big{font-size:72px}
+  .sched-bar{border-bottom:0}
+  .tabs{width:100%;border-bottom:1px solid var(--ink)}
+  .filter{margin-top:var(--s4)}
+  .speakers{grid-template-columns:repeat(2,1fr)}
+  .speakers .spk:nth-child(n){padding-left:var(--s4);padding-right:var(--s3);border-left:1px solid var(--line)}
+  .speakers .spk:nth-child(2n+1){padding-left:0;border-left:0}
+  .spk h3{font-size:20px}
+  .ident{width:56px;height:56px}
+  .spk .hash{font-size:10px}
+}
+@media (min-width:1800px){
+  body{font-size:18px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;transition-delay:0s !important;scroll-behavior:auto !important}
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none}
+  .draw .lane,.draw .merge{stroke-dashoffset:0}
+  .draw .op{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="本地优先软件大会 2026，回到顶部"><b>LOCAL<i>/</i>FIRST 26</b><span>本地优先软件大会</span></a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="#sync">它为什么重要</a>
+      <a href="#schedule">日程</a>
+      <a href="#speakers">讲者</a>
+      <a class="btn sm" href="#register">报名<span class="agenda-count" id="navCount" title="已收藏的场次">0</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero wrap" id="top" aria-labelledby="h1">
+  <div class="statusbar mono">
+    <span><span class="dot" id="netDot" aria-hidden="true"></span><span id="netText">本页已就绪 · 断网也能继续浏览</span></span>
+    <span>replica #lf26 · 首届 · 杭州</span>
+  </div>
+  <h1 id="h1"><span class="l l1"><span>云是备份，</span></span><span class="l l2"><span>不是<em>主人</em>。</span></span></h1>
+  <div class="hero-grid">
+    <div class="lede">
+      <p>两天，18 场分享，2 个动手工作坊。我们聊 <strong><span class="nw">CRDT、</span><wbr><span class="nw">同步引擎、</span><wbr><span class="nw">端侧数据库</span><wbr><span class="nw">与离线协作</span></strong>——让数据先落在你的设备上，网络只是锦上添花。</p>
+      <div class="cta-row">
+        <a class="btn" href="#register">报名，早鸟 ¥680 <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn ghost" href="#schedule">看两天日程</a>
+      </div>
+    </div>
+    <div class="dates">
+      <div class="big" aria-hidden="true">21<small>—22</small></div>
+      <dl>
+        <dt class="mono">2026 · 11 月 · 周六—周日</dt>
+        <dd>杭州 · 良渚文化艺术中心<br>主会场 + 两间工作坊教室</dd>
+      </dl>
+      <p class="sr">2026 年 11 月 21 日至 22 日</p>
+    </div>
+  </div>
+
+  <div class="oplog" aria-hidden="true">
+    <div class="oplog-head mono"><span>OP LOG · 两天的议程，像两个副本</span><span>分叉 → 各自编辑 → 合并 → 收敛</span></div>
+    <svg class="draw" id="oplog" viewBox="0 0 1200 150" preserveAspectRatio="xMidYMid meet" focusable="false">
+      <path class="lane" d="M0 75 H100 C140 75 140 38 180 38 H1020 C1060 38 1060 75 1100 75 H1200"/>
+      <path class="lane" d="M100 75 C140 75 140 112 180 112 H1020 C1060 112 1060 75 1100 75"/>
+      <path class="merge" d="M560 38 L600 112"/>
+      <path class="merge" d="M900 112 L940 38"/>
+      <text x="0" y="60">FORK</text>
+      <text x="196" y="22">设备 A · DAY 1</text>
+      <text x="196" y="140">设备 B · DAY 1</text>
+      <text x="620" y="22">DAY 2</text>
+      <text x="584" y="140">SYNC</text>
+      <text x="956" y="22">SYNC</text>
+      <text x="1112" y="60">CONVERGED</text>
+      <g id="ops"></g>
+    </svg>
+  </div>
+</section>
+
+<section class="wrap" aria-label="大会数字">
+  <ul class="stats">
+    <li><b>2</b><span>天议程，周末两天</span></li>
+    <li><b>18</b><span>场分享，含 6 场闪电演讲</span></li>
+    <li><b>320</b><span>个座位，不做线上直播</span></li>
+    <li><b id="reqCount">0</b><span>次外部请求，本页完全离线可用</span></li>
+  </ul>
+</section>
+<section class="night sec" id="sync" aria-labelledby="sync-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="idx mono">01 / 为什么来</p>
+      <h2 id="sync-h" class="rv">断网不是故障，<br>是常态。</h2>
+      <p class="rv">地铁、电梯、飞机、跨国 VPN。本地优先的软件把断网当作日常：先写进本机，回到网络后再合并，没有人的修改会丢。下面这两台“设备”就在你的浏览器里——断开连接，各自加几条议题，再恢复看看。</p>
+    </div>
+
+    <div class="demo" id="demo">
+      <article class="device" aria-labelledby="devA-h">
+        <div class="device-top mono"><span>DEVICE A · 笔记本</span><span class="pending" id="pendA">已同步</span></div>
+        <h3 id="devA-h">我想听的议题</h3>
+        <ul class="chips" id="listA" aria-live="polite"></ul>
+        <button class="add" type="button" id="addA">+ 在 A 上添加一条</button>
+        <p class="clock mono" id="clockA">clock A:0 · B:0</p>
+      </article>
+      <div class="channel">
+        <span class="wire" aria-hidden="true"></span>
+        <button class="toggle" type="button" id="netToggle" aria-pressed="false">断开网络</button>
+        <span class="netstate mono" id="netState">在线 · 实时同步</span>
+      </div>
+      <article class="device" aria-labelledby="devB-h">
+        <div class="device-top mono"><span>DEVICE B · 手机</span><span class="pending" id="pendB">已同步</span></div>
+        <h3 id="devB-h">我想听的议题</h3>
+        <ul class="chips" id="listB" aria-live="polite"></ul>
+        <button class="add" type="button" id="addB">+ 在 B 上添加一条</button>
+        <p class="clock mono" id="clockB">clock A:0 · B:0</p>
+      </article>
+    </div>
+    <div class="demo-log mono">
+      <span>合并日志 <output id="mergeLog" aria-live="polite">两台设备内容一致。</output></span>
+      <button class="demo-reset" type="button" id="demoReset">重置演示</button>
+    </div>
+
+    <ol class="principles">
+      <li class="rv"><b>01 · 本机即真相</b><p>读写都在本地完成，响应以毫秒计。<span>服务器负责中转和备份，不负责“批准”。</span></p></li>
+      <li class="rv"><b>02 · 合并而非覆盖</b><p>用 CRDT 或操作日志描述修改，两份副本总能收敛。<span>没有“你的版本已过期”。</span></p></li>
+      <li class="rv"><b>03 · 数据归你</b><p>能导出、能离开、公司倒闭也打得开。<span>这一条比前两条都难。</span></p></li>
+    </ol>
+  </div>
+</section>
+<section class="sec wrap" id="schedule" aria-labelledby="sched-h">
+  <div class="sec-head">
+    <p class="idx mono">02 / 日程</p>
+    <h2 id="sched-h" class="rv">第一天各自离线，<br>第二天一起合并。</h2>
+    <p class="rv">周六讲“怎么把数据留在本地”，周日讲“怎么让很多人一起改”。点 ☆ 收藏场次，收藏只存在你的浏览器里。</p>
+  </div>
+
+  <div class="sched-bar">
+    <div class="tabs" role="tablist" aria-label="选择日期">
+      <button class="tab" role="tab" id="tab-d1" aria-controls="panel-d1" aria-selected="true"><b>DAY 1</b><span>11.21 周六 · 离线</span></button>
+      <button class="tab" role="tab" id="tab-d2" aria-controls="panel-d2" aria-selected="false" tabindex="-1"><b>DAY 2</b><span>11.22 周日 · 同步</span></button>
+      <span class="tab-ind" id="tabInd" aria-hidden="true"></span>
+    </div>
+    <button class="filter" type="button" id="filterBtn" aria-pressed="false">只看我的收藏 <span class="agenda-count" id="filterCount">0</span></button>
+  </div>
+
+  <div id="sched">
+  <div class="panel" role="tabpanel" id="panel-d1" aria-labelledby="tab-d1" tabindex="0">
+    <div class="theme"><span class="mono">主题</span><p>当网络不可靠时，软件还能为你做什么。</p></div>
+    <ol>
+      <li class="slot quiet"><time>08:30</time><div class="what"><h3>签到，领取胸牌与纸质日程</h3></div></li>
+      <li class="slot" data-id="d1-1"><time>09:30</time><div class="what"><h3>开场：云是备份，不是主人</h3><p class="who">林知远 · 大会发起人</p></div><span class="tag mono">主题演讲</span></li>
+      <li class="slot" data-id="d1-2"><time>10:00</time><div class="what"><h3>本地优先的七条理想，五年后还剩几条</h3><p class="who">周以宁 · 前分布式数据库研究员</p></div><span class="tag mono">主题演讲</span></li>
+      <li class="slot" data-id="d1-3"><time>11:00</time><div class="what"><h3>同步引擎替代后端 API：一次重写的账本</h3><p class="who">陈墨 · 某笔记应用技术负责人</p></div><span class="tag mono">分享</span></li>
+      <li class="slot" data-id="d1-4"><time>11:40</time><div class="what"><h3>在浏览器里跑 SQLite：OPFS 与 WASM 的真实性能</h3><p class="who">苏河 · 浏览器存储工程师</p></div><span class="tag mono">分享</span></li>
+      <li class="slot quiet"><time>12:20</time><div class="what"><h3>午餐 · 场地内无 Wi-Fi 区开放</h3></div></li>
+      <li class="slot" data-id="d1-5"><time>13:40</time><div class="what"><h3>CRDT 文本编辑：从 RGA 到 Fugue，交错问题怎么解</h3><p class="who">许一帆 · 协作编辑器作者</p></div><span class="tag mono">分享</span></li>
+      <li class="slot" data-id="d1-6"><time>14:20</time><div class="what"><h3>地下车库里的外卖骑手：移动端离线优先实践</h3><p class="who">韩露 · 移动端架构师</p></div><span class="tag mono">分享</span></li>
+      <li class="slot quiet"><time>15:00</time><div class="what"><h3>茶歇</h3></div></li>
+      <li class="slot" data-id="d1-7"><time>15:30</time><div class="what"><h3>圆桌：用户真的在乎数据归属吗？</h3><p class="who">周以宁、陈墨、韩露 · 主持 林知远</p></div><span class="tag mono">圆桌</span></li>
+      <li class="slot" data-id="d1-8"><time>16:30</time><div class="what"><h3>工作坊 A：90 分钟写一个可合并的待办应用</h3><p class="who">许一帆 · 自带笔记本，限 40 人</p></div><span class="tag mono ws">工作坊</span></li>
+    </ol>
+    <p class="empty">这一天还没有收藏。点任一场次右侧的 ☆，它会出现在这里。</p>
+  </div>
+
+  <div class="panel" role="tabpanel" id="panel-d2" aria-labelledby="tab-d2" tabindex="0" hidden>
+    <div class="theme"><span class="mono">主题</span><p>当很多人、很多设备同时修改同一份数据。</p></div>
+    <ol>
+      <li class="slot" data-id="d2-1"><time>09:30</time><div class="what"><h3>同步是协议，不是服务</h3><p class="who">顾岚 · 开源同步协议维护者</p></div><span class="tag mono">主题演讲</span></li>
+      <li class="slot" data-id="d2-2"><time>10:30</time><div class="what"><h3>一百万次操作之后：CRDT 文档的内存与压缩</h3><p class="who">方屿 · CRDT 库贡献者</p></div><span class="tag mono">分享</span></li>
+      <li class="slot" data-id="d2-3"><time>11:10</time><div class="what"><h3>端到端加密的协作：服务器什么都看不见</h3><p class="who">顾岚 · 开源同步协议维护者</p></div><span class="tag mono">分享</span></li>
+      <li class="slot quiet"><time>12:00</time><div class="what"><h3>午餐</h3></div></li>
+      <li class="slot" data-id="d2-4"><time>13:30</time><div class="what"><h3>从 SaaS 迁到本地优先：18 个月的迁移日记</h3><p class="who">程未 · 设计工具创业公司 CTO</p></div><span class="tag mono">分享</span></li>
+      <li class="slot" data-id="d2-5"><time>14:10</time><div class="what"><h3>多人协作里的权限与历史：谁能撤销谁</h3><p class="who">苏河 · 浏览器存储工程师</p></div><span class="tag mono">分享</span></li>
+      <li class="slot quiet"><time>14:50</time><div class="what"><h3>茶歇</h3></div></li>
+      <li class="slot" data-id="d2-6"><time>15:20</time><div class="what"><h3>闪电演讲 × 6：每人 7 分钟，现场报名</h3><p class="who">从公开投稿中选出，名单会前一周公布</p></div><span class="tag mono">闪电演讲</span></li>
+      <li class="slot" data-id="d2-7"><time>16:20</time><div class="what"><h3>工作坊 B：给现有的 React 应用加上离线模式</h3><p class="who">方屿、程未 · 自带笔记本，限 40 人</p></div><span class="tag mono ws">工作坊</span></li>
+      <li class="slot" data-id="d2-8"><time>17:50</time><div class="what"><h3>闭幕：全场合并，然后各自回家</h3><p class="who">林知远</p></div><span class="tag mono">闭幕</span></li>
+    </ol>
+    <p class="empty">这一天还没有收藏。点任一场次右侧的 ☆，它会出现在这里。</p>
+  </div>
+  </div>
+  <p class="sched-note mono">工作坊需在报名时勾选 · 所有演讲提供中文现场字幕</p>
+</section>
+<section class="sec wrap" id="speakers" aria-labelledby="spk-h" style="padding-top:0">
+  <div class="sec-head">
+    <p class="idx mono">03 / 讲者</p>
+    <h2 id="spk-h" class="rv">八位讲者，<br>都在线上踩过坑。</h2>
+    <p class="rv">没有赞助商专场。每位讲者的题目都经过程序委员会两轮评审，并在会前做过一次内部试讲。</p>
+  </div>
+  <ul class="speakers" id="spkList">
+    <li class="spk rv" data-name="周以宁"><svg class="ident" viewBox="0 0 5 5" aria-hidden="true"></svg><h3>周以宁</h3><p class="role">前分布式数据库研究员</p><p class="talk">本地优先的七条理想，五年后还剩几条</p><p class="hash mono"></p></li>
+    <li class="spk rv" data-name="陈墨"><svg class="ident" viewBox="0 0 5 5" aria-hidden="true"></svg><h3>陈墨</h3><p class="role">某笔记应用技术负责人</p><p class="talk">同步引擎替代后端 API：一次重写的账本</p><p class="hash mono"></p></li>
+    <li class="spk rv" data-name="苏河"><svg class="ident" viewBox="0 0 5 5" aria-hidden="true"></svg><h3>苏河</h3><p class="role">浏览器存储工程师</p><p class="talk">在浏览器里跑 SQLite；多人协作里的权限与历史</p><p class="hash mono"></p></li>
+    <li class="spk rv" data-name="许一帆"><svg class="ident" viewBox="0 0 5 5" aria-hidden="true"></svg><h3>许一帆</h3><p class="role">协作编辑器作者</p><p class="talk">CRDT 文本编辑；工作坊 A</p><p class="hash mono"></p></li>
+    <li class="spk rv" data-name="韩露"><svg class="ident" viewBox="0 0 5 5" aria-hidden="true"></svg><h3>韩露</h3><p class="role">移动端架构师</p><p class="talk">地下车库里的外卖骑手：移动端离线优先实践</p><p class="hash mono"></p></li>
+    <li class="spk rv" data-name="顾岚"><svg class="ident" viewBox="0 0 5 5" aria-hidden="true"></svg><h3>顾岚</h3><p class="role">开源同步协议维护者</p><p class="talk">同步是协议，不是服务；端到端加密的协作</p><p class="hash mono"></p></li>
+    <li class="spk rv" data-name="方屿"><svg class="ident" viewBox="0 0 5 5" aria-hidden="true"></svg><h3>方屿</h3><p class="role">CRDT 库贡献者</p><p class="talk">一百万次操作之后；工作坊 B</p><p class="hash mono"></p></li>
+    <li class="spk rv" data-name="程未"><svg class="ident" viewBox="0 0 5 5" aria-hidden="true"></svg><h3>程未</h3><p class="role">设计工具创业公司 CTO</p><p class="talk">从 SaaS 迁到本地优先：18 个月的迁移日记</p><p class="hash mono"></p></li>
+  </ul>
+  <p class="spk-note">头像不是照片，是由讲者姓名的哈希值生成的图案：同样的名字，在任何设备上都会算出同样的图形——这就是内容寻址。大会主持：林知远。</p>
+</section>
+
+<section class="sec reg" id="register" aria-labelledby="reg-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="idx mono">04 / 报名</p>
+      <h2 id="reg-h" class="rv">先在本机占座，<br>联网后再同步。</h2>
+      <p class="rv">320 个座位，早鸟票截至 10 月 31 日。两天票含午餐、茶歇和会后录像；工作坊另需勾选，每场限 40 人。</p>
+    </div>
+    <form class="reg-grid" id="regForm" novalidate>
+      <fieldset class="tiers">
+        <legend class="mono">选择票种</legend>
+        <label class="tier"><input type="radio" name="tier" value="early" checked><div><b>早鸟票 · 两天</b><span>截至 10.31 · 剩余 64 张</span></div><p class="price"><small>¥</small>680</p></label>
+        <label class="tier"><input type="radio" name="tier" value="std"><div><b>标准票 · 两天</b><span>11.01 起</span></div><p class="price"><small>¥</small>980</p></label>
+        <label class="tier"><input type="radio" name="tier" value="ws"><div><b>两天 + 一场工作坊</b><span>工作坊 A 或 B，入场时选择</span></div><p class="price"><small>¥</small>1280</p></label>
+        <label class="tier"><input type="radio" name="tier" value="stu"><div><b>学生票 · 两天</b><span>入场查验学生证</span></div><p class="price"><small>¥</small>280</p></label>
+      </fieldset>
+      <div class="form">
+        <div class="field"><label for="fName">姓名</label><input id="fName" name="name" autocomplete="name" required aria-describedby="eName"><span class="err" id="eName"></span></div>
+        <div class="field"><label for="fMail">邮箱 · 用于接收电子票</label><input id="fMail" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="eMail"><span class="err" id="eMail"></span></div>
+        <div class="field"><label for="fOrg">公司或项目（选填）</label><input id="fOrg" name="org" autocomplete="organization"></div>
+        <button class="btn" type="submit" id="regBtn"><span>保存报名到本机</span><span class="arrow" aria-hidden="true">→</span></button>
+        <div class="sync-status" id="syncStatus" role="status" hidden><span class="st" id="syncTag">LOCAL</span><span id="syncMsg"></span></div>
+        <p class="fineprint">这是一个演示页：报名信息只写入你浏览器的本地存储，不会发送到任何服务器。正式报名开放后，请以大会邮件为准。</p>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <p class="foot-big">现在拔掉网线，<br><span>这一页还能读完。</span></p>
+    <dl class="receipt mono">
+      <div><dt>外部请求</dt><dd class="hot" id="rcReq">0</dd></div>
+      <div><dt>页面体积</dt><dd id="rcSize">— KB</dd></div>
+      <div><dt>本机存储</dt><dd id="rcStore">0 条</dd></div>
+      <div><dt>字体</dt><dd>系统自带</dd></div>
+    </dl>
+    <div class="foot-row">
+      <span>LOCAL/FIRST 26 · 本地优先软件大会 · 2026.11.21—22 · 杭州</span>
+      <nav aria-label="页脚导航"><a href="#sync">为什么来</a><a href="#schedule">日程</a><a href="#speakers">讲者</a><a href="#register">报名</a><a href="#top">回到顶部 ↑</a></nav>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+var store={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+  set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* network status + receipt */
+function net(){var on=navigator.onLine;$("#netDot").classList.toggle("off",!on);
+  $("#netText").textContent=on?"在线 · 本页其实不需要网络":"已离线 · 本页照常可用";}
+addEventListener("online",net);addEventListener("offline",net);net();
+function receipt(){
+  var ext=0;try{ext=performance.getEntriesByType("resource").filter(function(r){return !/^(data|blob):/.test(r.name)}).length}catch(e){}
+  $("#reqCount").textContent=ext;$("#rcReq").textContent=ext;
+  var kb=Math.round(new Blob([document.documentElement.outerHTML]).size/1024);
+  $("#rcSize").textContent=kb+" KB";
+}
+
+/* op-log signature */
+var ops=$("#ops"),NS="http://www.w3.org/2000/svg",i=0;
+function dot(x,y,m){var c=document.createElementNS(NS,"circle");c.setAttribute("cx",x);c.setAttribute("cy",y);c.setAttribute("r",m?6:4.5);
+  c.setAttribute("class","op"+(m?" m":""));c.style.setProperty("--i",i++);ops.appendChild(c);}
+[220,290,370,450,520].forEach(function(x){dot(x,38)});[240,330,400,480].forEach(function(x){dot(x,112)});
+dot(600,112,1);[660,740,820].forEach(function(x){dot(x,38)});[680,760,840].forEach(function(x){dot(x,112)});
+dot(940,38,1);dot(980,112);dot(1100,75,1);
+$$("#oplog path").forEach(function(p){p.style.setProperty("--len",Math.ceil(p.getTotalLength()))});
+requestAnimationFrame(function(){requestAnimationFrame(function(){$("#oplog").classList.add("go")})});
+
+/* reveal */
+var rv=$$(".rv");
+if(reduce||!("IntersectionObserver" in window)){rv.forEach(function(e){e.classList.add("in")})}
+else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{rootMargin:"0px 0px -8% 0px"});
+  rv.forEach(function(e,k){if(e.parentElement.classList.contains("speakers")){e.style.transitionDelay=(k%4)*70+"ms"}io.observe(e)});}
+/* CRDT demo: grow-only set, ordered by (lamport, origin) */
+var POOL={A:["端侧 SQLite","离线表单","Yjs 实战","冲突可视化","加密同步","Service Worker"],
+          B:["文本 CRDT","移动端缓存","数据导出","向量时钟","P2P 同步","撤销与历史"]};
+var D,online;
+function initDemo(){
+  var seed=[{id:"s1",t:"同步引擎",o:"A",l:1},{id:"s2",t:"Automerge",o:"B",l:1}];
+  D={A:{items:seed.slice(),pend:[],l:1,n:0,seen:{}},B:{items:seed.slice(),pend:[],l:1,n:0,seen:{}}};
+  online=true;$("#demo").classList.remove("offline");
+  var t=$("#netToggle");t.setAttribute("aria-pressed","false");t.textContent="断开网络";
+  $("#netState").textContent="在线 · 实时同步";$("#mergeLog").textContent="两台设备内容一致。";
+  render("A");render("B");
+}
+function other(k){return k==="A"?"B":"A"}
+function add(k){
+  var d=D[k],pool=POOL[k];if(d.n>=pool.length)return;
+  d.l=(online?Math.max(D.A.l,D.B.l):d.l)+1;
+  var it={id:k+d.n,t:pool[d.n++],o:k,l:d.l};
+  d.items.push(it);
+  if(online){D[other(k)].items.push(it);D[other(k)].seen[it.id]=k;render(other(k));
+    $("#mergeLog").textContent="实时同步："+k+" → "+other(k)+"「"+it.t+"」";}
+  else{d.pend.push(it);$("#mergeLog").textContent="离线写入 "+k+"「"+it.t+"」，待同步 "+d.pend.length+" 条。";}
+  render(k);
+}
+function reconnect(){
+  var a=D.A.pend.length,b=D.B.pend.length;
+  D.A.pend.forEach(function(it){D.B.items.push(it);D.B.seen[it.id]="A"});
+  D.B.pend.forEach(function(it){D.A.items.push(it);D.A.seen[it.id]="B"});
+  D.A.pend=[];D.B.pend=[];D.A.l=D.B.l=Math.max(D.A.l,D.B.l);render("A");render("B");
+  $("#mergeLog").textContent=(a+b)?"合并完成：A 收到 "+b+" 条，B 收到 "+a+" 条，冲突 0，两边顺序一致。":"重新连接，没有需要合并的修改。";
+}
+function render(k){
+  var d=D[k],ul=$("#list"+k),pend={};d.pend.forEach(function(p){pend[p.id]=1});
+  d.items.sort(function(x,y){return x.l-y.l||(x.o<y.o?-1:1)});
+  ul.innerHTML="";
+  d.items.forEach(function(it){
+    var li=document.createElement("li");li.className="chip"+(pend[it.id]?" local":"");
+    if(d.seen[it.id]&&!reduce){li.classList.add(k==="A"?"arrive-r":"arrive-l")}
+    li.innerHTML="<span></span><small></small>";li.firstChild.textContent=it.t;
+    li.lastChild.textContent=it.o+"·"+it.l+(pend[it.id]?" 未同步":"");ul.appendChild(li);
+  });
+  d.seen={};
+  var p=$("#pend"+k);p.classList.toggle("has",d.pend.length>0);
+  p.textContent=d.pend.length?"待同步 "+d.pend.length:(online?"已同步":"离线");
+  var ca=0,cb=0;d.items.forEach(function(it){if(it.o==="A")ca=Math.max(ca,it.l);else cb=Math.max(cb,it.l)});
+  $("#clock"+k).textContent="clock A:"+ca+" · B:"+cb+" · "+d.items.length+" 条";
+  var btn=$("#add"+k);btn.disabled=d.n>=POOL[k].length;if(btn.disabled)btn.textContent="本机议题已加完";
+  else btn.textContent="+ 在 "+k+" 上添加「"+POOL[k][d.n]+"」";
+}
+$("#addA").addEventListener("click",function(){add("A")});
+$("#addB").addEventListener("click",function(){add("B")});
+$("#netToggle").addEventListener("click",function(){
+  online=!online;this.setAttribute("aria-pressed",String(!online));
+  this.textContent=online?"断开网络":"恢复连接";
+  $("#demo").classList.toggle("offline",!online);
+  $("#netState").textContent=online?"在线 · 实时同步":"离线 · 各自写入";
+  if(online)reconnect();else{$("#mergeLog").textContent="已断开。现在两边分别添加几条试试。";render("A");render("B")}
+});
+$("#demoReset").addEventListener("click",initDemo);
+initDemo();
+/* tabs */
+var tabs=$$('[role="tab"]'),ind=$("#tabInd");
+function placeInd(){var t=$('[role="tab"][aria-selected="true"]');ind.style.width=(t.offsetWidth-parseFloat(getComputedStyle(t).paddingRight))+"px";ind.style.transform="translateX("+t.offsetLeft+"px)"}
+function select(t,focus){
+  tabs.forEach(function(x){var on=x===t;x.setAttribute("aria-selected",String(on));x.tabIndex=on?0:-1;
+    var p=document.getElementById(x.getAttribute("aria-controls"));p.hidden=!on;
+    if(on&&!reduce){p.classList.remove("enter");void p.offsetWidth;p.classList.add("enter")}});
+  if(focus)t.focus();placeInd();
+}
+tabs.forEach(function(t,k){
+  t.addEventListener("click",function(){select(t)});
+  t.addEventListener("keydown",function(e){var n=null;
+    if(e.key==="ArrowRight")n=tabs[(k+1)%tabs.length];else if(e.key==="ArrowLeft")n=tabs[(k-1+tabs.length)%tabs.length];
+    else if(e.key==="Home")n=tabs[0];else if(e.key==="End")n=tabs[tabs.length-1];
+    if(n){e.preventDefault();select(n,true)}});
+});
+addEventListener("resize",placeInd);placeInd();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(placeInd);
+
+/* stars, persisted locally */
+var fav=store.get("lf26-fav",[]);
+var STAR='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>';
+$$(".slot[data-id]").forEach(function(s){
+  var b=document.createElement("button");b.type="button";b.className="star";b.innerHTML=STAR;
+  b.setAttribute("aria-label","收藏："+$("h3",s).textContent);s.appendChild(b);
+  b.addEventListener("click",function(){var id=s.dataset.id,k=fav.indexOf(id);
+    if(k>-1)fav.splice(k,1);else fav.push(id);store.set("lf26-fav",fav);syncStars();
+    if(!reduce){b.classList.remove("pop");void b.offsetWidth;b.classList.add("pop")}});
+});
+function syncStars(){
+  $$(".slot[data-id]").forEach(function(s){var on=fav.indexOf(s.dataset.id)>-1;s.classList.toggle("starred",on);$(".star",s).setAttribute("aria-pressed",String(on))});
+  $("#navCount").textContent=fav.length;$("#filterCount").textContent=fav.length;storeCount();
+}
+$("#filterBtn").addEventListener("click",function(){var on=this.getAttribute("aria-pressed")!=="true";
+  this.setAttribute("aria-pressed",String(on));$("#sched").classList.toggle("filtering",on)});
+function storeCount(){var n=fav.length+(store.get("lf26-reg",null)?1:0);$("#rcStore").textContent=n+" 条"}
+syncStars();
+
+/* identicons from name hash */
+function fnv(s){var h=2166136261;for(var j=0;j<s.length;j++){h^=s.charCodeAt(j);h=Math.imul(h,16777619)}return h>>>0}
+$$(".spk").forEach(function(li){
+  var name=li.dataset.name,h=fnv(name),svg=$(".ident",li),html="",acc=(h>>>20)%15;
+  for(var c=0;c<15;c++){if(!((h>>>c)&1)&&c!==acc)continue;var col=Math.floor(c/5),row=c%5,
+    cls=c===acc?' class="a"':"";
+    html+='<rect'+cls+' x="'+col+'" y="'+row+'" width="1" height="1"/>';
+    if(col<2)html+='<rect'+cls+' x="'+(4-col)+'" y="'+row+'" width="1" height="1"/>';}
+  svg.innerHTML=html;
+  $(".hash",li).textContent="fnv1a:"+("0000000"+h.toString(16)).slice(-8);
+});
+
+/* registration: local first, then "sync" */
+var form=$("#regForm"),st=$("#syncStatus");
+function showStatus(kind,msg){st.hidden=false;st.className="sync-status "+kind;$("#syncTag").textContent=kind==="local"?"LOCAL":"SYNCED";$("#syncMsg").textContent=msg}
+var TIERS={early:"早鸟票",std:"标准票",ws:"两天 + 工作坊",stu:"学生票"};
+var prev=store.get("lf26-reg",null);
+if(prev){$("#fName").value=prev.name;$("#fMail").value=prev.email;$("#fOrg").value=prev.org||"";
+  var r=form.querySelector('input[value="'+prev.tier+'"]');if(r)r.checked=true;
+  showStatus("synced","你之前已在这台设备上保存过报名（"+TIERS[prev.tier]+"）。修改后再次提交会覆盖本机记录。");}
+function check(el,eid,msg){var ok=el.checkValidity()&&el.value.trim()!=="";el.setAttribute("aria-invalid",String(!ok));$("#"+eid).textContent=ok?"":msg;return ok}
+form.addEventListener("submit",function(e){
+  e.preventDefault();
+  var a=check($("#fName"),"eName","请填写姓名，它会印在胸牌上。");
+  var b=check($("#fMail"),"eMail","邮箱格式好像不对，例如 name@domain.cn。");
+  if(!a){$("#fName").focus();return}if(!b){$("#fMail").focus();return}
+  var data={name:$("#fName").value.trim(),email:$("#fMail").value.trim(),org:$("#fOrg").value.trim(),
+    tier:form.querySelector('input[name="tier"]:checked').value,at:Date.now()};
+  store.set("lf26-reg",data);storeCount();
+  var btn=$("#regBtn");btn.disabled=true;
+  showStatus("local","已写入本机："+data.name+" · "+TIERS[data.tier]+"。即使现在断网，这条记录也不会丢。");
+  setTimeout(function(){btn.disabled=false;
+    showStatus("synced",navigator.onLine?"同步完成（演示）。正式报名开放后，电子票会发到 "+data.email+"。":"你当前离线，记录保留在本机，联网后可再次提交。")},reduce?0:1400);
+});
+["fName","fMail"].forEach(function(id){$("#"+id).addEventListener("input",function(){if(this.getAttribute("aria-invalid")==="true"){this.setAttribute("aria-invalid","false");$("#e"+id.slice(1)).textContent=""}})});
+addEventListener("load",receipt);
+})();
+</script>
+</body>
+</html>

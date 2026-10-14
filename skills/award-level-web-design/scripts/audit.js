@@ -151,6 +151,31 @@
   const css = [...document.styleSheets].map(s => { try { return [...s.cssRules].map(r => r.cssText).join('\n'); } catch { return ''; } }).join('\n');
   if (/animation|transition/.test(css) && !/prefers-reduced-motion/.test(css)) add('reduced-motion', 'warn', null, 'page animates but has no @media (prefers-reduced-motion) rule');
 
+  // 8. Placeholder copy left in the DOM (a page that writes *about* placeholders can trip this; confirm before fixing)
+  const PLACEHOLDER = /lorem ipsum|dolor sit amet|your (text|title|company) here|company name|placeholder|coming soon|示例文字|此处输入|占位文字|公司名称|敬请期待/i;
+  const bodyText = document.body.innerText;
+  const ph = bodyText.match(PLACEHOLDER);
+  if (ph) add('placeholder', 'warn', null, `found "${ph[0]}" in visible text — replace with real copy (ignore if the page is about placeholders)`);
+
+  // 9. Content stuck invisible: large elements left at opacity 0 (broken reveal / reduced-motion path)
+  for (const el of document.querySelectorAll('body *')) {
+    const cs = getComputedStyle(el);
+    if (cs.opacity !== '0' || cs.visibility === 'hidden' || cs.display === 'none') continue;
+    const r = el.getBoundingClientRect();
+    // only what is on screen now; below-the-fold reveals simply have not been scrolled to yet
+    if (r.top < innerHeight && r.bottom > 0 && r.height > 40 && r.width > 40 && (el.innerText || '').trim() && !isAnimating(el) && !el.closest('[aria-hidden="true"],[hidden],dialog:not([open])')) add('stuck-hidden', 'warn', el, 'opacity is 0 after settle — reveal never fired, or reduced-motion path hides content');
+  }
+
+  // 10. Structure & meta: one h1, a <main>, lang, title, description, image alt
+  const h1s = document.querySelectorAll('h1').length;
+  if (h1s !== 1) add('structure', 'warn', null, `${h1s} <h1> elements, expected exactly 1`);
+  if (!document.querySelector('main')) add('structure', 'warn', null, 'no <main> landmark');
+  if (!/width=device-width/.test(document.querySelector('meta[name="viewport"]')?.content || '')) add('meta', 'error', null, 'no <meta name="viewport" content="width=device-width, initial-scale=1"> — phones render a 980px desktop layout');
+  if (!document.documentElement.lang) add('meta', 'warn', null, '<html> has no lang attribute');
+  if (!document.title.trim() || /^(home|index|document|untitled|vite app|react app)$/i.test(document.title.trim())) add('meta', 'warn', null, `generic or empty <title>: "${document.title}"`);
+  if (!document.querySelector('meta[name="description"]')?.content) add('meta', 'warn', null, 'no meta description');
+  for (const img of document.querySelectorAll('img')) if (!img.hasAttribute('alt')) add('img-alt', 'error', img, `missing alt (use alt="" if decorative): ${img.currentSrc || img.src}`.slice(0, 120));
+
   const count = s => issues.filter(i => i.severity === s).length;
   return { viewport: vw, errors: count('error'), warnings: count('warn'), issues };
 })();
