@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Award-Level Web Design · Agent Skill</title>
-<meta name="description" content="让 AI 编程助手按 Awwwards / Webby / FWA 获奖网站的标准做网页，并用截图—打分—修改的循环自检到位。">
+<meta name="description" content="Award-Level Web Design v1.3：让 AI 编程助手按 Awwwards / Webby / FWA 获奖网站的标准做网页，并用截图、打分、修改和高级媒介参考把设计自检到位。">
 <meta name="theme-color" content="#F4F3EF">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://abc-xiaoxuan.github.io/award-level-web-design/">
 <meta property="og:title" content="Award-Level Web Design · Agent Skill">
-<meta property="og:description" content="让 AI 做出能拿奖的网页，by default.">
+<meta property="og:description" content="v1.3：按获奖网站标准设计、截图、打分、修改，并覆盖滚动、WebGL、视频和证据式深度拆解。">
 <meta property="og:image" content="https://abc-xiaoxuan.github.io/award-level-web-design/og-preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Award-Level Web Design · Agent Skill">
-<meta name="twitter:description" content="按获奖网站标准设计、截图、打分、修改，直到挑不出明显问题。">
+<meta name="twitter:description" content="v1.3：按获奖网站标准设计、截图、打分、修改，新增滚动、WebGL、视频和深度拆解参考。">
 <meta name="twitter:image" content="https://abc-xiaoxuan.github.io/award-level-web-design/og-preview.png">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:image:type" content="image/png">
@@ -159,7 +159,19 @@ h1,h2,h3,p,figure{margin:0}
 .ab dd b{font-family:var(--f-serif);font-weight:400;font-size:2.2rem;line-height:1;color:var(--ink);letter-spacing:-.02em}
 .ab .fine{grid-column:1;font-size:.85rem;color:var(--ink-3)}
 .ab .fine a{color:var(--ink-2);text-decoration:underline;text-underline-offset:3px}
-@media (max-width:760px){.ab{grid-template-columns:1fr}.ab dl{grid-column:1;grid-row:auto}}
+.update-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s4);border-top:1px solid var(--ink)}
+.update-card{grid-column:span 4;padding:var(--s4) var(--s4) var(--s5) 0;border-bottom:1px solid var(--line);min-height:285px}
+.update-card+.update-card{border-left:1px solid var(--line);padding-left:var(--s4)}
+.update-card .idx{color:var(--blue)}
+.update-card h3{margin-top:var(--s5);font-size:1.45rem;line-height:1.2;letter-spacing:-.025em}
+.update-card p{margin-top:var(--s3);color:var(--ink-2);font-size:.95rem;max-width:25em}
+.update-card ul{list-style:none;margin:var(--s4) 0 0;padding:0;display:grid;gap:8px;color:var(--ink-2);font-size:.82rem}
+.update-card li{display:flex;gap:8px;align-items:baseline}
+.update-card li::before{content:'↗';color:var(--blue);font-family:var(--f-mono);font-size:.7rem}
+.update-card a{background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;color:var(--ink)}
+.update-card a:hover{color:var(--blue)}
+.update-note{margin-top:var(--s4);padding-top:var(--s4);border-top:1px solid var(--line-2);color:var(--ink-2);font-size:.95rem;max-width:48em}
+@media (max-width:760px){.ab{grid-template-columns:1fr}.ab dl{grid-column:1;grid-row:auto}.update-card{grid-column:1/-1;min-height:0;padding:var(--s4) 0}.update-card+.update-card{border-left:0;padding-left:0}}
 
 /* gallery */
 .works{display:flex;flex-direction:column;gap:var(--s7)}
@@ -245,6 +257,7 @@ h1,h2,h3,p,figure{margin:0}
     <a class="logo" href="#top"><i aria-hidden="true">A</i>award-level-web-design</a>
     <ul>
       <li><a href="#how">工作方式</a></li>
+      <li><a href="#updates">最新能力</a></li>
       <li><a href="#work">示例</a></li>
       <li><a href="#install">安装</a></li>
     </ul>
@@ -252,14 +265,14 @@ h1,h2,h3,p,figure{margin:0}
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">菜单</button>
   </div>
   <div class="mobile-menu" id="mobile-menu" hidden>
-    <nav aria-label="移动端主导航"><a href="#how">工作方式</a><a href="#work">示例</a><a href="#install">安装</a><a href="https://github.com/ABC-xiaoxuan/award-level-web-design">GitHub</a></nav>
+    <nav aria-label="移动端主导航"><a href="#how">工作方式</a><a href="#updates">最新能力</a><a href="#work">示例</a><a href="#install">安装</a><a href="https://github.com/ABC-xiaoxuan/award-level-web-design">GitHub</a></nav>
   </div>
 </header>
 
 <main id="top">
   <section class="hero wrap" aria-labelledby="h1">
     <div class="grid">
-      <p class="kick mono"><span><b>●</b> Agent Skill</span><span>Claude Code · Codex · Cursor · 30+ 工具</span><span>MIT</span></p>
+      <p class="kick mono"><span><b>●</b> Agent Skill</span><span>v1.3 · Advanced media</span><span>Claude Code · Codex · Cursor · 30+ 工具</span><span>MIT</span></p>
       <div class="hero-l">
         <h1 id="h1"><span class="l"><span>让 AI 做出</span></span><span class="l"><span>能拿奖的网页，</span></span><span class="l"><span><em>by default.</em></span></span></h1>
         <p class="lead">以 Awwwards、Webby、FWA 获奖网站为标准：先定一个设计概念，再实现，然后真正打开浏览器截图，按九个维度加权打分、修改、再截图——直到挑不出明显问题。</p>
@@ -309,9 +322,38 @@ h1,h2,h3,p,figure{margin:0}
     </aside>
   </section>
 
+  <section class="sec wrap" id="updates" aria-labelledby="updates-h">
+    <div class="head reveal">
+      <span class="mono">02 / 最新能力</span>
+      <h2 id="updates-h">从页面构想，<br>走到<em>更复杂的媒介。</em></h2>
+      <p>v1.3 吸收了高级技术路线，同时保留静态降级、键盘操作和真实浏览器验证。</p>
+    </div>
+    <div class="update-grid">
+      <article class="update-card reveal" style="--i:0">
+        <span class="idx mono">01 / Stack + scroll</span>
+        <h3>先选最小技术栈，再设计滚动。</h3>
+        <p>普通页面保持轻量。连续场景才使用平滑滚动，并让 DOM、动画和画布共用一个循环。</p>
+        <ul><li><a href="https://github.com/ABC-xiaoxuan/award-level-web-design/blob/main/skills/award-level-web-design/references/stack.md">技术栈与项目结构</a></li><li><a href="https://github.com/ABC-xiaoxuan/award-level-web-design/blob/main/skills/award-level-web-design/references/scroll.md">滚动系统与性能</a></li></ul>
+      </article>
+      <article class="update-card reveal" style="--i:1">
+        <span class="idx mono">02 / WebGL + video</span>
+        <h3>高级媒介也要有预算。</h3>
+        <p>WebGL 有 draw call 和内存边界。视频有 poster、编码梯度和可访问控制器。没有降级，就没有交付。</p>
+        <ul><li><a href="https://github.com/ABC-xiaoxuan/award-level-web-design/blob/main/skills/award-level-web-design/references/webgl.md">WebGL 与 3D</a></li><li><a href="https://github.com/ABC-xiaoxuan/award-level-web-design/blob/main/skills/award-level-web-design/references/video.md">视频优先页面</a></li></ul>
+      </article>
+      <article class="update-card reveal" style="--i:2">
+        <span class="idx mono">03 / Evidence + scrub</span>
+        <h3>提取原则，不复制表面。</h3>
+        <p>用证据拆解获奖站。只有当连续镜头就是概念时，才让原生滚动驱动视频旅程。</p>
+        <ul><li><a href="https://github.com/ABC-xiaoxuan/award-level-web-design/blob/main/skills/award-level-web-design/references/deepdive.md">获奖网站深度拆解</a></li><li><a href="https://github.com/ABC-xiaoxuan/award-level-web-design/blob/main/skills/award-level-web-design/references/scroll-scrub.md">Scroll-scrub 参考</a></li></ul>
+      </article>
+    </div>
+    <p class="update-note reveal">复杂技术只在概念需要时出现。静态内容、移动端、键盘操作和 <code>prefers-reduced-motion</code> 始终是完整体验的一部分。</p>
+  </section>
+
   <section class="sec wrap" id="work" aria-labelledby="work-h">
     <div class="head reveal">
-      <span class="mono">02 / 示例</span>
+      <span class="mono">03 / 示例</span>
       <h2 id="work-h">三个方向，<br>三种<em>完全不同</em>的气质。</h2>
       <p>三套可交互的完整示例，点开页面体验各自的设计与细节。</p>
     </div>
@@ -344,7 +386,7 @@ h1,h2,h3,p,figure{margin:0}
   </template>
   <section class="sec wrap" id="install" aria-labelledby="ins-h">
     <div class="head reveal">
-      <span class="mono">03 / 安装</span>
+      <span class="mono">04 / 安装</span>
       <h2 id="ins-h">一行命令，<br><em>装进</em>你的 AI 助手。</h2>
       <p>装好后不用特意调用：做落地页、官网、作品集，或者说"要高级感"时会自动启用。</p>
     </div>
