@@ -23,6 +23,8 @@ description: 以 Awwwards / Webby Awards / FWA 获奖网站为品质标准来设
 - 3–5 个视觉关键词；
 - 签名时刻是什么。
 
+如果需要参考现有获奖站，先读 [references/deepdive.md](references/deepdive.md)，只提取可验证的原则，不复制它的布局、颜色或动效参数。
+
 三个方向不能只是换了配色，美术方向必须不同。选定一个，用一句话说明为什么不选另外两个，然后为它写出节拍表（每屏的目的和唯一的视觉事件）。用户明确给了方向时，可以跳过发散，但节拍表仍然要写。
 
 ### 1.2 翻译：把概念落实成设计决策
@@ -58,6 +60,12 @@ description: 以 Awwwards / Webby Awards / FWA 获奖网站为品质标准来设
 - 移动优先，至少在 375 / 768 / 1280 / 1920 四个宽度下都成立；不能出现横向滚动。
 - 图片给出尺寸避免布局抖动；字体用 `font-display: swap`；首屏不要被重型动画库拖慢。
 
+### 技术选型与高级媒介
+
+先读 [references/stack.md](references/stack.md)，选择能表达概念的最小技术栈。静态 HTML 已经够用时，不要为了显得高级而引入框架。需要连续场景时，再读 [references/scroll.md](references/scroll.md)；概念是空间或材质时，按需读 [references/webgl.md](references/webgl.md)；视频是内容和签名时刻时，读 [references/video.md](references/video.md)。只有当“一段连续镜头就是页面概念”时，才读 [references/scroll-scrub.md](references/scroll-scrub.md)。这些参考都要求静态内容、键盘操作、移动端版本和 reduced-motion 降级先成立。
+
+滚动、动画和 WebGL 使用一个渲染循环。视频使用 poster 作为首屏候选，不把自动播放声音或滚轮劫持作为设计手段。高级媒介是概念的表达方式，不是额外的视觉装饰。
+
 ### 动效设计规范
 
 动效必须服务于内容概念和阅读顺序。默认采用“一个签名动效 + 少量入场/微交互”的结构，不要把所有元素都做成淡入，也不要为了展示技术而加入重型动画库。
@@ -68,7 +76,7 @@ description: 以 Awwwards / Webby Awards / FWA 获奖网站为品质标准来设
 - 必须实现 `prefers-reduced-motion: reduce`：直接显示信息内容，停止连续动画，清除错峰延迟；如果使用 `requestAnimationFrame` 或计时器，还要在脚本中监听 `visibilitychange` 和 `IntersectionObserver`。
 - 指针跟随和背景循环只用于局部签名效果，使用 `requestAnimationFrame` 合帧和 `transform`，避免持续触发布局；不要让装饰动效抢过标题和 CTA。
 
-可直接套用的模式、参数和降级模板见 [references/motion-patterns.md](references/motion-patterns.md)。
+可直接套用的模式、参数和降级模板见 [references/motion-patterns.md](references/motion-patterns.md)。高级媒介的技术边界见 [references/stack.md](references/stack.md)、[references/scroll.md](references/scroll.md)、[references/webgl.md](references/webgl.md)、[references/video.md](references/video.md) 和 [references/scroll-scrub.md](references/scroll-scrub.md)。
 
 ## 3. 完成后：渲染—自检—优化循环
 
