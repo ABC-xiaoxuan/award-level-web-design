@@ -3,7 +3,8 @@
   "type": "module",
   "scripts": {
     "dev": "node tests/server.mjs",
-    "test": "node tests/browser.mjs",
+    "test": "node tests/structure.mjs && node tests/browser.mjs",
+    "test:structure": "node tests/structure.mjs",
     "test:lighthouse": "node tests/lighthouse.mjs",
     "test:shots": "node tests/shoot-all.mjs",
     "build:texture": "node tests/build-texture.mjs && python tests/optimize-texture.py",

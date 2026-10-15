@@ -1,0 +1,18 @@
+{
+  "p01": {
+    "brief": "jian",
+    "group": "A"
+  },
+  "p02": {
+    "brief": "forum",
+    "group": "B"
+  },
+  "p03": {
+    "brief": "forum",
+    "group": "A"
+  },
+  "p04": {
+    "brief": "jian",
+    "group": "B"
+  }
+}

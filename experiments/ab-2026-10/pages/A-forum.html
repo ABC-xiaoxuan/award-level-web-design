@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>本地优先大会 2026</title>
+<meta name="description" content="LOCAL-FIRST 2026：为期两天的本地优先软件技术大会，11 月 21—22 日，杭州。">
+<style>
+:root{
+  --paper:#f3efe6;--paper-2:#ebe5d8;--ink:#16211c;--ink-2:#4a554f;--line:#cfc7b6;
+  --accent:#e2522b;--moss:#2f5d4a;--card:#fbf9f4;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;
+  --serif:"Songti SC","STSong","Noto Serif CJK SC","Source Han Serif SC","SimSun",Georgia,serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --gut:clamp(16px,4vw,56px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#111714;--paper-2:#18201c;--ink:#ece6d8;--ink-2:#a3aaa3;--line:#2c3631;
+  --accent:#ff6a3d;--moss:#7fb59a;--card:#161d19;}}
+:root[data-theme="dark"]{--paper:#111714;--paper-2:#18201c;--ink:#ece6d8;--ink-2:#a3aaa3;--line:#2c3631;--accent:#ff6a3d;--moss:#7fb59a;--card:#161d19;}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;font-size:16px;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 var(--gut)}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+/* nav */
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none;letter-spacing:.02em}
+.logo svg{width:22px;height:22px}
+.nav ul{display:flex;gap:28px;list-style:none}
+.nav ul a{text-decoration:none;font-size:14px;color:var(--ink-2);transition:color .2s}
+.nav ul a:hover{color:var(--ink)}
+.status{display:inline-flex;align-items:center;gap:8px;color:var(--ink-2)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--moss);box-shadow:0 0 0 3px color-mix(in srgb,var(--moss) 25%,transparent)}
+.status.off .dot{background:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);text-decoration:none;border:0;font:inherit;font-size:15px;font-weight:600;padding:12px 20px;border-radius:999px;cursor:pointer;transition:transform .2s,background .2s}
+.btn:hover{background:var(--accent);transform:translateY(-1px)}
+.btn .arr{transition:transform .2s}.btn:hover .arr{transform:translateX(3px)}
+.btn.sm{padding:8px 16px;font-size:14px}
+/* hero */
+.hero{padding:clamp(48px,8vw,104px) 0 0;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,5vw,72px);align-items:end}
+.eyebrow{display:flex;gap:14px;flex-wrap:wrap;color:var(--ink-2);margin-bottom:28px}
+.eyebrow span+span::before{content:"/";margin-right:14px;color:var(--line)}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(48px,9.2vw,132px);line-height:.98;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--accent)}
+h1 .lat{display:block;font-family:var(--sans);font-size:.28em;letter-spacing:.02em;font-weight:600;margin-top:.6em;color:var(--ink-2)}
+.lede{font-size:clamp(17px,1.6vw,20px);max-width:34em;margin-top:32px;color:var(--ink-2)}
+.hero-cta{display:flex;align-items:center;gap:22px;margin-top:36px;flex-wrap:wrap}
+.hero-cta .meta{font-size:14px;color:var(--ink-2)}
+.hero-art{aspect-ratio:1;width:100%;max-width:460px;justify-self:end}
+.hero-art svg{width:100%;height:100%;display:block}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);margin-top:clamp(48px,7vw,88px)}
+.facts div{padding:22px 0 26px;border-right:1px solid var(--line);padding-left:20px}
+.facts div:first-child{padding-left:0}.facts div:last-child{border-right:0}
+.facts b{display:block;font-family:var(--serif);font-size:clamp(28px,3.4vw,44px);line-height:1.1}
+.facts span{font-size:13px;color:var(--ink-2)}
+/* sections */
+section{padding:clamp(72px,10vw,140px) 0}
+.sec-head{display:grid;grid-template-columns:200px 1fr;gap:24px;margin-bottom:clamp(36px,5vw,64px);align-items:baseline}
+.sec-head .mono{color:var(--accent)}
+h2{font-family:var(--serif);font-size:clamp(34px,5vw,64px);line-height:1.08;letter-spacing:-.01em;font-weight:700}
+h2+p{margin-top:16px;color:var(--ink-2);max-width:36em}
+/* manifesto */
+.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.pr{background:var(--paper);padding:32px 28px 36px;transition:background .25s}
+.pr:hover{background:var(--card)}
+.pr .n{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.pr h3{font-size:20px;margin:18px 0 8px}
+.pr p{font-size:15px;color:var(--ink-2)}
+.pr svg{width:44px;height:44px;margin-top:20px;color:var(--moss)}
+/* schedule */
+#schedule{background:var(--paper-2)}
+.tabs{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+.tab{font:inherit;cursor:pointer;background:transparent;color:var(--ink);border:1px solid var(--ink);border-radius:999px;padding:10px 20px;font-size:15px;transition:background .2s,color .2s}
+.tab small{font-family:var(--mono);font-size:12px;margin-left:8px;opacity:.7}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.tab:not([aria-selected="true"]):hover{background:var(--card)}
+.filters{display:flex;gap:16px;flex-wrap:wrap;margin-left:auto;align-items:center}
+.chip{font:inherit;font-size:13px;cursor:pointer;border:0;background:none;color:var(--ink-2);display:inline-flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid transparent}
+.chip i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.chip[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.slots{list-style:none;border-top:1px solid var(--ink)}
+.slot{display:grid;grid-template-columns:120px 1fr 220px 110px;gap:24px;padding:22px 0;border-bottom:1px solid var(--line);align-items:start;transition:opacity .25s}
+.slot.dim{opacity:.22}
+.slot time{font-family:var(--mono);font-size:14px;padding-top:3px}
+.slot h3{font-size:clamp(17px,1.7vw,21px);line-height:1.4;font-weight:600}
+.slot p{font-size:14px;color:var(--ink-2);margin-top:4px}
+.slot .who{font-size:14px}.slot .who span{display:block;color:var(--ink-2);font-size:13px}
+.tag{justify-self:end;font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.slot.break{grid-template-columns:120px 1fr}
+.slot.break h3{font-weight:400;color:var(--ink-2);font-size:15px}
+.t-talk{color:var(--moss)}.t-work{color:var(--accent)}.t-panel{color:#8a6a1f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .t-panel{color:#d8b25a}}
+:root[data-theme="dark"] .t-panel{color:#d8b25a}
+/* speakers */
+.speakers{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,28px)}
+.sp{background:var(--card);border:1px solid var(--line);border-radius:4px;overflow:hidden;transition:transform .3s,border-color .3s}
+.sp:hover{transform:translateY(-4px);border-color:var(--ink)}
+.sp .av{aspect-ratio:4/3.4;display:block;width:100%}
+.sp .bd{padding:16px 18px 20px}
+.sp h3{font-size:18px}
+.sp .role{font-size:13px;color:var(--ink-2)}
+.sp .topic{font-size:14px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+/* register */
+.reg{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px)}
+.tiers{display:grid;gap:12px;margin-top:32px}
+.tier{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;border:1px solid var(--line);padding:18px 20px;border-radius:4px;cursor:pointer;transition:border-color .2s,background .2s}
+.tier:hover{border-color:var(--ink-2)}
+.tier:has(input:checked){border-color:var(--ink);background:var(--card)}
+.tier input{accent-color:var(--accent);width:18px;height:18px}
+.tier b{display:block}.tier small{color:var(--ink-2);font-size:13px}
+.tier .price{font-family:var(--serif);font-size:24px;font-weight:700}
+form.card{background:var(--card);border:1px solid var(--line);padding:clamp(24px,3vw,40px);border-radius:4px;align-self:start}
+.field{display:grid;gap:6px;margin-bottom:18px}
+.field label{font-size:14px;font-weight:600}
+.field input,.field select{font:inherit;font-size:16px;padding:12px 14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:3px;width:100%}
+.field input:focus,.field select:focus{outline:none;border-color:var(--ink)}
+.err{color:var(--accent);font-size:13px;min-height:1em}
+.sum{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:18px;margin:8px 0 20px}
+.sum b{font-family:var(--serif);font-size:30px}
+.ok{display:none;text-align:center;padding:40px 0}
+.ok.show{display:block}
+.ok svg{width:64px;height:64px;color:var(--moss)}
+.ok h3{font-family:var(--serif);font-size:28px;margin:12px 0 6px}
+.ok p{color:var(--ink-2)}
+.note{font-size:13px;color:var(--ink-2);margin-top:14px}
+/* footer */
+footer{border-top:1px solid var(--ink);padding:40px 0 56px;font-size:14px;color:var(--ink-2)}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.big{font-family:var(--serif);font-weight:700;font-size:clamp(56px,14vw,200px);line-height:.9;letter-spacing:-.03em;color:var(--ink);padding:0 var(--gut) 24px;max-width:1240px;margin:0 auto;overflow:hidden;white-space:nowrap}
+.big span{color:var(--accent)}
+/* sync anim */
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+.pk{animation:pulse 2.4s ease-in-out infinite}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}html{scroll-behavior:auto}}
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr}.hero-art{max-width:320px;justify-self:start;order:-1}
+  .speakers{grid-template-columns:repeat(2,1fr)}
+  .principles{grid-template-columns:1fr}
+  .reg{grid-template-columns:1fr}
+  .slot{grid-template-columns:90px 1fr 100px}.slot .who{grid-column:2}.slot .tag{grid-row:1;grid-column:3}
+  .sec-head{grid-template-columns:1fr;gap:10px}
+  .nav ul{display:none}
+}
+@media (max-width:600px){
+  .facts{grid-template-columns:1fr 1fr}.facts div{padding-left:0!important;border-right:0;border-bottom:1px solid var(--line)}
+  .slot,.slot.break{grid-template-columns:1fr;gap:6px}.slot .who{grid-column:auto}.slot .tag{grid-row:auto;grid-column:auto;justify-self:start}
+  .speakers{grid-template-columns:1fr 1fr;gap:12px}.sp .bd{padding:12px}.sp h3{font-size:16px}
+  .status{display:none}
+  .filters{margin-left:0;width:100%}
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="LOCAL-FIRST 2026 首页">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="4" fill="currentColor"/><circle cx="18" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 12h4" stroke="var(--accent)" stroke-width="2"/></svg>
+      LOCAL-FIRST 2026
+    </a>
+    <nav aria-label="主导航"><ul>
+      <li><a href="#why">理念</a></li><li><a href="#schedule">日程</a></li><li><a href="#speakers">讲者</a></li><li><a href="#register">报名</a></li>
+    </ul></nav>
+    <span class="status mono" id="net" aria-live="polite"><i class="dot"></i><span>在线 · 已同步</span></span>
+    <a class="btn sm" href="#register">报名 <span class="arr" aria-hidden="true">→</span></a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow mono"><span>11.21 — 11.22</span><span>杭州 · 良渚文化艺术中心</span><span>第 1 届</span></div>
+        <h1>数据<em>属于</em><br>你的设备。<span class="lat">Local-First Software Conference</span></h1>
+        <p class="lede">两天，二十余场分享与工作坊。我们讨论 CRDT、同步引擎、端侧存储与离线协作，以及如何让软件在没有网络的时候依然完整、快速、可靠。</p>
+        <div class="hero-cta">
+          <a class="btn" href="#register">立即报名 <span class="arr" aria-hidden="true">→</span></a>
+          <span class="meta">早鸟票剩余 <b id="seats">86</b> 张 · 截止 10 月 31 日</span>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 400 400">
+          <defs><pattern id="g" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="var(--line)"/></pattern></defs>
+          <rect width="400" height="400" fill="url(#g)"/>
+          <g fill="none" stroke="var(--ink)" stroke-width="1.5">
+            <path d="M110 110 C 200 60, 260 120, 290 110" stroke-dasharray="4 6"/>
+            <path d="M110 110 C 90 210, 130 260, 120 290" stroke-dasharray="4 6"/>
+            <path d="M290 110 C 320 200, 260 260, 280 290" stroke-dasharray="4 6"/>
+            <path d="M120 290 C 200 330, 230 280, 280 290" stroke-dasharray="4 6"/>
+          </g>
+          <g id="pkts" fill="var(--accent)">
+            <circle r="5"><animateMotion dur="3.2s" repeatCount="indefinite" path="M110 110 C 200 60, 260 120, 290 110"/></circle>
+            <circle r="5"><animateMotion dur="4s" repeatCount="indefinite" path="M120 290 C 130 260, 90 210, 110 110"/></circle>
+            <circle r="5"><animateMotion dur="3.6s" repeatCount="indefinite" path="M280 290 C 260 260, 320 200, 290 110"/></circle>
+            <circle r="5"><animateMotion dur="4.4s" repeatCount="indefinite" path="M120 290 C 200 330, 230 280, 280 290"/></circle>
+          </g>
+          <g font-family="ui-monospace,Consolas,monospace" font-size="11" fill="var(--ink)">
+            <rect x="62" y="74" width="96" height="72" rx="6" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+            <rect x="72" y="86" width="76" height="6" rx="3" fill="var(--moss)"/><rect x="72" y="98" width="52" height="6" rx="3" fill="var(--line)"/><rect x="72" y="110" width="64" height="6" rx="3" fill="var(--line)"/>
+            <text x="72" y="136">laptop · v12</text>
+            <rect x="254" y="70" width="70" height="84" rx="10" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+            <rect x="264" y="84" width="50" height="6" rx="3" fill="var(--moss)"/><rect x="264" y="96" width="34" height="6" rx="3" fill="var(--line)"/>
+            <text x="262" y="142">phone</text>
+            <rect x="80" y="258" width="80" height="64" rx="6" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+            <rect x="90" y="270" width="40" height="6" rx="3" fill="var(--accent)"/><rect x="90" y="282" width="60" height="6" rx="3" fill="var(--line)"/>
+            <text x="90" y="310">tablet</text>
+            <rect x="236" y="256" width="92" height="68" rx="6" fill="var(--ink)"/>
+            <text x="248" y="282" fill="var(--paper)">merge()</text>
+            <text x="248" y="302" fill="var(--paper)" class="pk">✓ converged</text>
+          </g>
+          <circle cx="200" cy="200" r="34" fill="var(--accent)"/>
+          <text x="200" y="196" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="10" fill="#fff">CRDT</text>
+          <text x="200" y="210" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="10" fill="#fff">sync</text>
+        </svg>
+      </div>
+    </div>
+    <div class="facts">
+      <div><b>2 天</b><span>11 月 21—22 日</span></div>
+      <div><b>24 场</b><span>演讲 · 工作坊 · 圆桌</span></div>
+      <div><b>16 位</b><span>来自开源社区与一线团队的讲者</span></div>
+      <div><b>600 席</b><span>线下座位，另设直播</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head"><span class="mono">01 / 理念</span><div><h2>云端是副本，<br>不是主人。</h2><p>本地优先软件把数据的主副本放在用户手里，云端负责同步与备份。它让应用即时响应、离线可用，并且长久存续。</p></div></div>
+    <div class="principles">
+      <article class="pr reveal"><span class="n">01</span><h3>不用等待</h3><p>读写都在本地完成，没有加载转圈，交互延迟以毫秒计。</p>
+        <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="22" cy="22" r="18"/><path d="M22 10v12l8 5"/></svg></article>
+      <article class="pr reveal"><span class="n">02</span><h3>离线也完整</h3><p>飞机上、地铁里、信号差的山区，功能一样不少，联网后自动合并。</p>
+        <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 18c9-8 23-8 32 0M12 25c6-5 14-5 20 0M18 32c2-2 6-2 8 0"/><path d="M6 6l32 32" stroke="var(--accent)"/></svg></article>
+      <article class="pr reveal"><span class="n">03</span><h3>多端协作</h3><p>借助 CRDT 等技术，多人同时编辑同一份文档，冲突自动收敛。</p>
+        <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="12" r="5"/><circle cx="34" cy="12" r="5"/><circle cx="22" cy="34" r="5"/><path d="M14 15l6 15M30 15l-6 15M15 12h14"/></svg></article>
+      <article class="pr reveal"><span class="n">04</span><h3>长久存续</h3><p>即便服务停止运营，你的数据和软件仍然可以继续使用。</p>
+        <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><ellipse cx="22" cy="10" rx="14" ry="5"/><path d="M8 10v24c0 3 6 5 14 5s14-2 14-5V10M8 22c0 3 6 5 14 5s14-2 14-5"/></svg></article>
+      <article class="pr reveal"><span class="n">05</span><h3>隐私与安全</h3><p>端到端加密成为默认选项，服务器只看到无法解读的密文。</p>
+        <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="19" width="26" height="19" rx="3"/><path d="M15 19v-6a7 7 0 0114 0v6"/><circle cx="22" cy="28" r="2" fill="currentColor"/></svg></article>
+      <article class="pr reveal"><span class="n">06</span><h3>用户掌控</h3><p>数据可导出、可迁移、可审计，所有权回到使用者手中。</p>
+        <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 6v22M14 20l8 8 8-8"/><path d="M8 30v8h28v-8"/></svg></article>
+    </div>
+  </div>
+</section>
+
+<section id="schedule">
+  <div class="wrap">
+    <div class="sec-head"><span class="mono">02 / 日程</span><div><h2>两天，从原理到落地。</h2><p>第一天聚焦理论与基础设施，第二天进入工程实践与产品落地。日程可能微调，以现场为准。</p></div></div>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-bottom:28px">
+      <div class="tabs" role="tablist" aria-label="选择日期" style="margin:0">
+        <button class="tab" role="tab" id="tab-1" aria-selected="true" aria-controls="slots" data-day="1">Day 1 <small>11.21 周六</small></button>
+        <button class="tab" role="tab" id="tab-2" aria-selected="false" aria-controls="slots" data-day="2" tabindex="-1">Day 2 <small>11.22 周日</small></button>
+      </div>
+      <div class="filters" role="group" aria-label="按类型筛选">
+        <button class="chip" aria-pressed="true" data-f="all">全部</button>
+        <button class="chip t-talk" aria-pressed="false" data-f="talk"><i style="background:currentColor"></i><span style="color:var(--ink-2)">演讲</span></button>
+        <button class="chip t-work" aria-pressed="false" data-f="work"><i style="background:currentColor"></i><span style="color:var(--ink-2)">工作坊</span></button>
+        <button class="chip t-panel" aria-pressed="false" data-f="panel"><i style="background:currentColor"></i><span style="color:var(--ink-2)">圆桌</span></button>
+      </div>
+    </div>
+    <ol class="slots" id="slots" role="tabpanel" aria-labelledby="tab-1"></ol>
+  </div>
+</section>
+
+<section id="speakers">
+  <div class="wrap">
+    <div class="sec-head"><span class="mono">03 / 讲者</span><div><h2>正在构建它的人。</h2><p>来自数据库、编辑器、协作工具与开源社区的工程师和研究者。</p></div></div>
+    <div class="speakers" id="sp"></div>
+  </div>
+</section>
+
+<section id="register" style="border-top:1px solid var(--line)">
+  <div class="wrap reg">
+    <div>
+      <div class="mono" style="color:var(--accent);margin-bottom:18px">04 / 报名</div>
+      <h2>留一个座位<br>给你。</h2>
+      <p style="margin-top:16px;color:var(--ink-2);max-width:30em">所有票种均含两天主会场、午餐与茶歇。工作坊名额有限，需单独选择。学生票请在现场出示学生证。</p>
+      <div class="tiers" role="radiogroup" aria-label="票种">
+        <label class="tier"><input type="radio" name="tier" value="899" data-name="早鸟票" checked><span><b>早鸟票</b><small>10 月 31 日前 · 剩余 <span class="seat-mirror">86</span> 张</small></span><span class="price">¥899</span></label>
+        <label class="tier"><input type="radio" name="tier" value="1299" data-name="标准票"><span><b>标准票</b><small>两天全场通行</small></span><span class="price">¥1299</span></label>
+        <label class="tier"><input type="radio" name="tier" value="299" data-name="学生票"><span><b>学生票</b><small>需验证学生身份</small></span><span class="price">¥299</span></label>
+      </div>
+    </div>
+    <form class="card" id="form" novalidate>
+      <div id="fields">
+        <div class="field"><label for="name">姓名</label><input id="name" name="name" autocomplete="name" required><span class="err" id="e-name"></span></div>
+        <div class="field"><label for="email">邮箱</label><input id="email" name="email" type="email" autocomplete="email" required><span class="err" id="e-email"></span></div>
+        <div class="field"><label for="org">公司 / 学校（选填）</label><input id="org" name="org" autocomplete="organization"></div>
+        <div class="field"><label for="ws">加选工作坊</label>
+          <select id="ws" name="ws"><option value="0">不参加工作坊</option><option value="199">Automerge 动手实践（+¥199）</option><option value="199">用 SQLite 构建同步引擎（+¥199）</option><option value="199">端到端加密的协作应用（+¥199）</option></select></div>
+        <div class="sum"><span><span id="s-tier">早鸟票</span><br><small style="color:var(--ink-2)" id="s-ws">无工作坊</small></span><b id="total">¥899</b></div>
+        <button class="btn" type="submit" style="width:100%;justify-content:center">提交报名 <span class="arr" aria-hidden="true">→</span></button>
+        <p class="note">表单草稿会自动保存在你的浏览器里，断网也不会丢，这是一个很小的本地优先示例。</p>
+      </div>
+      <div class="ok" id="ok" role="status" tabindex="-1">
+        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><circle cx="32" cy="32" r="28"/><path d="M20 33l8 8 16-17"/></svg>
+        <h3>报名已记录</h3><p id="ok-msg">确认邮件将在 24 小时内送达。</p>
+        <button type="button" class="btn sm" id="again" style="margin-top:20px">再报一位</button>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="big" aria-hidden="true">local<span>·</span>first</div>
+  <div class="wrap">
+    <span>LOCAL-FIRST 2026 · 本地优先软件大会 · 杭州</span>
+    <span>联系：hello@localfirst.example</span>
+  </div>
+</footer>
+<script>
+(function(){
+var SP=[
+ ["林知远","Automerge 核心贡献者","CRDT 十年：从论文到生产"],
+ ["周以宁","某协作文档团队 · 架构师","百万文档的离线同步实践"],
+ ["陈默","开源数据库作者","SQLite 作为应用的真相之源"],
+ ["许青禾","分布式系统研究员","因果一致性与用户直觉"],
+ ["沈一帆","笔记应用创始人","小团队如何做本地优先产品"],
+ ["何雨","移动端负责人","弱网环境下的移动端存储"],
+ ["梁书白","密码学工程师","端到端加密与协作并存"],
+ ["方澄","设计负责人","离线状态的交互设计"]
+];
+var D={1:[
+ ["09:00","签到与早餐","","","b"],
+ ["09:30","开幕：为什么现在是本地优先的时代","主办方致辞与大会议程介绍","主持人","talk"],
+ ["10:00","CRDT 十年：从论文到生产",SP[0][1],0,"talk"],
+ ["10:50","因果一致性与用户直觉","当系统“正确”时，用户为什么仍觉得出错","3","talk"],
+ ["11:40","SQLite 作为应用的真相之源","把数据库搬进客户端之后发生了什么",2,"talk"],
+ ["12:30","午餐","","","b"],
+ ["13:30","Automerge 动手实践","两小时内做出一个离线可用的看板应用",0,"work"],
+ ["13:30","同步协议设计：增量、压缩与版本向量","",3,"talk"],
+ ["15:30","茶歇","","","b"],
+ ["16:00","圆桌：云厂商与本地优先能共存吗","林知远 / 陈默 / 周以宁","",'panel'],
+ ["17:00","闪电演讲 × 6","社区项目五分钟展示","多位讲者","talk"],
+ ["18:30","社区晚间交流","良渚文化艺术中心庭院","","b"]
+],2:[
+ ["09:00","签到与早餐","","","b"],
+ ["09:30","百万文档的离线同步实践","从中心化架构迁移的三年",1,"talk"],
+ ["10:20","弱网环境下的移动端存储","配额、驱逐策略与后台同步",5,"talk"],
+ ["11:10","离线状态的交互设计","让“未同步”成为可理解的状态",7,"talk"],
+ ["12:00","午餐","","","b"],
+ ["13:00","用 SQLite 构建同步引擎","从变更日志到冲突合并的完整实现",2,"work"],
+ ["13:00","端到端加密与协作并存","密钥轮换、成员变更与可撤销访问",6,"talk"],
+ ["14:30","端到端加密的协作应用","基于开源工具链完成一个加密笔记",6,"work"],
+ ["15:30","茶歇","","","b"],
+ ["16:00","小团队如何做本地优先产品","商业模式、定价与运维成本",4,"talk"],
+ ["16:50","圆桌：下一个十年的软件所有权","沈一帆 / 许青禾 / 梁书白 / 方澄","","panel"],
+ ["17:40","闭幕","","主办方","talk"]
+]};
+var TN={talk:"演讲",work:"工作坊",panel:"圆桌"};
+var day=1,filt="all",list=document.getElementById("slots");
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function render(){
+  list.innerHTML=D[day].map(function(r){
+    if(r[4]==="b")return '<li class="slot break"><time>'+r[0]+'</time><h3>'+esc(r[1])+'</h3></li>';
+    var who=typeof r[3]==="number"||/^\d$/.test(r[3])?SP[+r[3]]:null;
+    var w=who?'<span class="who">'+esc(who[0])+'<span>'+esc(who[1])+'</span></span>':'<span class="who">'+esc(r[3]||"")+'</span>';
+    var dim=filt!=="all"&&filt!==r[4]?" dim":"";
+    return '<li class="slot'+dim+'"><time>'+r[0]+'</time><div><h3>'+esc(r[1])+'</h3>'+(r[2]?'<p>'+esc(r[2])+'</p>':'')+'</div>'+w+'<span class="tag t-'+r[4]+'">'+TN[r[4]]+'</span></li>';
+  }).join("");
+  list.setAttribute("aria-labelledby","tab-"+day);
+}
+var tabs=[].slice.call(document.querySelectorAll(".tab"));
+tabs.forEach(function(t,i){
+  t.addEventListener("click",function(){sel(i)});
+  t.addEventListener("keydown",function(e){if(e.key==="ArrowRight"||e.key==="ArrowLeft"){var j=(i+(e.key==="ArrowRight"?1:-1)+tabs.length)%tabs.length;sel(j);tabs[j].focus()}});
+});
+function sel(i){tabs.forEach(function(t,k){t.setAttribute("aria-selected",k===i);t.tabIndex=k===i?0:-1});day=+tabs[i].dataset.day;render()}
+[].forEach.call(document.querySelectorAll(".chip"),function(c,_,all){
+  c.addEventListener("click",function(){filt=c.dataset.f;[].forEach.call(document.querySelectorAll(".chip"),function(x){x.setAttribute("aria-pressed",x===c)});render()});
+});
+render();
+
+/* speakers: generative avatars */
+var pal=[["#2f5d4a","#e2522b"],["#16211c","#d8b25a"],["#e2522b","#f3efe6"],["#8a6a1f","#2f5d4a"]];
+function hash(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h}
+function av(name,i){
+  var h=hash(name),p=pal[i%4],a=p[0],b=p[1],r=(h%5)+3,s='';
+  for(var k=0;k<r;k++){var x=(h>>(k*3))%5,y=(h>>(k*2+1))%4;s+='<circle cx="'+(30+x*35)+'" cy="'+(26+y*32)+'" r="'+(4+(h>>k)%6)+'" fill="'+b+'" opacity=".55"/>'}
+  var ch=esc(name.charAt(0));
+  return '<svg class="av" viewBox="0 0 200 170" role="img" aria-label="'+esc(name)+' 的头像插画"><rect width="200" height="170" fill="'+a+'"/>'+s+
+    '<circle cx="100" cy="74" r="30" fill="'+b+'"/><path d="M40 170c6-40 34-58 60-58s54 18 60 58z" fill="'+b+'"/>'+
+    '<text x="100" y="84" text-anchor="middle" font-size="28" font-weight="700" fill="'+a+'" font-family="PingFang SC,Microsoft YaHei,sans-serif">'+ch+'</text></svg>';
+}
+document.getElementById("sp").innerHTML=SP.map(function(s,i){
+  return '<article class="sp reveal">'+av(s[0],i)+'<div class="bd"><h3>'+esc(s[0])+'</h3><div class="role">'+esc(s[1])+'</div><div class="topic">'+esc(s[2])+'</div></div></article>';
+}).join("");
+
+/* online status */
+var net=document.getElementById("net");
+function upd(){var on=navigator.onLine;net.classList.toggle("off",!on);net.lastElementChild.textContent=on?"在线 · 已同步":"离线 · 本地可用"}
+addEventListener("online",upd);addEventListener("offline",upd);upd();
+
+/* registration */
+var form=document.getElementById("form"),KEY="lf26-draft",F={n:document.getElementById("name"),e:document.getElementById("email"),o:document.getElementById("org"),w:document.getElementById("ws")};
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
+function total(){
+  var t=form.ownerDocument.querySelector('input[name=tier]:checked'),ws=document.getElementById("ws");
+  document.getElementById("s-tier").textContent=t.dataset.name;
+  document.getElementById("s-ws").textContent=ws.value==="0"?"无工作坊":ws.options[ws.selectedIndex].text.replace(/（.*）/,"");
+  document.getElementById("total").textContent="¥"+(+t.value + +ws.value);
+}
+function save(){
+  var t=document.querySelector('input[name=tier]:checked');
+  store(KEY,JSON.stringify({name:F.n.value,email:F.e.value,org:F.o.value,ws:F.w.selectedIndex,tier:t.value}));
+}
+try{var d=JSON.parse(store(KEY)||"null");if(d){F.n.value=d.name||"";F.e.value=d.email||"";F.o.value=d.org||"";F.w.selectedIndex=d.ws||0;var ti=document.querySelector('input[name=tier][value="'+d.tier+'"]');if(ti)ti.checked=true}}catch(e){}
+document.addEventListener("change",function(e){if(e.target.name==="tier"||e.target.id==="ws"){total();save()}});
+form.addEventListener("input",save);
+total();
+form.addEventListener("submit",function(e){
+  e.preventDefault();var ok=true;
+  var n=F.n.value.trim(),m=F.e.value.trim();
+  document.getElementById("e-name").textContent=n?"":"请填写姓名";
+  document.getElementById("e-email").textContent=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)?"":"请填写有效的邮箱地址";
+  if(!n){ok=false;F.n.setAttribute("aria-invalid","true")}else F.n.removeAttribute("aria-invalid");
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){ok=false;F.e.setAttribute("aria-invalid","true")}else F.e.removeAttribute("aria-invalid");
+  if(!ok){(n?F.e:F.n).focus();return}
+  var t=document.querySelector('input[name=tier]:checked');
+  if(t.value==="899"){var s=document.getElementById("seats"),v=Math.max(0,+s.textContent-1);s.textContent=v;[].forEach.call(document.querySelectorAll(".seat-mirror"),function(x){x.textContent=v})}
+  document.getElementById("ok-msg").textContent=n+"，你的"+t.dataset.name+"（"+document.getElementById("total").textContent+"）已记录。"+(navigator.onLine?"确认邮件将发送至 "+m+"。":"当前离线，联网后会自动提交。");
+  document.getElementById("fields").style.display="none";
+  var okb=document.getElementById("ok");okb.classList.add("show");okb.focus();
+  store(KEY,null);
+});
+document.getElementById("again").addEventListener("click",function(){
+  form.reset();total();document.getElementById("ok").classList.remove("show");document.getElementById("fields").style.display="";F.n.focus();
+});
+
+/* reveal */
+if("IntersectionObserver" in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(en,i){if(en.isIntersecting){en.target.style.transitionDelay=(i*60)+"ms";en.target.classList.add("in");io.unobserve(en.target)}})},{threshold:.15});
+  [].forEach.call(document.querySelectorAll(".reveal"),function(el){io.observe(el)});
+}else [].forEach.call(document.querySelectorAll(".reveal"),function(el){el.classList.add("in")});
+})();
+</script>
+</body>
+</html>

@@ -3,3 +3,10 @@
 !/verification/REVIEW.md
 /shots/
 __pycache__/
+verification-test.log
+# A/B experiment: screenshots are regenerable with blind.mjs; unfinished pages are not part of the results
+/experiments/*/blind/
+/experiments/ab-2026-10/pages/A-echo.html
+/experiments/ab-2026-10/pages/A-folio.html
+/experiments/ab-2026-10/pages/A-qimu.html
+/experiments/ab-2026-10/pages/B-folio.html
